@@ -19,13 +19,18 @@ const playfair = Playfair_Display({
   display: "swap",
 });
 
+// Next's metadata-generated <link rel="icon"> is NOT auto-prefixed with
+// basePath under static export (verified against the built output), so it
+// needs the same manual prefix as the custom image loader.
+const BASE_PATH = process.env.NEXT_PUBLIC_BASE_PATH || "";
+
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: `AI Appointment Setter & CRM for Local Service Businesses | Viking`,
   description:
     "Viking's AI appointment setter answers every lead, qualifies them, & books the job straight to your calendar. One platform for local service businesses.",
   applicationName: SITE_NAME,
-  icons: { icon: "/images/favicon.svg" },
+  icons: { icon: `${BASE_PATH}/images/favicon.svg` },
 };
 
 export default function RootLayout({
