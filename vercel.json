@@ -1,0 +1,7 @@
+{
+  "redirects": [
+    { "source": "/ai-receptionist", "destination": "/ai-appointment-setter", "permanent": true },
+    { "source": "/post/best-ai-appointment-setter-insurance-agencies-2026", "destination": "/", "permanent": true },
+    { "source": "/home", "destination": "/", "permanent": true }
+  ]
+}
