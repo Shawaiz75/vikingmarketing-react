@@ -299,8 +299,21 @@ export default function HomePage() {
 
       {/* ------------------------------ HERO ------------------------------ */}
       <section className="relative overflow-hidden pt-36 pb-16 md:pt-44">
-        <div className="grid-backdrop" aria-hidden>
-          <div className="grid-glow top-0" />
+        {/* Perspective-grid floor with the magenta horizon glow. One asset
+            replacing the CSS-drawn grid: it carries both the receding grid
+            and the glow, and its alpha composites over the navy ground. */}
+        <div
+          className="pointer-events-none absolute inset-x-0 top-24 flex justify-center opacity-60 md:top-0 md:opacity-100"
+          aria-hidden
+        >
+          <Image
+            src="/images/hero-grid-bg.webp"
+            alt=""
+            width={1200}
+            height={1004}
+            priority
+            className="w-full min-w-[1200px] max-w-none"
+          />
         </div>
         <div className="relative mx-auto w-full max-w-[1328px] px-6 text-center">
           <p className="text-[16px] text-white/80">
@@ -343,13 +356,16 @@ export default function HomePage() {
               label="Watch how Viking Marketing works"
               trigger={
                 <span className="relative inline-flex items-center">
-                  <span className="inline-flex h-16 w-16 items-center justify-center rounded-full bg-white/5 ring-1 ring-white/10 transition group-hover:bg-white/10">
-                    <span className="inline-flex h-10 w-10 items-center justify-center rounded-full bg-[#188bf6]">
-                      <svg width="14" height="16" viewBox="0 0 14 16" fill="#fff" aria-hidden>
-                        <path d="M0 0l14 8-14 8z" />
-                      </svg>
-                    </span>
-                  </span>
+                  {/* Brand play button: layered blur halos + gradient-stroked
+                      blue disc, supplied as one asset. */}
+                  <Image
+                    src="/images/hero-play-button.svg"
+                    alt=""
+                    width={124}
+                    height={124}
+                    aria-hidden
+                    className="h-[76px] w-[76px] transition-transform duration-200 group-hover:scale-105"
+                  />
                   {/* Hand-drawn curved arrow + handwritten label (one asset). */}
                   <Image
                     src="/images/6a2dc4acc5c62232066e-27e7fb32c54e.webp"
