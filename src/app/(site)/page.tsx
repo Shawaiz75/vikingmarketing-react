@@ -367,7 +367,12 @@ export default function HomePage() {
             <CheckLine items={["Plans from $297/mo", "No contracts", "Live in 48 hours"]} />
           </div>
 
-          <Reveal className="relative mt-12">
+          {/* Full-bleed: breaks out of the padded container so the render
+              reads as the hero's background visual rather than a card.
+              Uses a negative margin, not translate-x - a transform would
+              create a stacking context and trap the glow's -z-10 inside,
+              painting the whole block over the headline and CTA. */}
+          <Reveal className="relative mt-12 ml-[calc(50%-50vw)] w-screen max-w-none">
             {/* Perspective-grid floor + magenta horizon glow, replacing the
                 CSS-drawn grid. Its glow core sits 68% down the asset, so
                 translating up by that much lands the glow exactly on the
@@ -392,11 +397,11 @@ export default function HomePage() {
             <Image
               src="/images/hero-dashboard-device.webp"
               alt="Viking Marketing CRM dashboard showing opportunity status, opportunity value, and conversion rate for a local business"
-              width={2400}
-              height={1086}
+              width={3326}
+              height={1505}
               priority
-              sizes="(max-width: 1280px) 100vw, 1240px"
-              className="mx-auto w-full max-w-[1240px] [mask-image:linear-gradient(180deg,#000_86%,transparent_100%)]"
+              sizes="100vw"
+              className="mx-auto w-full max-w-none [mask-image:linear-gradient(180deg,#000_86%,transparent_100%)]"
             />
           </Reveal>
         </div>
