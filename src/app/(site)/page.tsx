@@ -391,17 +391,17 @@ export default function HomePage() {
                 className="w-[100vw] min-w-[620px] max-w-none shrink-0 -translate-y-[68%] md:min-w-[1200px]"
               />
             </span>
-            {/* Ships with its own device bezel and transparent surround, so
-                no card border/radius here - those would frame the empty
-                space around the device rather than the screen. */}
+            {/* Supplied Hero Image.png, used unmodified at its original
+                3942x1554 - no crop, no resize. Ships with its own device
+                bezel and transparent surround, so no card border/radius. */}
             <Image
-              src="/images/hero-dashboard-device.webp"
+              src="/images/hero-image.webp"
               alt="Viking Marketing CRM dashboard showing opportunity status, opportunity value, and conversion rate for a local business"
-              width={3326}
-              height={1505}
+              width={3942}
+              height={1554}
               priority
               sizes="100vw"
-              className="mx-auto w-full max-w-none [mask-image:linear-gradient(180deg,#000_86%,transparent_100%)]"
+              className="mx-auto w-full max-w-none"
             />
           </Reveal>
         </div>
