@@ -299,22 +299,6 @@ export default function HomePage() {
 
       {/* ------------------------------ HERO ------------------------------ */}
       <section className="relative overflow-hidden pt-36 pb-16 md:pt-44">
-        {/* Perspective-grid floor with the magenta horizon glow. One asset
-            replacing the CSS-drawn grid: it carries both the receding grid
-            and the glow, and its alpha composites over the navy ground. */}
-        <div
-          className="pointer-events-none absolute inset-x-0 top-24 flex justify-center opacity-60 md:top-0 md:opacity-100"
-          aria-hidden
-        >
-          <Image
-            src="/images/hero-grid-bg.webp"
-            alt=""
-            width={1200}
-            height={1004}
-            priority
-            className="w-full min-w-[1200px] max-w-none"
-          />
-        </div>
         <div className="relative mx-auto w-full max-w-[1328px] px-6 text-center">
           <p className="text-[16px] text-white/80">
             ⚡ Built in Chandler · Serving local businesses across the U.S.
@@ -383,14 +367,36 @@ export default function HomePage() {
             <CheckLine items={["Plans from $297/mo", "No contracts", "Live in 48 hours"]} />
           </div>
 
-          <Reveal className="mt-12">
+          <Reveal className="relative mt-12">
+            {/* Perspective-grid floor + magenta horizon glow, replacing the
+                CSS-drawn grid. Its glow core sits 68% down the asset, so
+                translating up by that much lands the glow exactly on the
+                dashboard's top edge at any viewport width. */}
+            <span
+              className="pointer-events-none absolute inset-x-0 top-0 -z-10 flex justify-center"
+              aria-hidden
+            >
+              <Image
+                src="/images/hero-grid-bg.webp"
+                alt=""
+                width={2000}
+                height={1413}
+                priority
+                sizes="100vw"
+                className="w-[100vw] min-w-[620px] max-w-none shrink-0 -translate-y-[68%] md:min-w-[1200px]"
+              />
+            </span>
+            {/* Ships with its own device bezel and transparent surround, so
+                no card border/radius here - those would frame the empty
+                space around the device rather than the screen. */}
             <Image
-              src="/images/hero-dashboard.webp"
+              src="/images/hero-dashboard-device.webp"
               alt="Viking Marketing CRM dashboard showing opportunity status, opportunity value, and conversion rate for a local business"
-              width={1160}
-              height={720}
+              width={2400}
+              height={1086}
               priority
-              className="mx-auto w-full max-w-[1160px] rounded-2xl border border-white/10 shadow-[0_30px_120px_rgba(139,92,246,0.25)] [mask-image:linear-gradient(180deg,#000_72%,transparent_100%)]"
+              sizes="(max-width: 1280px) 100vw, 1240px"
+              className="mx-auto w-full max-w-[1240px] [mask-image:linear-gradient(180deg,#000_86%,transparent_100%)]"
             />
           </Reveal>
         </div>
