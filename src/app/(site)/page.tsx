@@ -391,14 +391,14 @@ export default function HomePage() {
                 className="w-[100vw] min-w-[620px] max-w-none shrink-0 -translate-y-[68%] md:min-w-[1200px]"
               />
             </span>
-            {/* Supplied Hero Image.png, used unmodified at its original
-                3942x1554 - no crop, no resize. Ships with its own device
+            {/* Supplied Background2.png, used unmodified at its original
+                4032x1530 - no crop, no resize. Ships with its own device
                 bezel and transparent surround, so no card border/radius. */}
             <Image
               src="/images/hero-image.webp"
               alt="Viking Marketing CRM dashboard showing opportunity status, opportunity value, and conversion rate for a local business"
-              width={3942}
-              height={1554}
+              width={4032}
+              height={1530}
               priority
               sizes="100vw"
               className="mx-auto w-full max-w-none"
