@@ -3,37 +3,134 @@ import Link from "next/link";
 import { CtaButton, SectionHeading } from "./ui";
 import Reveal from "./Reveal";
 import { CITY_LIST } from "@/lib/nav";
-import { PHONE_DISPLAY, PHONE_TEL, REVIEWS_WIDGET_URL } from "@/lib/site";
+import { PHONE_DISPLAY, PHONE_TEL, RATING, GOOGLE_MAPS_URL } from "@/lib/site";
 
-/** "What Real Businesses Say About Viking" — GHL reviews widget (env-configured). */
+/** Real, attributed reviews from Viking Marketing's Google Business Profile
+ *  (see GOOGLE_MAPS_URL). Text is quoted verbatim, including Google's own
+ *  truncation — each card links out to the full review rather than having
+ *  the cut-off text guessed or rewritten. All 21 reviews on the listing are
+ *  5-star; update this list by hand if new ones are worth featuring. */
+const TESTIMONIALS: { name: string; reviewCount: number; date: string; text: string }[] = [
+  {
+    name: "Aaron Waxman",
+    reviewCount: 7,
+    date: "7 months ago",
+    text: "Charlie went above and beyond for my business. There are a lot of marketing companies out there, but very few operate like Viking Marketing. Charlie and his team delivered exactly what I wanted, within the timeline they promised, handled…",
+  },
+  {
+    name: "Christie Issey",
+    reviewCount: 2,
+    date: "7 months ago",
+    text: "We had a great experience working with Viking Marketing. They helped us set up an automated text messaging system and improve lead funnel. They're really knowledge and just really great to work with.",
+  },
+  {
+    name: "Leigh Hendrickson",
+    reviewCount: 5,
+    date: "a year ago",
+    text: "This company is the best! Their custom support is so quick and knowledgeable. I've never had an issue and not had it addressed and also been taught how to fix it in the future myself at the same time…",
+  },
+];
+
+/** Five-pointed solid star, used at a fixed gold fill for review ratings. */
+function Star({ className = "h-4 w-4" }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 20 20" fill="#FBBC05" className={className} aria-hidden>
+      <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.958a1 1 0 00.95.69h4.162c.969 0 1.371 1.24.588 1.81l-3.37 2.448a1 1 0 00-.363 1.118l1.287 3.957c.3.922-.755 1.688-1.54 1.118l-3.37-2.448a1 1 0 00-1.176 0l-3.37 2.448c-.784.57-1.838-.196-1.539-1.118l1.286-3.957a1 1 0 00-.363-1.118l-3.37-2.448c-.783-.57-.38-1.81.588-1.81h4.163a1 1 0 00.95-.69l1.285-3.958z" />
+    </svg>
+  );
+}
+
+/** The standard multicolor Google "G" mark, used nominatively to indicate
+ *  these are real Google reviews and to badge the outbound links. */
+function GoogleG({ className = "h-5 w-5" }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 48 48" className={className} aria-hidden>
+      <path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z" />
+      <path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z" />
+      <path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z" />
+      <path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z" />
+    </svg>
+  );
+}
+
+/** "What Real Businesses Say About Viking" — real Google reviews, hardcoded
+ *  from the business's own Google Business Profile (see GOOGLE_MAPS_URL). */
 export function ReviewsSection() {
   return (
     <section className="section">
       <div className="wrap">
         <SectionHeading title="What Real Businesses Say About Viking" />
-        <div className="mt-10">
-          {REVIEWS_WIDGET_URL ? (
-            <iframe
-              src={REVIEWS_WIDGET_URL}
-              title="Google reviews for Viking Marketing"
-              className="h-[360px] w-full rounded-2xl"
-              loading="lazy"
-              scrolling="no"
-            />
-          ) : (
-            <div className="card-strong px-8 py-14 text-center">
-              <p className="font-heading text-xl font-bold text-white">
-                Rated 5.0 from 21 Google reviews
-              </p>
-              <p className="mx-auto mt-3 max-w-xl text-white/65">
-                Live review feed appears here. Set{" "}
-                <code className="rounded bg-white/10 px-1.5 py-0.5 text-[13px]">
-                  NEXT_PUBLIC_REVIEWS_WIDGET_URL
-                </code>{" "}
-                to your reviews widget URL to enable it.
-              </p>
-            </div>
-          )}
+
+        <Reveal className="mt-8 flex flex-wrap items-center justify-center gap-3">
+          <GoogleG className="h-7 w-7" />
+          <span className="font-heading text-2xl font-bold text-white">{RATING.value}</span>
+          <span className="flex gap-0.5" role="img" aria-label={`${RATING.value} out of 5 stars`}>
+            {Array.from({ length: 5 }).map((_, i) => (
+              <Star key={i} className="h-5 w-5" />
+            ))}
+          </span>
+          <a
+            href={GOOGLE_MAPS_URL}
+            target="_blank"
+            rel="noopener"
+            className="text-[15px] text-white/70 underline decoration-white/25 underline-offset-4 transition hover:text-white hover:decoration-white/60"
+          >
+            {RATING.count} reviews on Google
+          </a>
+        </Reveal>
+
+        <div className="mt-10 grid gap-5 md:grid-cols-3">
+          {TESTIMONIALS.map((r, i) => (
+            <Reveal key={r.name} delay={i * 90} className="h-full">
+              <div className="card-strong flex h-full flex-col p-6">
+                <div className="flex items-center justify-between">
+                  <span className="flex gap-0.5" role="img" aria-label="5 out of 5 stars">
+                    {Array.from({ length: 5 }).map((_, j) => (
+                      <Star key={j} />
+                    ))}
+                  </span>
+                  <span className="text-[13px] text-white/45">{r.date}</span>
+                </div>
+                <p className="mt-4 flex-1 text-[15px] leading-relaxed text-white/80">{r.text}</p>
+                <div className="mt-5 flex items-center justify-between border-t border-white/10 pt-4">
+                  <div className="flex items-center gap-3">
+                    <span className="inline-flex h-9 w-9 flex-none items-center justify-center rounded-full bg-gradient-to-br from-[#efa4f2] to-[#3d05dd] text-[13px] font-semibold text-white">
+                      {r.name
+                        .split(" ")
+                        .map((n) => n[0])
+                        .join("")}
+                    </span>
+                    <div>
+                      <p className="text-[14px] font-semibold text-white">{r.name}</p>
+                      <p className="text-[12.5px] text-white/50">
+                        {r.reviewCount} review{r.reviewCount === 1 ? "" : "s"} on Google
+                      </p>
+                    </div>
+                  </div>
+                  <a
+                    href={GOOGLE_MAPS_URL}
+                    target="_blank"
+                    rel="noopener"
+                    aria-label={`Read ${r.name}'s full review on Google`}
+                    className="flex-none transition hover:opacity-80"
+                  >
+                    <GoogleG />
+                  </a>
+                </div>
+              </div>
+            </Reveal>
+          ))}
+        </div>
+
+        <div className="mt-10 flex justify-center">
+          <a
+            href={GOOGLE_MAPS_URL}
+            target="_blank"
+            rel="noopener"
+            className="btn-outline-gradient"
+          >
+            Read all {RATING.count} reviews on Google
+          </a>
         </div>
       </div>
     </section>

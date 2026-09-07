@@ -13,6 +13,7 @@ import {
 import { CtaButton, SectionHeading, JsonLd, CheckLine } from "@/components/ui";
 import Reveal from "@/components/Reveal";
 import VideoModal from "@/components/VideoModal";
+import LogoMarquee from "@/components/LogoMarquee";
 import FaqSection, { type Faq } from "@/components/FaqSection";
 import {
   ReviewsSection,
@@ -410,33 +411,11 @@ export default function HomePage() {
       {/* -------------------------- AS FEATURED IN ------------------------ */}
       <section className="section !pt-4">
         <div className="wrap">
-          <h2 className="text-center font-heading text-[24px] font-bold text-white">As Featured In</h2>
-          <div className="mt-10 grid items-center justify-items-center gap-x-8 gap-y-10 grid-cols-2 sm:grid-cols-3 lg:grid-cols-5">
-            {PRESS.slice(0, 5).map((p) => (
-              <Image
-                key={p.img}
-                src={p.img}
-                alt={p.alt}
-                width={210}
-                height={56}
-                className="max-h-12 w-auto object-contain"
-              />
-            ))}
-            {PRESS.slice(5).map((p) => (
-              <Image
-                key={p.img}
-                src={p.img}
-                alt={p.alt}
-                width={210}
-                height={56}
-                className="max-h-12 w-auto object-contain"
-              />
-            ))}
-            <p className="font-heading text-left text-[18px] font-medium leading-snug text-white">
-              Featured across 40+
-              <br />
-              news networks
-            </p>
+          <p className="text-center text-[13px] font-semibold uppercase tracking-[0.2em] text-white/45">
+            Featured across 40+ news networks
+          </p>
+          <div className="mt-8">
+            <LogoMarquee logos={PRESS} />
           </div>
         </div>
       </section>

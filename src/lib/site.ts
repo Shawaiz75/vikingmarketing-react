@@ -21,13 +21,13 @@ export const SOCIAL = {
 export const APP_LOGIN_URL = "https://app.vikingmarketing.ai/";
 export const RATING = { value: "5.0", count: "21" };
 export const PRICE_RANGE = "$297-$997";
+// Google Business Profile — source of truth for the testimonials section
+// and the "read more reviews" links out to the real listing.
+export const GOOGLE_MAPS_URL =
+  "https://www.google.com/maps/place/Viking+Marketing/@33.2449236,-111.8440962,17z/data=!3m1!4b1!4m6!3m5!1s0x872b01e23f3f0feb:0x55e9f746330e73f4!8m2!3d33.2449236!4d-111.8440962!16s%2Fg%2F11ksqzcphw";
 
 // Integrations — set these in .env.local (see .env.example). Never hardcode IDs.
 export const GTM_ID = process.env.NEXT_PUBLIC_GTM_ID || "";
-// Defaults to the site's own public GHL reviews widget (same embed the live page uses).
-export const REVIEWS_WIDGET_URL =
-  process.env.NEXT_PUBLIC_REVIEWS_WIDGET_URL ||
-  "https://backend.leadconnectorhq.com/appengine/reviews/get_widget/3gMLUPh02dyQOTzRywWd";
 export const BOOKING_WIDGET_URL = process.env.NEXT_PUBLIC_BOOKING_WIDGET_URL || "";
 export const CHAT_WIDGET_SRC = process.env.NEXT_PUBLIC_CHAT_WIDGET_SRC || "";
 

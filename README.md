@@ -34,7 +34,6 @@ Third-party embeds are opt-in via environment variables so no account IDs live i
 | Variable | What it enables |
 | --- | --- |
 | `NEXT_PUBLIC_GTM_ID` | Google Tag Manager (analytics + the chat widget, which the live site loads through GTM) |
-| `NEXT_PUBLIC_REVIEWS_WIDGET_URL` | The LeadConnector Google-reviews carousel in "What Real Businesses Say About Viking" |
 | `NEXT_PUBLIC_BOOKING_WIDGET_URL` | The booking calendar on `/book-a-call` (your GHL calendar permalink) |
 | `NEXT_PUBLIC_CHAT_WIDGET_SRC` | Optional direct chat-widget script if not using GTM |
 

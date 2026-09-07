@@ -16,7 +16,13 @@ import {
   faqLd,
   howToLd,
 } from "@/lib/seo";
-import { SITE_URL, PHONE_DISPLAY, PHONE_TEL, REVIEWS_WIDGET_URL } from "@/lib/site";
+import { SITE_URL, PHONE_DISPLAY, PHONE_TEL } from "@/lib/site";
+
+// Kept local to this experimental page rather than in the shared site
+// constants — the main site's reviews section now hardcodes real Google
+// Business Profile reviews instead of embedding this widget (see
+// ReviewsSection in src/components/sections.tsx).
+const REVIEWS_WIDGET_URL = process.env.NEXT_PUBLIC_REVIEWS_WIDGET_URL || "";
 
 const plexMono = IBM_Plex_Mono({
   variable: "--font-plex-mono",

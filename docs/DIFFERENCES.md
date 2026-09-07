@@ -5,7 +5,7 @@ The rebuild reproduces the source site's content, URLs, metadata, and design. Th
 ## Platform / integration differences
 
 - **GoHighLevel page engine → Next.js static site.** All GHL runtime markup replaced with clean React components; content is data-driven (`src/data`, `src/content`).
-- **Reviews carousel** ("What Real Businesses Say About Viking"): the source embeds a LeadConnector reviews widget iframe. The rebuild embeds the same widget via `NEXT_PUBLIC_REVIEWS_WIDGET_URL`; when unset it renders a "Rated 5.0 from 21 Google reviews" placeholder card. No review content is hardcoded.
+- **Reviews section** ("What Real Businesses Say About Viking"): the source embeds a LeadConnector reviews widget iframe with its own (non-matching) styling. The rebuild instead hardcodes three real, attributed reviews pulled directly from the business's Google Business Profile, styled to match the site's dark/purple theme, with links out to the full listing for the remaining reviews. See `TESTIMONIALS` in `src/components/sections.tsx`.
 - **Booking calendar** on `/book-a-call`: the source renders a GHL calendar inside the page engine (no public embed URL in the HTML). The rebuild embeds a GHL calendar permalink via `NEXT_PUBLIC_BOOKING_WIDGET_URL`; when unset it shows call/email actions instead.
 - **Chat widget bubble**: loaded on the source via Google Tag Manager. Wire up `NEXT_PUBLIC_GTM_ID` and it returns identically. No tracking IDs are hardcoded (the source's GTM container ID was deliberately not copied).
 - **Fonts**: headings use Satoshi served from Fontshare's official free CDN instead of the site's privately re-hosted OTF files (same typeface, licensed channel). Poppins and Playfair Display are self-hosted via `next/font`.
