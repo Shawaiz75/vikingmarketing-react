@@ -124,6 +124,27 @@ h1, h2, h3, .font-heading {
   border-color: rgba(139, 92, 246, 0.9);
 }
 
+/* Gradient-outline pill (header Login) — matches the live site's recipe:
+   a solid inner fill clipped to padding-box plus a gradient clipped to
+   border-box, so the "border" is really the gradient showing through a
+   transparent border of the same width. */
+.btn-outline-gradient {
+  display: inline-flex;
+  align-items: center;
+  padding: 15px 30px;
+  border-radius: 100px;
+  border: 1.5px solid transparent;
+  background-image: linear-gradient(var(--bg), var(--bg)), linear-gradient(180deg, #efa4f2, #3d05dd);
+  background-origin: border-box;
+  background-clip: padding-box, border-box;
+  color: #fff;
+  font-size: 16px;
+  transition: background-color 0.2s ease, opacity 0.2s ease;
+}
+.btn-outline-gradient:hover {
+  opacity: 0.85;
+}
+
 /* Dark glass card */
 .card {
   border-radius: 20px;

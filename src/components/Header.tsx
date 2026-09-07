@@ -14,7 +14,9 @@ export default function Header() {
 
   return (
     <header className="absolute inset-x-0 top-0 z-50">
-      <div className="wrap flex items-center justify-between gap-6 py-3">
+      {/* Wider than the shared .wrap (1200px) to match the live site's
+          header row, measured at 1260px content width. */}
+      <div className="mx-auto flex w-full max-w-[1260px] items-center justify-between gap-6 px-6 py-3">
         <Link href="/" aria-label="Viking Marketing home" className="flex-none">
           <Image
             src="/images/logo.svg"
@@ -76,7 +78,7 @@ export default function Header() {
         </nav>
 
         <div className="hidden lg:block">
-          <a href={APP_LOGIN_URL} className="btn-outline" target="_blank" rel="noopener">
+          <a href={APP_LOGIN_URL} className="btn-outline-gradient" target="_blank" rel="noopener">
             Login
           </a>
         </div>
