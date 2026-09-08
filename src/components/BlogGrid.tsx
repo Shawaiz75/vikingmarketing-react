@@ -1,66 +1,13 @@
 "use client";
 
 import { useState } from "react";
-import Link from "next/link";
-import Image from "next/image";
-import { AUTHOR, type PostCard } from "@/lib/blog-constants";
+import PostCard from "@/components/PostCard";
+import type { PostCard as PostCardData } from "@/lib/blog-constants";
 
-const PER_PAGE = 4;
+const PER_PAGE = 6;
 
-/** "August 18, 2026" -> "18/08/2026", matching the listing page's own date
- *  format on the live site (its post-detail pages use the stored format
- *  as-is; the listing reformats it - a real, preserved source quirk). */
-function toListingDate(date: string | null): string | null {
-  if (!date) return null;
-  const d = new Date(date);
-  if (Number.isNaN(d.getTime())) return date;
-  const dd = String(d.getDate()).padStart(2, "0");
-  const mm = String(d.getMonth() + 1).padStart(2, "0");
-  return `${dd}/${mm}/${d.getFullYear()}`;
-}
-
-function Card({ post }: { post: PostCard }) {
-  return (
-    <article className="overflow-hidden">
-      <Link href={`/post/${post.slug}`} className="block">
-        {post.hero ? (
-          <Image
-            src={post.hero}
-            alt={post.title}
-            width={640}
-            height={360}
-            className="aspect-[16/9] w-full object-cover"
-          />
-        ) : null}
-      </Link>
-      <div className="pt-4">
-        <h2 className="text-[20px] font-medium uppercase leading-snug text-white">
-          <Link href={`/post/${post.slug}`} className="hover:text-[#efa4f2]">
-            {post.title}
-          </Link>
-        </h2>
-        <div className="mt-2 flex items-center gap-2 text-[12px] text-white">
-          <Image src={AUTHOR.avatar} alt="" width={24} height={24} className="h-6 w-6 rounded-full object-cover" />
-          <span>{AUTHOR.name}</span>
-        </div>
-        {post.date ? <p className="mt-1 text-[12px] text-white">Published on: {toListingDate(post.date)}</p> : null}
-        <p className="mt-3 text-[14px] leading-relaxed text-white/80">{post.description}</p>
-        {post.category ? (
-          <p className="mt-2 text-[12px] text-white">{post.category.name}</p>
-        ) : null}
-        <Link
-          href={`/post/${post.slug}`}
-          className="mt-3 inline-block rounded-full bg-[#b771eb] px-2.5 py-1.5 text-[14px] text-white transition hover:opacity-90"
-        >
-          Read More
-        </Link>
-      </div>
-    </article>
-  );
-}
-
-/** Paginated post grid — 4 per page with numbered controls, like the source site. */
-export default function BlogGrid({ posts }: { posts: PostCard[] }) {
+/** Paginated post grid — 6 per page with numbered controls. */
+export default function BlogGrid({ posts }: { posts: PostCardData[] }) {
   const [page, setPage] = useState(1);
   const pages = Math.max(1, Math.ceil(posts.length / PER_PAGE));
   const visible = posts.slice((page - 1) * PER_PAGE, page * PER_PAGE);
@@ -72,9 +19,9 @@ export default function BlogGrid({ posts }: { posts: PostCard[] }) {
 
   return (
     <div>
-      <div className="grid gap-6 sm:grid-cols-2">
+      <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
         {visible.map((p) => (
-          <Card key={p.slug} post={p} />
+          <PostCard key={p.slug} post={p} />
         ))}
       </div>
 

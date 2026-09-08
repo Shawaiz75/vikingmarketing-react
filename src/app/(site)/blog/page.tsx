@@ -1,11 +1,11 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { pageMetadata, jsonLdGraph, webPageLd, breadcrumbLd } from "@/lib/seo";
 import { JsonLd } from "@/components/ui";
 import BlogGrid from "@/components/BlogGrid";
 import { getPostsIndex } from "@/lib/blog";
+import { CATEGORIES } from "@/lib/blog-constants";
 
-// Note: the source site ships its blog listing with no title/meta (a GHL
-// limitation). We add proper metadata here, matching the site's SEO patterns.
 export const metadata: Metadata = pageMetadata({
   title: "Blog | Viking Marketing",
   description:
@@ -31,15 +31,33 @@ export default function BlogIndexPage() {
   return (
     <>
       <JsonLd json={ld} />
-      {/* The live site's blog index has no hero/title/category-nav at all -
-          it goes straight from the header into the post grid. Matched here;
-          h1 in this route comes from metadata/JSON-LD only. */}
-      <section className="pt-32 pb-16 md:pt-40">
-        <div className="wrap">
-          {/* Visually hidden: the live page has no visible page title, but a
-              document still needs exactly one real h1 for accessibility/SEO
-              (see the "SEO corrections" convention in docs/DIFFERENCES.md). */}
-          <h1 className="sr-only">Blog | Viking Marketing</h1>
+      <section className="relative overflow-hidden pt-36 pb-10 md:pt-44">
+        <div className="grid-backdrop" aria-hidden>
+          <div className="grid-glow top-0" />
+        </div>
+        <div className="wrap relative text-center">
+          <h1 className="font-heading text-[clamp(32px,4.6vw,54px)] font-bold text-white">
+            The Viking Marketing Blog
+          </h1>
+          <p className="mx-auto mt-5 max-w-2xl text-[16px] text-white/75">
+            Honest guides on AI appointment setting, missed-call recovery, and growing a local
+            service business.
+          </p>
+          <nav aria-label="Blog categories" className="mt-8 flex flex-wrap justify-center gap-2.5">
+            {Object.entries(CATEGORIES).map(([slug, name]) => (
+              <Link
+                key={slug}
+                href={`/blog/category/${slug}`}
+                className="rounded-full border border-white/15 bg-white/[0.04] px-4 py-2 text-[13.5px] font-medium text-white/80 transition hover:border-white/35 hover:text-white"
+              >
+                {name}
+              </Link>
+            ))}
+          </nav>
+        </div>
+      </section>
+      <section className="section !pt-8">
+        <div className="wrap max-w-6xl">
           <BlogGrid posts={posts} />
         </div>
       </section>

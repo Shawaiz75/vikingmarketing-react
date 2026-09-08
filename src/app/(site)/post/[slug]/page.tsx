@@ -5,6 +5,7 @@ import { notFound } from "next/navigation";
 import { jsonLdGraph, personLd, breadcrumbLd, organizationLd } from "@/lib/seo";
 import { JsonLd } from "@/components/ui";
 import { FinalCta, CallNote } from "@/components/sections";
+import PostCard from "@/components/PostCard";
 import AuthorBio from "@/components/AuthorBio";
 import BackToTop from "@/components/BackToTop";
 import { getPost, getPostSlugs, getPostsIndex, AUTHOR_ID, AUTHOR } from "@/lib/blog";
@@ -90,23 +91,31 @@ export default async function PostPage({ params }: { params: Promise<Params> }) 
     <>
       <JsonLd json={ld} />
 
-      {/* Post header — no breadcrumb, category as its own line, and no
-          grid/glow backdrop, matching the live site exactly (confirmed via
-          computed styles: no background-image anywhere above the h1). */}
-      <section className="pt-36 pb-8 md:pt-44">
-        <div className="wrap">
-          <h1 className="text-[28px] font-bold leading-[38.5px] text-white">{post.h1 || post.title}</h1>
+      {/* Post header */}
+      <section className="relative overflow-hidden pt-36 pb-8 md:pt-44">
+        <div className="grid-backdrop" aria-hidden>
+          <div className="grid-glow top-0" />
+        </div>
+        <div className="wrap relative max-w-4xl">
+          <nav aria-label="Breadcrumb" className="text-[13px] text-white/55">
+            <Link href="/" className="hover:text-white">Home</Link>
+            <span className="mx-2" aria-hidden>/</span>
+            <Link href="/blog" className="hover:text-white">Blog</Link>
+          </nav>
           {post.category ? (
             <Link
               href={`/blog/category/${post.category.slug}`}
-              className="mt-2 inline-block text-[14px] text-[#335dff] hover:underline"
+              className="mt-5 inline-block rounded-full border border-white/15 bg-white/[0.04] px-3.5 py-1.5 text-[12.5px] font-medium text-[#efa4f2] transition hover:border-white/30 hover:text-white"
             >
               {post.category.name}
             </Link>
           ) : null}
-          <div className="mt-2 flex flex-wrap items-center gap-x-2 text-[14px] text-white/70">
+          <h1 className="mt-4 font-heading text-[clamp(28px,4vw,44px)] font-bold leading-[1.2] text-white">
+            {post.h1 || post.title}
+          </h1>
+          <div className="mt-5 flex flex-wrap items-center gap-x-3 gap-y-2 text-[13.5px] text-white/60">
             {post.date ? <span>{post.date}</span> : null}
-            {post.date && post.readTime ? <span aria-hidden>•</span> : null}
+            {post.date && post.readTime ? <span aria-hidden>·</span> : null}
             {post.readTime ? <span>{post.readTime}</span> : null}
           </div>
           {post.hero ? (
@@ -116,7 +125,7 @@ export default async function PostPage({ params }: { params: Promise<Params> }) 
               width={1200}
               height={630}
               priority
-              className="mt-8 w-full"
+              className="mt-8 w-full rounded-2xl border border-white/10 shadow-[0_20px_60px_rgba(0,0,0,0.35)]"
             />
           ) : null}
         </div>
@@ -124,97 +133,95 @@ export default async function PostPage({ params }: { params: Promise<Params> }) 
 
       {/* Article body (migrated verbatim from the source post) */}
       <section className="pb-16">
-        <div className="wrap">
-          <div className="mx-auto max-w-3xl">
-            <div className="blog-html" dangerouslySetInnerHTML={{ __html: post.contentHtml }} />
+        <div className="wrap max-w-3xl">
+          <div className="blog-html" dangerouslySetInnerHTML={{ __html: post.contentHtml }} />
 
-            {/* Tags — sourced from the source site's own per-post keywords;
-                three of nineteen posts have none, matching the source. */}
-            {post.tags.length ? (
-              <div className="mt-10 flex flex-wrap gap-2">
-                {post.tags.map((tag) => (
-                  <span
-                    key={tag}
-                    className="rounded-[10px] bg-[#e5e7eb] px-2.5 py-1 text-[13px] text-[#6b7280]"
-                  >
-                    {tag}
-                  </span>
-                ))}
-              </div>
-            ) : null}
-
-            {/* Author box */}
-            <div className="mt-6 rounded-[4px] bg-[#1f113a] px-10 py-5">
-              <div className="flex items-center gap-4">
-                <Link href={`/blog/author/${AUTHOR_ID}`} className="flex-none">
-                  <Image
-                    src={AUTHOR.avatar}
-                    alt={post.authorName}
-                    width={64}
-                    height={64}
-                    className="h-16 w-16 rounded-[25px] object-cover"
-                  />
-                </Link>
-                <div className="flex flex-wrap items-center gap-2 text-[16px] text-white">
-                  <Link href={`/blog/author/${AUTHOR_ID}`} className="font-semibold hover:underline">
-                    {post.authorName}
-                  </Link>
-                  <span className="text-white/40" aria-hidden>|</span>
-                  <span>{post.authorRole}</span>
-                  <span className="text-white/40" aria-hidden>|</span>
-                  <a href={AUTHOR.facebook} target="_blank" rel="noreferrer noopener" aria-label="Facebook">
-                    <Image src="/images/social-facebook-white.svg" alt="" width={22} height={22} />
-                  </a>
-                  <a href={AUTHOR.linkedin} target="_blank" rel="noreferrer noopener" aria-label="LinkedIn">
-                    <Image src="/images/social-linkedin-white.svg" alt="" width={22} height={22} />
-                  </a>
-                </div>
-              </div>
-              <div className="mt-3">
-                <AuthorBio text={`Author description: ${post.authorBio}`} />
-              </div>
+          {/* Tags — sourced from the source site's own per-post keywords;
+              three of nineteen posts have none, matching the source. */}
+          {post.tags.length ? (
+            <div className="mt-10 flex flex-wrap gap-2">
+              {post.tags.map((tag) => (
+                <span
+                  key={tag}
+                  className="rounded-full border border-white/10 bg-white/[0.04] px-3 py-1.5 text-[12.5px] text-white/70"
+                >
+                  {tag}
+                </span>
+              ))}
             </div>
+          ) : null}
 
-            <div className="mt-8">
-              <BackToTop />
-            </div>
-            <p className="mt-4">
-              <Link href="/blog" className="text-[13px] text-[#6b7280] hover:text-white">
-                Back to Blog
+          {/* Author box */}
+          <aside className="card-strong mt-10 p-7 sm:p-8">
+            <div className="flex flex-wrap items-center gap-4">
+              <Link href={`/blog/author/${AUTHOR_ID}`} className="flex-none">
+                <Image
+                  src={AUTHOR.avatar}
+                  alt={post.authorName}
+                  width={64}
+                  height={64}
+                  className="h-16 w-16 rounded-full border-2 border-[#efa4f2]/40 object-cover"
+                />
               </Link>
-            </p>
+              <div>
+                <Link
+                  href={`/blog/author/${AUTHOR_ID}`}
+                  className="font-heading text-[16px] font-bold text-white hover:text-[#efa4f2]"
+                >
+                  {post.authorName}
+                </Link>
+                <p className="text-[13px] text-white/55">{post.authorRole}</p>
+              </div>
+              <div className="ml-auto flex items-center gap-2">
+                <a
+                  href={AUTHOR.facebook}
+                  target="_blank"
+                  rel="noreferrer noopener"
+                  aria-label="Facebook"
+                  className="flex h-9 w-9 items-center justify-center rounded-full bg-white/[0.06] transition hover:bg-white/15"
+                >
+                  <Image src="/images/social-facebook-white.svg" alt="" width={16} height={16} />
+                </a>
+                <a
+                  href={AUTHOR.linkedin}
+                  target="_blank"
+                  rel="noreferrer noopener"
+                  aria-label="LinkedIn"
+                  className="flex h-9 w-9 items-center justify-center rounded-full bg-white/[0.06] transition hover:bg-white/15"
+                >
+                  <Image src="/images/social-linkedin-white.svg" alt="" width={16} height={16} />
+                </a>
+              </div>
+            </div>
+            <div className="mt-4">
+              <AuthorBio text={`Author description: ${post.authorBio}`} />
+            </div>
+          </aside>
+
+          <div className="mt-8 flex items-center justify-between">
+            <Link
+              href="/blog"
+              className="inline-flex items-center gap-1.5 text-[13.5px] font-medium text-white/60 hover:text-white"
+            >
+              <svg width="13" height="9" viewBox="0 0 14 10" fill="none" aria-hidden>
+                <path d="M13 5H1m0 0l4-4M1 5l4 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+              </svg>
+              Back to Blog
+            </Link>
+            <BackToTop />
           </div>
         </div>
       </section>
 
-      {/* Related posts. Not present on the live post template (which ends
-          at "Back to Blog"), kept as a deliberate, pre-existing deviation
-          for internal linking/engagement - see docs/DIFFERENCES.md. */}
+      {/* Related posts. Not present on the live post template, kept as a
+          deliberate deviation for internal linking/engagement value. */}
       {related.length ? (
         <section className="section !pt-0">
           <div className="wrap max-w-5xl">
             <h2 className="font-heading text-2xl font-bold text-white">Related posts</h2>
-            <div className="mt-6 grid gap-6 md:grid-cols-3">
+            <div className="mt-6 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
               {related.map((r) => (
-                <article key={r.slug} className="card overflow-hidden transition hover:border-white/20">
-                  <Link href={`/post/${r.slug}`} className="block">
-                    {r.hero ? (
-                      <Image
-                        src={r.hero}
-                        alt={r.title}
-                        width={480}
-                        height={270}
-                        className="aspect-[16/9] w-full object-cover"
-                      />
-                    ) : null}
-                    <div className="p-5">
-                      <h3 className="font-heading text-[15.5px] font-bold leading-snug text-white">
-                        {r.title}
-                      </h3>
-                      {r.date ? <p className="mt-2 text-[12.5px] text-white/55">{r.date}</p> : null}
-                    </div>
-                  </Link>
-                </article>
+                <PostCard key={r.slug} post={r} />
               ))}
             </div>
           </div>
