@@ -7,11 +7,18 @@ import { SectionHeading } from "./ui";
 
 export type Faq = { q: string; a: string };
 
-function FaqItem({ faq, open, onToggle }: { faq: Faq; open: boolean; onToggle: () => void }) {
+function FaqItem({ faq, index, open, onToggle }: { faq: Faq; index: number; open: boolean; onToggle: () => void }) {
+  const panelId = `faq-answer-${index}`;
   return (
     <div className="faq-item" data-open={open}>
       <h3 className="m-0">
-        <button type="button" className="faq-q" aria-expanded={open} onClick={onToggle}>
+        <button
+          type="button"
+          className="faq-q"
+          aria-expanded={open}
+          aria-controls={panelId}
+          onClick={onToggle}
+        >
           <span>{faq.q}</span>
           <span className="faq-toggle" aria-hidden>
             {open ? (
@@ -22,7 +29,7 @@ function FaqItem({ faq, open, onToggle }: { faq: Faq; open: boolean; onToggle: (
           </span>
         </button>
       </h3>
-      <div className="faq-a" style={{ maxHeight: open ? "600px" : 0, transition: "max-height .35s ease" }}>
+      <div id={panelId} className="faq-a" style={{ maxHeight: open ? "600px" : 0, transition: "max-height .35s ease" }}>
         <p className="pb-6 pr-10">{faq.a}</p>
       </div>
     </div>
@@ -49,10 +56,19 @@ export default function FaqSection({
         <div className="mt-12 grid items-start gap-8 lg:grid-cols-[1.6fr_1fr]">
           <div className="card-strong px-7 py-3 sm:px-10">
             {faqs.map((f, i) => (
-              <FaqItem key={f.q} faq={f} open={open === i} onToggle={() => setOpen(open === i ? -1 : i)} />
+              <FaqItem
+                key={f.q}
+                faq={f}
+                index={i}
+                open={open === i}
+                onToggle={() => setOpen(open === i ? -1 : i)}
+              />
             ))}
           </div>
-          <div className="card-strong px-8 py-10 text-center">
+          {/* Sticky on desktop so it stays in view while the (usually much
+              taller) FAQ list scrolls past; stacks normally below lg, where
+              there's no room for a side rail. */}
+          <div className="card-strong px-8 py-10 text-center lg:sticky lg:top-8">
             <Image
               src="/images/still-questions.svg"
               alt={sideImageAlt ?? `Still have questions? Contact Viking Marketing${contextLabel ? ` to get answers about ${contextLabel}` : ""}`}
