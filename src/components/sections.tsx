@@ -3,7 +3,10 @@ import Link from "next/link";
 import { CtaButton, SectionHeading } from "./ui";
 import Reveal from "./Reveal";
 import { CITY_LIST } from "@/lib/nav";
-import { PHONE_DISPLAY, PHONE_TEL, RATING, GOOGLE_MAPS_URL } from "@/lib/site";
+import { PHONE_DISPLAY, PHONE_TEL, RATING, GOOGLE_MAPS_URL, ADDRESS } from "@/lib/site";
+
+const MAP_EMBED_SRC =
+  "https://www.google.com/maps?q=Viking+Marketing,4240+S+Arizona+Ave+%231063,Chandler,AZ+85248&z=15&output=embed";
 
 /** Real, attributed reviews from Viking Marketing's Google Business Profile
  *  (see GOOGLE_MAPS_URL). Text is quoted verbatim, including Google's own
@@ -232,6 +235,8 @@ export function LocalSection({
   footNote?: string;
   showMap?: boolean;
 }) {
+  const fullAddress = `${ADDRESS.streetAddress}, ${ADDRESS.addressLocality}, ${ADDRESS.addressRegion} ${ADDRESS.postalCode}`;
+
   return (
     <section className="section">
       <div className="wrap">
@@ -249,24 +254,36 @@ export function LocalSection({
           </Reveal>
           {showMap ? (
             <Reveal delay={120}>
-              <a
-                href="https://maps.google.com/?q=4240+S+Arizona+Ave+%231063,+Chandler,+AZ+85248"
-                target="_blank"
-                rel="noopener"
-                aria-label="Viking Marketing on Google Maps"
-              >
-                <Image
-                  src="/images/map-chandler.jpg"
-                  alt="4240 S Arizona Ave #1063, Chandler, AZ 85248, USA"
-                  width={560}
-                  height={380}
-                  className="w-full rounded-2xl border border-white/10 object-cover"
+              {/* Real, interactive embed instead of a static photo - visitors
+                  can pan/zoom/verify the location inline instead of only
+                  linking out. No API key needed for the basic embed form. */}
+              <div className="overflow-hidden rounded-2xl border border-white/10">
+                <iframe
+                  src={MAP_EMBED_SRC}
+                  title={`Map showing Viking Marketing's office at ${fullAddress}`}
+                  loading="lazy"
+                  referrerPolicy="no-referrer-when-downgrade"
+                  className="h-[280px] w-full grayscale-[0.3] contrast-[1.05] lg:h-[320px]"
                 />
+              </div>
+              <a
+                href={GOOGLE_MAPS_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="mt-3 inline-flex items-center gap-1.5 text-[14px] font-medium text-white/70 hover:text-white"
+              >
+                Get Directions
+                <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden>
+                  <path d="M2 10 10 2M4 2h6v6" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+                </svg>
               </a>
             </Reveal>
           ) : null}
         </div>
         <div className="mt-10">
+          <p className="mb-4 text-center text-[13px] font-semibold uppercase tracking-wide text-white/40">
+            Proudly rooted in the Greater Phoenix Area
+          </p>
           <CityChips />
         </div>
         <p className="mt-6 text-center text-[16px] text-white/80">{footNote}</p>
