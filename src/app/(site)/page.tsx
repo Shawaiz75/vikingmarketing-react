@@ -438,7 +438,10 @@ export default function HomePage() {
       </section>
 
       {/* ------------------------ PROBLEM / SOLUTION ---------------------- */}
-      <section className="section">
+      <section
+        className="section bg-cover bg-top bg-no-repeat"
+        style={{ backgroundImage: "url('/images/problem-section-bg.webp')" }}
+      >
         <div className="wrap">
           <SectionHeading title="You're Losing Customers You Already Earned" />
           <div className="mx-auto mt-8 max-w-[1150px] space-y-5 text-center text-[16px] leading-[37px] text-white/80">
@@ -464,7 +467,7 @@ export default function HomePage() {
             {CHIP_FEATURES.map((f) => (
               <span
                 key={f.label}
-                className="inline-flex items-center gap-2.5 rounded-xl border border-white/10 bg-[#0b0920]/80 px-5 py-3 text-[16px] font-medium text-white"
+                className="inline-flex items-center gap-2.5 rounded-full border border-white/10 bg-[#0b0920]/80 px-5 py-3 text-[16px] font-medium text-white"
               >
                 <Image src={f.icon} alt="" width={24} height={24} className="h-6 w-6" />
                 {f.label}
@@ -473,20 +476,13 @@ export default function HomePage() {
           </Reveal>
 
           {/* Dashed connector flow ending in the "You will access" label */}
-          <div className="relative mx-auto mt-2 hidden max-w-3xl md:block" aria-hidden>
-            <svg viewBox="0 0 640 90" fill="none" className="w-full">
-              <path
-                d="M40 0v18a24 24 0 0 0 24 24h232a24 24 0 0 1 24 24v14M600 0v18a24 24 0 0 1-24 24H344"
-                stroke="rgba(139,92,246,0.45)"
-                strokeWidth="1.5"
-                strokeDasharray="5 7"
-              />
-              <path d="M317 66l8 20 3.5-8.5L337 74z" fill="#fff" stroke="#0b0920" strokeWidth="1" />
-            </svg>
-          </div>
-          <p className="mx-auto mt-1 w-fit rounded-md border border-white/10 bg-[#0b0920] px-3 py-1.5 text-center text-[13px] text-white/80">
-            You will access
-          </p>
+          <Image
+            src="/images/problem-connector.webp"
+            alt="You will access"
+            width={530}
+            height={134}
+            className="mx-auto mt-2 hidden w-full max-w-[640px] md:block"
+          />
         </div>
         <div className="wrap mt-16">
           <div className="divider-glow" aria-hidden />
