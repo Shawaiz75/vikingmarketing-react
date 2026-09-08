@@ -498,15 +498,26 @@ export default function HomePage() {
               <Reveal key={row.solution} delay={i * 60}>
                 <div className="card-strong grid items-center gap-8 p-6 md:p-8 lg:grid-cols-[220px_240px_1fr]">
                   <div className="flex items-center gap-4 lg:flex-col lg:items-start">
-                    <span className="inline-flex h-12 w-12 flex-none items-center justify-center rounded-xl bg-[#2a1420]">
-                      <Image src="/images/icon-missed.svg" alt="Missed call icon representing a lost customer" width={26} height={26} />
-                    </span>
+                    {/* Icon files are already complete 59x59 tiles (dark
+                        rounded-square + gradient border + glyph baked in),
+                        so no wrapper background is needed here. */}
+                    <Image
+                      src="/images/icon-missed.svg"
+                      alt="Missed call icon representing a lost customer"
+                      width={59}
+                      height={59}
+                      className="h-[59px] w-[59px] flex-none"
+                    />
                     <p className="text-[16px] font-semibold text-white">{row.problem}</p>
                   </div>
                   <div className="flex items-center gap-4 lg:flex-col lg:items-start">
-                    <span className="inline-flex h-12 w-12 flex-none items-center justify-center rounded-xl bg-[#3a1a5c]">
-                      <Image src="/images/icon-viking-mark.svg" alt={`Viking Marketing ${row.solution} icon`} width={26} height={26} />
-                    </span>
+                    <Image
+                      src="/images/icon-viking-mark.svg"
+                      alt={`Viking Marketing ${row.solution} icon`}
+                      width={59}
+                      height={59}
+                      className="h-[59px] w-[59px] flex-none"
+                    />
                     <p className="text-[16px] font-semibold text-white">{row.solution}</p>
                   </div>
                   <div className="min-w-0">
