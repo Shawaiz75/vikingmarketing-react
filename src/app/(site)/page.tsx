@@ -120,56 +120,48 @@ const AI_POWER_BULLETS = [
 const PLATFORM_FEATURES = [
   {
     icon: "/images/feat-ai-setter.svg",
-    category: "Lead Capture",
     title: "AI Appointment Setter",
     body: "Texts back every lead in seconds, qualifies them, and books the appointment 24/7.",
     href: "/ai-appointment-setter",
   },
   {
     icon: "/images/feat-mctb.svg",
-    category: "Lead Capture",
     title: "Missed Call Text Back",
     body: "Auto-text every missed call within 60 seconds. Capture leads you'd otherwise lose.",
     href: "/missed-call-text-back",
   },
   {
     icon: "/images/feat-inbox.svg",
-    category: "Communication",
     title: "Unified Inbox",
     body: "SMS, email, web chat, Facebook, Instagram, Google. all in one place.",
     href: "/all-in-one-inbox",
   },
   {
     icon: "/images/feat-webchat.svg",
-    category: "Lead Capture",
     title: "AI Web Chat",
     body: "Convert website visitors into booked appointments before they leave.",
     href: "/website-chat-widget",
   },
   {
     icon: "/images/feat-reviews.svg",
-    category: "Growth",
     title: "Review Automation",
     body: "Get 5x more Google reviews automatically, by text, after every appointment.",
     href: "/review-generation-software",
   },
   {
     icon: "/images/feat-dbr.svg",
-    category: "Growth",
     title: "Database Reactivation",
     body: "Bring lost customers back with AI-driven SMS campaigns.",
     href: "/database-reactivation",
   },
   {
     icon: "/images/feat-payments.svg",
-    category: "Payments",
     title: "Payments & Invoicing",
     body: "Send invoices by text, get paid faster, no chasing.",
     href: "/crm-with-invoicing",
   },
   {
     icon: "/images/feat-tracking.svg",
-    category: "CRM",
     title: "Lead & Customer Tracking",
     body: "Tracking a full CRM that actually tracks the customer journey, without spreadsheets.",
     href: "/lead-management-software-for-small-business",
@@ -557,10 +549,7 @@ export default function HomePage() {
                       the feature, so a descriptive alt here would just
                       have screen readers announce it twice. */}
                   <Image src={f.icon} alt="" aria-hidden width={63} height={63} className="h-[63px] w-[63px]" />
-                  <span className="mt-4 inline-flex w-fit items-center rounded-full border border-white/10 bg-white/5 px-2.5 py-1 text-[10.5px] font-semibold uppercase tracking-wide text-white/45">
-                    {f.category}
-                  </span>
-                  <h3 className="mt-3 text-[20px] font-bold text-white">{f.title}</h3>
+                  <h3 className="mt-[50px] text-[20px] font-bold text-white">{f.title}</h3>
                   <p className="mt-2.5 flex-1 text-[16px] leading-[29px] text-[#CBD5E0]">{f.body}</p>
                   <span className="mt-4 inline-flex items-center gap-1.5 text-[13.5px] font-medium text-white/50 transition group-hover:text-[#efa4f2] group-focus-visible:text-[#efa4f2]">
                     Learn more
