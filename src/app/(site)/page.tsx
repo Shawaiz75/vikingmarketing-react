@@ -12,6 +12,7 @@ import {
 } from "@/lib/seo";
 import { CtaButton, SectionHeading, JsonLd, CheckLine } from "@/components/ui";
 import Reveal from "@/components/Reveal";
+import GrowthTabs, { type GrowthRow } from "@/components/GrowthTabs";
 import VideoModal from "@/components/VideoModal";
 import LogoMarquee from "@/components/LogoMarquee";
 import FaqSection, { type Faq } from "@/components/FaqSection";
@@ -65,15 +66,7 @@ const CHIP_FEATURES = [
   { label: "Database Reactivation", icon: "/images/cd180d98-2c05-49b7-b-d8a0a13dc0f4.svg" },
 ];
 
-const GROWTH_ROWS: {
-  problem: string;
-  solution: string;
-  headline: string;
-  href: string;
-  image: string;
-  imageAlt: string;
-  images?: string[];
-}[] = [
+const GROWTH_ROWS: GrowthRow[] = [
   {
     problem: "Missed calls = missed customers",
     solution: "Missed Call Text Back & Voice AI",
@@ -494,108 +487,11 @@ export default function HomePage() {
         <div className="wrap">
           <SectionHeading
             title="How Viking Drives Your Growth"
-            lede="Every row below is a real problem local service businesses lose money to, and the Viking feature built to close it."
+            lede="Pick the problem that's costing you the most right now — Viking already has an answer for it."
           />
-          <div className="mt-14 space-y-8">
-            {GROWTH_ROWS.map((row, i) => (
-              <Reveal key={row.solution} delay={i * 60}>
-                <div className="card-strong group relative overflow-hidden p-6 transition duration-300 hover:-translate-y-1 hover:border-white/20 md:p-8">
-                  <span
-                    aria-hidden
-                    className="pointer-events-none absolute right-6 top-6 font-heading text-[13px] font-bold tracking-wide text-white/15 md:right-8 md:top-8"
-                  >
-                    {String(i + 1).padStart(2, "0")}
-                  </span>
-                  <div className="grid items-center gap-8 lg:grid-cols-[220px_240px_1fr]">
-                    <div className="relative flex items-center gap-4 lg:flex-col lg:items-start">
-                      {/* Icon files are already complete 59x59 tiles (dark
-                          rounded-square + gradient border + glyph baked in),
-                          so no wrapper background is needed here — the drop
-                          shadow adds a red "problem" glow without touching
-                          the tile art itself. */}
-                      <Image
-                        src="/images/icon-missed.svg"
-                        alt="Missed call icon representing a lost customer"
-                        width={59}
-                        height={59}
-                        className="h-[59px] w-[59px] flex-none drop-shadow-[0_0_20px_rgba(239,68,68,0.25)]"
-                      />
-                      <p className="text-[15.5px] font-medium text-white/60">{row.problem}</p>
-                      {/* Problem -> solution connector, desktop only */}
-                      <span
-                        aria-hidden
-                        className="pointer-events-none absolute -right-9 top-1/2 hidden -translate-y-1/2 lg:block"
-                      >
-                        <svg width="24" height="12" viewBox="0 0 24 12" fill="none">
-                          <path
-                            d="M1 6h20m0 0l-6-5m6 5l-6 5"
-                            stroke="rgba(255,255,255,0.22)"
-                            strokeWidth="1.5"
-                            strokeLinecap="round"
-                          />
-                        </svg>
-                      </span>
-                    </div>
-                    <div className="flex items-center gap-4 lg:flex-col lg:items-start">
-                      <Image
-                        src="/images/icon-viking-mark.svg"
-                        alt={`Viking Marketing ${row.solution} icon`}
-                        width={59}
-                        height={59}
-                        className="h-[59px] w-[59px] flex-none drop-shadow-[0_0_20px_rgba(139,92,246,0.35)]"
-                      />
-                      <p className="text-[16px] font-semibold text-white">{row.solution}</p>
-                    </div>
-                    <div className="min-w-0">
-                      <div className="flex flex-wrap items-center justify-between gap-4">
-                        <p className="font-heading text-[19px] font-bold leading-snug text-white">
-                          {row.headline}
-                        </p>
-                        <Link
-                          href={row.href}
-                          className="inline-flex flex-none items-center gap-1.5 rounded-full border border-white/15 px-4 py-2 text-[13.5px] font-medium text-white transition hover:border-[#efa4f2]/50 hover:bg-white/[0.04] hover:text-[#efa4f2]"
-                        >
-                          Learn More
-                          <svg width="14" height="10" viewBox="0 0 14 10" fill="none" aria-hidden>
-                            <path d="M1 5h12m0 0L9 1m4 4L9 9" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-                          </svg>
-                        </Link>
-                      </div>
-                      {row.images ? (
-                        <div className="mt-5 flex items-stretch justify-between gap-4">
-                          {row.images.map((src, idx) => (
-                            <div key={src} className="w-[31.5%] overflow-hidden rounded-xl">
-                              <Image
-                                src={src}
-                                alt={idx === 0 ? row.imageAlt : ""}
-                                width={182}
-                                height={121}
-                                className="h-auto w-full transition duration-500 group-hover:scale-[1.03]"
-                              />
-                            </div>
-                          ))}
-                        </div>
-                      ) : (
-                        <div className="mt-5 overflow-hidden rounded-xl border border-white/10 bg-black/30 shadow-[0_16px_50px_rgba(0,0,0,0.35)]">
-                          {row.image ? (
-                            <Image
-                              src={row.image}
-                              alt={row.imageAlt}
-                              width={1144}
-                              height={296}
-                              className="w-full object-cover transition duration-500 group-hover:scale-[1.02]"
-                            />
-                          ) : (
-                            <SocialMarquee />
-                          )}
-                        </div>
-                      )}
-                    </div>
-                  </div>
-                </div>
-              </Reveal>
-            ))}
-          </div>
+          <Reveal>
+            <GrowthTabs rows={GROWTH_ROWS} />
+          </Reveal>
         </div>
       </section>
 
@@ -727,34 +623,3 @@ export default function HomePage() {
   );
 }
 
-/** Marquee of platform-logo strips used in the unified-inbox growth row
- *  (the source asset is one 755x60 strip of app logos, tiled and scrolled). */
-function SocialMarquee() {
-  return (
-    <div className="space-y-3 py-5" aria-hidden>
-      {[0, 1].map((rowIdx) => (
-        <div key={rowIdx} className="marquee overflow-hidden">
-          <div
-            className="marquee-track items-center gap-10 px-4"
-            style={rowIdx === 1 ? { animationDirection: "reverse", animationDuration: "46s" } : undefined}
-          >
-            {[0, 1].map((half) => (
-              <div key={half} className="flex items-center gap-10">
-                {[0, 1, 2].map((i) => (
-                  <Image
-                    key={`${half}-${i}`}
-                    src="/images/growth-social-logo.svg"
-                    alt=""
-                    width={755}
-                    height={60}
-                    className="h-11 w-auto max-w-none"
-                  />
-                ))}
-              </div>
-            ))}
-          </div>
-        </div>
-      ))}
-    </div>
-  );
-}
