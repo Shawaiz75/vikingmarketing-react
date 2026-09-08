@@ -116,30 +116,51 @@ export default function ChatDemo() {
   const visible = SCRIPT.slice(0, visibleCount);
 
   return (
-    <div aria-hidden className="mx-auto w-full max-w-[400px]">
-      <div className="card-strong overflow-hidden">
-        <div className="flex items-center gap-3 border-b border-white/10 px-5 py-4">
-          <Image src="/images/icon-viking-mark.svg" alt="" width={36} height={36} className="h-9 w-9 flex-none" />
-          <div className="min-w-0">
-            <p className="text-[14px] font-semibold text-white">Ai.Power</p>
-            <p className="flex items-center gap-1.5 text-[12px] text-white/50">
-              <span className="h-1.5 w-1.5 flex-none rounded-full bg-[#37ca37]" />
-              Online now
-            </p>
+    <div aria-hidden className="mx-auto w-full max-w-[300px]">
+      {/* iPhone chassis */}
+      <div className="relative rounded-[52px] bg-gradient-to-b from-[#3a3a42] to-[#1a1a20] p-3 shadow-[0_30px_80px_rgba(0,0,0,0.55)]">
+        {/* Side buttons */}
+        <span className="absolute -left-[2px] top-[108px] h-7 w-[3px] rounded-l-sm bg-[#232328]" />
+        <span className="absolute -left-[2px] top-[150px] h-12 w-[3px] rounded-l-sm bg-[#232328]" />
+        <span className="absolute -left-[2px] top-[206px] h-12 w-[3px] rounded-l-sm bg-[#232328]" />
+        <span className="absolute -right-[2px] top-[170px] h-16 w-[3px] rounded-r-sm bg-[#232328]" />
+
+        {/* Screen */}
+        <div className="relative overflow-hidden rounded-[38px] bg-[#0b0920] ring-1 ring-white/10">
+          {/* Dynamic island */}
+          <div className="absolute left-1/2 top-3 z-10 h-[22px] w-[84px] -translate-x-1/2 rounded-full bg-black" />
+
+          <div className="h-11" aria-hidden />
+
+          <div className="flex items-center gap-2.5 border-b border-white/10 px-4 py-3">
+            <Image src="/images/icon-viking-mark.svg" alt="" width={30} height={30} className="h-[30px] w-[30px] flex-none" />
+            <div className="min-w-0">
+              <p className="text-[13px] font-semibold text-white">Ai.Power</p>
+              <p className="flex items-center gap-1.5 text-[11px] text-white/50">
+                <span className="h-1.5 w-1.5 flex-none rounded-full bg-[#37ca37]" />
+                Online now
+              </p>
+            </div>
           </div>
-        </div>
-        <div className="flex h-[340px] flex-col justify-end gap-3 overflow-hidden p-5">
-          {visible.map((s, idx) => {
-            // A "typing" step is transient: once a later step has arrived,
-            // it has been superseded (by the real message it stood in
-            // for) and should no longer render.
-            if (s.step.kind === "typing") {
-              return idx === visible.length - 1 ? <TypingBubble key={idx} /> : null;
-            }
-            if (s.step.kind === "booked") return <BookedChip key={idx} />;
-            if (s.step.kind === "lead") return <LeadBubble key={idx} text={s.step.text} />;
-            return <AiBubble key={idx} text={s.step.text} />;
-          })}
+
+          <div className="flex h-[360px] flex-col justify-end gap-2.5 overflow-hidden px-3.5 py-3.5">
+            {visible.map((s, idx) => {
+              // A "typing" step is transient: once a later step has arrived,
+              // it has been superseded (by the real message it stood in
+              // for) and should no longer render.
+              if (s.step.kind === "typing") {
+                return idx === visible.length - 1 ? <TypingBubble key={idx} /> : null;
+              }
+              if (s.step.kind === "booked") return <BookedChip key={idx} />;
+              if (s.step.kind === "lead") return <LeadBubble key={idx} text={s.step.text} />;
+              return <AiBubble key={idx} text={s.step.text} />;
+            })}
+          </div>
+
+          {/* Home indicator */}
+          <div className="flex justify-center py-2.5">
+            <div className="h-[5px] w-[110px] rounded-full bg-white/40" />
+          </div>
         </div>
       </div>
     </div>

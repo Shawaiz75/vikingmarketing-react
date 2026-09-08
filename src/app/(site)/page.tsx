@@ -506,18 +506,18 @@ export default function HomePage() {
             <h2 className="font-heading text-[clamp(30px,3.5vw,47px)] font-bold leading-[1.38] text-white">
               The Rep Who Works 24/7, Without the Payroll
             </h2>
-            <p className="mt-5 text-[18px] leading-[37px] text-white/80">
+            <p className="mt-4 text-[15px] leading-[27px] text-white/80">
               Our AI Sales Assistant never sleeps. It engages every lead the moment they reach out —
               SMS, chat, Instagram DM, Facebook Messenger, or your website — qualifies them, answers
               their questions, and books appointments directly to your calendar. By the time you
               check your phone, the deal is already moving.
             </p>
-            <ul className="mt-6 space-y-4">
+            <ul className="mt-5 space-y-3">
               {AI_POWER_BULLETS.map((b) => (
-                <li key={b} className="flex items-start gap-3 text-[17px] text-white/85">
+                <li key={b} className="flex items-start gap-2.5 text-[14px] text-white/85">
                   <svg
-                    width="22"
-                    height="22"
+                    width="19"
+                    height="19"
                     viewBox="0 0 22 22"
                     fill="none"
                     aria-hidden
@@ -530,7 +530,7 @@ export default function HomePage() {
                 </li>
               ))}
             </ul>
-            <div className="mt-8">
+            <div className="mt-6">
               <CtaButton href="/book-a-call">Book My Free Demo</CtaButton>
             </div>
           </Reveal>
