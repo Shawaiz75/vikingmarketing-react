@@ -307,11 +307,11 @@ export function StepsSection({
         <div className={`grid gap-10 md:grid-cols-3 ${showIllustration ? "mt-4" : "mt-12"}`}>
           {steps.map((s, i) => (
             <Reveal key={s.title} delay={i * 120} className="text-center">
-              {/* When the combined illustration is shown it already contains the icons. */}
+              {/* When the combined illustration is shown it already contains
+                  the icons. Icon files are already complete self-styled
+                  82x82 tiles, so no wrapper background here either. */}
               {!showIllustration ? (
-                <span className="icon-tile">
-                  <Image src={s.icon} alt={s.alt ?? ""} width={30} height={30} className="h-7 w-7" />
-                </span>
+                <Image src={s.icon} alt={s.alt ?? ""} width={82} height={82} className="mx-auto h-[82px] w-[82px]" />
               ) : null}
               <h3 className="mt-5 font-heading text-[20px] font-bold leading-[32px] text-white">{s.title}</h3>
               <p className="mt-3 text-[16px] leading-[24px] text-white/80">{s.body}</p>

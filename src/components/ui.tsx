@@ -12,16 +12,17 @@ export function CtaButton({
   className?: string;
 }) {
   return (
-    <Link href={href} className={`btn-cta font-heading font-medium ${className}`}>
+    <Link href={href} className={`btn-cta font-heading font-normal ${className}`}>
       <span>{children}</span>
+      {/* Solid white disc + dark arrow glyph, matching the live button's
+          exact SVG (decoded from its ::before pseudo-element) - not a
+          translucent circle with a white stroke arrow. */}
       <span className="btn-cta-arrow" aria-hidden>
-        <svg width="15" height="12" viewBox="0 0 15 12" fill="none">
+        <svg width="37" height="38" viewBox="0 0 37 38" fill="none">
+          <rect y="0.5" width="37" height="37" rx="18.5" fill="white" />
           <path
-            d="M1 6h12m0 0L8.5 1.5M13 6l-4.5 4.5"
-            stroke="#fff"
-            strokeWidth="1.6"
-            strokeLinecap="round"
-            strokeLinejoin="round"
+            d="M19.7904 23.375L18.7112 22.2573L21.4477 19.5208H12.082V17.9792H21.4477L18.7112 15.2427L19.7904 14.125L24.4154 18.75L19.7904 23.375Z"
+            fill="#171717"
           />
         </svg>
       </span>

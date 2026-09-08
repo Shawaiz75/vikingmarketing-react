@@ -100,9 +100,10 @@ function SectionBlock({ section }: { section: TplSection }) {
             >
               {section.steps.map((s, i) => (
                 <Reveal key={(s.title ?? s.body).slice(0, 40)} delay={i * 90} className="card h-full p-6 text-center">
-                  <span className="icon-tile !h-12 !w-12 !rounded-xl">
-                    <Image src={s.icon} alt={s.alt ?? ""} width={26} height={26} className="h-6 w-6" />
-                  </span>
+                  {/* Icon files are already complete self-styled tiles - no
+                      wrapper background. h-auto/w-auto since a few of these
+                      per-page icon sets aren't perfectly square. */}
+                  <Image src={s.icon} alt={s.alt ?? ""} width={63} height={63} className="mx-auto h-[63px] w-auto" />
                   {s.title ? (
                     <h3 className="mt-4 font-heading text-[17px] font-bold text-white">{s.title}</h3>
                   ) : null}
@@ -189,12 +190,10 @@ function SectionBlock({ section }: { section: TplSection }) {
             <SectionHeading title={section.title} lede={section.intro} />
             <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
               {section.cards.map((c, i) => (
-                <Reveal key={c.title} delay={(i % 3) * 80} className="card h-full p-6">
-                  <span className="icon-tile !h-12 !w-12 !rounded-xl">
-                    <Image src={c.icon} alt={c.alt ?? ""} width={26} height={26} className="h-6 w-6" />
-                  </span>
-                  <h3 className="mt-5 font-heading text-[17px] font-bold text-white">{c.title}</h3>
-                  <p className="mt-2.5 text-[14px] leading-relaxed text-white/65">{c.body}</p>
+                <Reveal key={c.title} delay={(i % 3) * 80} className="card-feature h-full">
+                  <Image src={c.icon} alt={c.alt ?? ""} width={63} height={63} className="h-[63px] w-[63px]" />
+                  <h3 className="mt-5 text-[20px] font-bold text-white">{c.title}</h3>
+                  <p className="mt-2.5 text-[16px] leading-[29px] text-[#CBD5E0]">{c.body}</p>
                 </Reveal>
               ))}
             </div>
@@ -282,9 +281,7 @@ function SectionBlock({ section }: { section: TplSection }) {
             <div className="mt-12 grid gap-10 md:grid-cols-3">
               {section.steps.map((s, i) => (
                 <Reveal key={(s.title ?? s.body).slice(0, 40)} delay={i * 120} className="text-center">
-                  <span className="icon-tile">
-                    <Image src={s.icon} alt={s.alt ?? ""} width={30} height={30} className="h-7 w-7" />
-                  </span>
+                  <Image src={s.icon} alt={s.alt ?? ""} width={82} height={82} className="mx-auto h-[82px] w-[82px]" />
                   {s.title ? (
                     <h3 className="mt-5 font-heading text-xl font-bold text-white">{s.title}</h3>
                   ) : null}

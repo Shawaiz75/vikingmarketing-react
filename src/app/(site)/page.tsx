@@ -617,12 +617,12 @@ export default function HomePage() {
           <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
             {PLATFORM_FEATURES.map((f, i) => (
               <Reveal key={f.title} delay={(i % 4) * 80}>
-                <Link href={f.href} className="card block h-full p-6 transition hover:border-white/20">
-                  <span className="icon-tile !h-12 !w-12 !rounded-xl">
-                    <Image src={f.icon} alt={f.iconAlt} width={26} height={26} className="h-6 w-6" />
-                  </span>
-                  <h3 className="mt-9 text-[16px] font-semibold text-white">{f.title}</h3>
-                  <p className="mt-2.5 text-[14px] leading-[24px] text-white/70">{f.body}</p>
+                <Link href={f.href} className="card-feature block h-full transition hover:border-white/20">
+                  {/* Icon files are already complete self-styled 63x63 tiles
+                      (blue rounded-square + glyph baked in) - no wrapper. */}
+                  <Image src={f.icon} alt={f.iconAlt} width={63} height={63} className="h-[63px] w-[63px]" />
+                  <h3 className="mt-[50px] text-[20px] font-bold text-white">{f.title}</h3>
+                  <p className="mt-2.5 text-[16px] leading-[29px] text-[#CBD5E0]">{f.body}</p>
                 </Link>
               </Reveal>
             ))}
@@ -641,12 +641,10 @@ export default function HomePage() {
           <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
             {INDUSTRY_CARDS.map((f, i) => (
               <Reveal key={f.title} delay={(i % 3) * 80}>
-                <Link href={f.href} className="card block h-full min-h-[210px] p-7 transition hover:border-white/20">
-                  <span className="icon-tile !h-12 !w-12 !rounded-xl">
-                    <Image src={f.icon} alt={f.iconAlt} width={26} height={26} className="h-6 w-6" />
-                  </span>
-                  <h3 className="mt-10 text-[16px] font-semibold text-white">{f.title}</h3>
-                  <p className="mt-2.5 text-[14px] leading-[24px] text-white/70">{f.body}</p>
+                <Link href={f.href} className="card-feature block h-full min-h-[210px] transition hover:border-white/20">
+                  <Image src={f.icon} alt={f.iconAlt} width={63} height={63} className="h-[63px] w-[63px]" />
+                  <h3 className="mt-10 text-[20px] font-bold text-white">{f.title}</h3>
+                  <p className="mt-2.5 text-[16px] leading-[29px] text-[#CBD5E0]">{f.body}</p>
                 </Link>
               </Reveal>
             ))}

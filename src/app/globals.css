@@ -85,7 +85,7 @@ h1, h2, h3, .font-heading {
 .btn-cta {
   display: inline-flex;
   align-items: center;
-  gap: 14px;
+  gap: 5px;
   padding: 11px 11px 11px 30px;
   border-radius: 100px;
   background-image: var(--grad-cta);
@@ -102,10 +102,9 @@ h1, h2, h3, .font-heading {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 34px;
-  height: 34px;
-  border-radius: 100px;
-  background: rgba(255, 255, 255, 0.18);
+  width: 37px;
+  height: 37px;
+  flex: none;
 }
 
 /* Outline pill (Login) */
@@ -157,16 +156,15 @@ h1, h2, h3, .font-heading {
   background: linear-gradient(180deg, rgba(133, 71, 246, 0.18) 0%, rgba(3, 2, 19, 0.4) 100%);
 }
 
-/* Blue icon tile (feature grids) */
-.icon-tile {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 56px;
-  height: 56px;
-  border-radius: 14px;
-  background: var(--blue);
-  box-shadow: 0 8px 30px rgba(24, 139, 246, 0.35);
+/* Feature/industry grid card — measured directly from the live site's
+   platform-features and industry cards (both use identical values there).
+   Kept separate from the plain .card used by blog/footer/contact cards
+   elsewhere, which weren't part of this comparison and shouldn't shift. */
+.card-feature {
+  padding: 30px;
+  border-radius: 25px;
+  border: 1px solid transparent;
+  background: linear-gradient(90deg, rgba(133, 71, 246, 0.1) 0%, rgba(183, 121, 245, 0.2) 96%);
 }
 
 /* Purple perspective grid backdrop (hero / final CTA) */
