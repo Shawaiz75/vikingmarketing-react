@@ -200,11 +200,14 @@ h1, h2, h3, .font-heading {
   background: radial-gradient(ellipse at center, rgba(139, 92, 246, 0.28) 0%, transparent 65%);
 }
 
-/* Scroll-reveal animation */
+/* Scroll-reveal animation — a slight scale is mixed into the usual
+   fade+slide for more depth; eased with a expo-out curve (fast start,
+   long soft settle) rather than plain "ease", closer to how premium
+   marketing sites animate section entrances. */
 .reveal {
   opacity: 0;
-  transform: translateY(28px);
-  transition: opacity 0.7s ease, transform 0.7s ease;
+  transform: translateY(28px) scale(0.98);
+  transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
 }
 .reveal.is-visible {
   opacity: 1;

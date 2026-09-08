@@ -4,6 +4,7 @@ import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { SectionHeading } from "./ui";
+import Reveal from "./Reveal";
 
 export type Faq = { q: string; a: string };
 
@@ -54,7 +55,7 @@ export default function FaqSection({
       <div className="wrap">
         <SectionHeading title={title} />
         <div className="mt-12 grid items-start gap-8 lg:grid-cols-[1.6fr_1fr]">
-          <div className="card-strong px-7 py-3 sm:px-10">
+          <Reveal className="card-strong px-7 py-3 sm:px-10">
             {faqs.map((f, i) => (
               <FaqItem
                 key={f.q}
@@ -64,11 +65,11 @@ export default function FaqSection({
                 onToggle={() => setOpen(open === i ? -1 : i)}
               />
             ))}
-          </div>
+          </Reveal>
           {/* Sticky on desktop so it stays in view while the (usually much
               taller) FAQ list scrolls past; stacks normally below lg, where
               there's no room for a side rail. */}
-          <div className="card-strong px-8 py-10 text-center lg:sticky lg:top-8">
+          <Reveal delay={120} className="card-strong px-8 py-10 text-center lg:sticky lg:top-8">
             <Image
               src="/images/still-questions.svg"
               alt={sideImageAlt ?? `Still have questions? Contact Viking Marketing${contextLabel ? ` to get answers about ${contextLabel}` : ""}`}
@@ -88,7 +89,7 @@ export default function FaqSection({
               </svg>
               Book a 15-min call with our team
             </Link>
-          </div>
+          </Reveal>
         </div>
       </div>
     </section>

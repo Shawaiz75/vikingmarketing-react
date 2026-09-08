@@ -1,5 +1,6 @@
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import StickyCta from "@/components/StickyCta";
 
 /** Chrome for the faithful-rebuild pages. The /v2 redesign renders its own. */
 export default function SiteLayout({ children }: { children: React.ReactNode }) {
@@ -8,6 +9,7 @@ export default function SiteLayout({ children }: { children: React.ReactNode }) 
       <Header />
       <main>{children}</main>
       <Footer />
+      <StickyCta />
     </>
   );
 }

@@ -313,46 +313,57 @@ export default function HomePage() {
             </span>{" "}
             That Answers Every Lead, Books Every Job, Wins Every Customer
           </h1>
-          <p className="mx-auto mt-6 max-w-[1280px] text-[16px] leading-[2.1] text-white/80">
-            Viking&apos;s AI never sleeps, never gets tired, and never lets a lead go cold. It
-            replies, qualifies, and books the job, replacing 12 disconnected tools with one
-            AI-powered platform. Built for dentists, gyms, med spas, home services, and local
-            businesses that can&apos;t afford to lose another lead.
-          </p>
+          {/* The H1 above is left out of the reveal treatment deliberately -
+              it's the page's LCP candidate, and starting it at opacity 0
+              risks delaying that metric. Everything below it is already
+              secondary content, so a light cascading entrance here adds
+              polish without touching LCP timing. */}
+          <Reveal>
+            <p className="mx-auto mt-6 max-w-[1280px] text-[16px] leading-[2.1] text-white/80">
+              Viking&apos;s AI never sleeps, never gets tired, and never lets a lead go cold. It
+              replies, qualifies, and books the job, replacing 12 disconnected tools with one
+              AI-powered platform. Built for dentists, gyms, med spas, home services, and local
+              businesses that can&apos;t afford to lose another lead.
+            </p>
+          </Reveal>
 
-          <div className="mt-9 flex flex-wrap items-center justify-center gap-6">
-            <CtaButton href="/book-a-call">Book Your Free Demo</CtaButton>
-            <VideoModal
-              videoId="ktpSvngBNiA"
-              label="Watch how Viking Marketing works"
-              trigger={
-                <span className="relative inline-flex items-center">
-                  {/* Brand play button: layered blur halos + gradient-stroked
-                      blue disc, supplied as one asset. */}
-                  <Image
-                    src="/images/hero-play-button.svg"
-                    alt=""
-                    width={124}
-                    height={124}
-                    aria-hidden
-                    className="h-[76px] w-[76px] transition-transform duration-200 group-hover:scale-105"
-                  />
-                  {/* Hand-drawn curved arrow + handwritten label (one asset). */}
-                  <Image
-                    src="/images/6a2dc4acc5c62232066e-27e7fb32c54e.webp"
-                    alt="Click here to watch how Viking Marketing works"
-                    width={169}
-                    height={123}
-                    className="pointer-events-none ml-2 hidden h-auto w-[169px] md:block"
-                  />
-                </span>
-              }
-            />
-          </div>
+          <Reveal delay={100}>
+            <div className="mt-9 flex flex-wrap items-center justify-center gap-6">
+              <CtaButton href="/book-a-call">Book Your Free Demo</CtaButton>
+              <VideoModal
+                videoId="ktpSvngBNiA"
+                label="Watch how Viking Marketing works"
+                trigger={
+                  <span className="relative inline-flex items-center">
+                    {/* Brand play button: layered blur halos + gradient-stroked
+                        blue disc, supplied as one asset. */}
+                    <Image
+                      src="/images/hero-play-button.svg"
+                      alt=""
+                      width={124}
+                      height={124}
+                      aria-hidden
+                      className="h-[76px] w-[76px] transition-transform duration-200 group-hover:scale-105"
+                    />
+                    {/* Hand-drawn curved arrow + handwritten label (one asset). */}
+                    <Image
+                      src="/images/6a2dc4acc5c62232066e-27e7fb32c54e.webp"
+                      alt="Click here to watch how Viking Marketing works"
+                      width={169}
+                      height={123}
+                      className="pointer-events-none ml-2 hidden h-auto w-[169px] md:block"
+                    />
+                  </span>
+                }
+              />
+            </div>
+          </Reveal>
 
-          <div className="mt-8 flex justify-center">
-            <CheckLine items={["Plans from $297/mo", "No contracts", "Live in 48 hours"]} />
-          </div>
+          <Reveal delay={180}>
+            <div className="mt-8 flex justify-center">
+              <CheckLine items={["Plans from $297/mo", "No contracts", "Live in 48 hours"]} />
+            </div>
+          </Reveal>
 
           {/* Full-bleed: breaks out of the padded container so the render
               reads as the hero's background visual rather than a card.
@@ -395,7 +406,7 @@ export default function HomePage() {
       </section>
 
       {/* -------------------------- AS FEATURED IN ------------------------ */}
-      <section className="section !pt-4">
+      <section className="section">
         <div className="wrap">
           <p className="text-center text-[13px] font-semibold uppercase tracking-[0.2em] text-white/45">
             Featured across 40+ news networks
@@ -407,7 +418,7 @@ export default function HomePage() {
       </section>
 
       {/* ------------------------------ STATS ----------------------------- */}
-      <section className="section !pt-6">
+      <section className="section">
         <div className="wrap">
           <SectionHeading title="Built for businesses that can't afford to miss a lead" />
           <div className="mt-12 grid gap-10 text-center md:grid-cols-3">
