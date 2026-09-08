@@ -8,6 +8,8 @@ import { FinalCta, CallNote } from "@/components/sections";
 import PostCard from "@/components/PostCard";
 import AuthorBio from "@/components/AuthorBio";
 import BackToTop from "@/components/BackToTop";
+import TableOfContents from "@/components/TableOfContents";
+import { withHeadingIds } from "@/lib/toc";
 import { getPost, getPostSlugs, getPostsIndex, AUTHOR_ID, AUTHOR } from "@/lib/blog";
 import { SITE_URL, SITE_NAME, DEFAULT_OG_IMAGE } from "@/lib/site";
 
@@ -62,6 +64,7 @@ export default async function PostPage({ params }: { params: Promise<Params> }) 
   const related = getPostsIndex()
     .filter((p) => p.slug !== slug && p.category?.slug === post.category?.slug)
     .slice(0, 3);
+  const { html: contentHtml, headings } = withHeadingIds(post.contentHtml);
 
   const ld = jsonLdGraph([
     organizationLd(),
@@ -91,32 +94,31 @@ export default async function PostPage({ params }: { params: Promise<Params> }) 
     <>
       <JsonLd json={ld} />
 
-      {/* Post header */}
-      <section className="relative overflow-hidden pt-36 pb-8 md:pt-44">
-        <div className="grid-backdrop" aria-hidden>
-          <div className="grid-glow top-0" />
-        </div>
-        <div className="wrap relative max-w-4xl">
-          <nav aria-label="Breadcrumb" className="text-[13px] text-white/55">
-            <Link href="/" className="hover:text-white">Home</Link>
-            <span className="mx-2" aria-hidden>/</span>
-            <Link href="/blog" className="hover:text-white">Blog</Link>
-          </nav>
-          {post.category ? (
-            <Link
-              href={`/blog/category/${post.category.slug}`}
-              className="mt-5 inline-block rounded-full border border-white/15 bg-white/[0.04] px-3.5 py-1.5 text-[12.5px] font-medium text-[#efa4f2] transition hover:border-white/30 hover:text-white"
-            >
-              {post.category.name}
-            </Link>
-          ) : null}
-          <h1 className="mt-4 font-heading text-[clamp(28px,4vw,44px)] font-bold leading-[1.2] text-white">
-            {post.h1 || post.title}
-          </h1>
-          <div className="mt-5 flex flex-wrap items-center gap-x-3 gap-y-2 text-[13.5px] text-white/60">
-            {post.date ? <span>{post.date}</span> : null}
-            {post.date && post.readTime ? <span aria-hidden>·</span> : null}
-            {post.readTime ? <span>{post.readTime}</span> : null}
+      {/* Post header — plain dark background, no decorative grid pattern. */}
+      <section className="pt-36 pb-8 md:pt-44">
+        <div className="wrap max-w-6xl">
+          <div className="max-w-3xl">
+            <nav aria-label="Breadcrumb" className="text-[13px] text-white/55">
+              <Link href="/" className="hover:text-white">Home</Link>
+              <span className="mx-2" aria-hidden>/</span>
+              <Link href="/blog" className="hover:text-white">Blog</Link>
+            </nav>
+            {post.category ? (
+              <Link
+                href={`/blog/category/${post.category.slug}`}
+                className="mt-5 inline-block rounded-full border border-white/15 bg-white/[0.04] px-3.5 py-1.5 text-[12.5px] font-medium text-[#efa4f2] transition hover:border-white/30 hover:text-white"
+              >
+                {post.category.name}
+              </Link>
+            ) : null}
+            <h1 className="mt-4 font-heading text-[clamp(28px,4vw,44px)] font-bold leading-[1.2] text-white">
+              {post.h1 || post.title}
+            </h1>
+            <div className="mt-5 flex flex-wrap items-center gap-x-3 gap-y-2 text-[13.5px] text-white/60">
+              {post.date ? <span>{post.date}</span> : null}
+              {post.date && post.readTime ? <span aria-hidden>·</span> : null}
+              {post.readTime ? <span>{post.readTime}</span> : null}
+            </div>
           </div>
           {post.hero ? (
             <Image
@@ -131,84 +133,92 @@ export default async function PostPage({ params }: { params: Promise<Params> }) 
         </div>
       </section>
 
-      {/* Article body (migrated verbatim from the source post) */}
+      {/* Article body: 70% content / 30% sticky table of contents. */}
       <section className="pb-16">
-        <div className="wrap max-w-3xl">
-          <div className="blog-html" dangerouslySetInnerHTML={{ __html: post.contentHtml }} />
+        <div className="wrap max-w-6xl">
+          <div className="grid gap-10 lg:grid-cols-[7fr_3fr]">
+            <div className="min-w-0">
+              <div className="blog-html" dangerouslySetInnerHTML={{ __html: contentHtml }} />
 
-          {/* Tags — sourced from the source site's own per-post keywords;
-              three of nineteen posts have none, matching the source. */}
-          {post.tags.length ? (
-            <div className="mt-10 flex flex-wrap gap-2">
-              {post.tags.map((tag) => (
-                <span
-                  key={tag}
-                  className="rounded-full border border-white/10 bg-white/[0.04] px-3 py-1.5 text-[12.5px] text-white/70"
-                >
-                  {tag}
-                </span>
-              ))}
-            </div>
-          ) : null}
+              {/* Tags — sourced from the source site's own per-post keywords;
+                  three of nineteen posts have none, matching the source. */}
+              {post.tags.length ? (
+                <div className="mt-10 flex flex-wrap gap-2">
+                  {post.tags.map((tag) => (
+                    <span
+                      key={tag}
+                      className="rounded-full border border-white/10 bg-white/[0.04] px-3 py-1.5 text-[12.5px] text-white/70"
+                    >
+                      {tag}
+                    </span>
+                  ))}
+                </div>
+              ) : null}
 
-          {/* Author box */}
-          <aside className="card-strong mt-10 p-7 sm:p-8">
-            <div className="flex flex-wrap items-center gap-4">
-              <Link href={`/blog/author/${AUTHOR_ID}`} className="flex-none">
-                <Image
-                  src={AUTHOR.avatar}
-                  alt={post.authorName}
-                  width={64}
-                  height={64}
-                  className="h-16 w-16 rounded-full border-2 border-[#efa4f2]/40 object-cover"
-                />
-              </Link>
-              <div>
+              {/* Author box */}
+              <aside className="card-strong mt-10 p-7 sm:p-8">
+                <div className="flex flex-wrap items-center gap-4">
+                  <Link href={`/blog/author/${AUTHOR_ID}`} className="flex-none">
+                    <Image
+                      src={AUTHOR.avatar}
+                      alt={post.authorName}
+                      width={64}
+                      height={64}
+                      className="h-16 w-16 rounded-full border-2 border-[#efa4f2]/40 object-cover"
+                    />
+                  </Link>
+                  <div>
+                    <Link
+                      href={`/blog/author/${AUTHOR_ID}`}
+                      className="font-heading text-[16px] font-bold text-white hover:text-[#efa4f2]"
+                    >
+                      {post.authorName}
+                    </Link>
+                    <p className="text-[13px] text-white/55">{post.authorRole}</p>
+                  </div>
+                  <div className="ml-auto flex items-center gap-2">
+                    <a
+                      href={AUTHOR.facebook}
+                      target="_blank"
+                      rel="noreferrer noopener"
+                      aria-label="Facebook"
+                      className="flex h-9 w-9 items-center justify-center rounded-full bg-white/[0.06] transition hover:bg-white/15"
+                    >
+                      <Image src="/images/social-facebook-white.svg" alt="" width={16} height={16} />
+                    </a>
+                    <a
+                      href={AUTHOR.linkedin}
+                      target="_blank"
+                      rel="noreferrer noopener"
+                      aria-label="LinkedIn"
+                      className="flex h-9 w-9 items-center justify-center rounded-full bg-white/[0.06] transition hover:bg-white/15"
+                    >
+                      <Image src="/images/social-linkedin-white.svg" alt="" width={16} height={16} />
+                    </a>
+                  </div>
+                </div>
+                <div className="mt-4">
+                  <AuthorBio text={`Author description: ${post.authorBio}`} />
+                </div>
+              </aside>
+
+              <div className="mt-8 flex items-center justify-between">
                 <Link
-                  href={`/blog/author/${AUTHOR_ID}`}
-                  className="font-heading text-[16px] font-bold text-white hover:text-[#efa4f2]"
+                  href="/blog"
+                  className="inline-flex items-center gap-1.5 text-[13.5px] font-medium text-white/60 hover:text-white"
                 >
-                  {post.authorName}
+                  <svg width="13" height="9" viewBox="0 0 14 10" fill="none" aria-hidden>
+                    <path d="M13 5H1m0 0l4-4M1 5l4 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+                  </svg>
+                  Back to Blog
                 </Link>
-                <p className="text-[13px] text-white/55">{post.authorRole}</p>
-              </div>
-              <div className="ml-auto flex items-center gap-2">
-                <a
-                  href={AUTHOR.facebook}
-                  target="_blank"
-                  rel="noreferrer noopener"
-                  aria-label="Facebook"
-                  className="flex h-9 w-9 items-center justify-center rounded-full bg-white/[0.06] transition hover:bg-white/15"
-                >
-                  <Image src="/images/social-facebook-white.svg" alt="" width={16} height={16} />
-                </a>
-                <a
-                  href={AUTHOR.linkedin}
-                  target="_blank"
-                  rel="noreferrer noopener"
-                  aria-label="LinkedIn"
-                  className="flex h-9 w-9 items-center justify-center rounded-full bg-white/[0.06] transition hover:bg-white/15"
-                >
-                  <Image src="/images/social-linkedin-white.svg" alt="" width={16} height={16} />
-                </a>
+                <BackToTop />
               </div>
             </div>
-            <div className="mt-4">
-              <AuthorBio text={`Author description: ${post.authorBio}`} />
-            </div>
-          </aside>
 
-          <div className="mt-8 flex items-center justify-between">
-            <Link
-              href="/blog"
-              className="inline-flex items-center gap-1.5 text-[13.5px] font-medium text-white/60 hover:text-white"
-            >
-              <svg width="13" height="9" viewBox="0 0 14 10" fill="none" aria-hidden>
-                <path d="M13 5H1m0 0l4-4M1 5l4 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-              </svg>
-              Back to Blog
-            </Link>
-            <BackToTop />
+            <div className="hidden lg:block">
+              <TableOfContents headings={headings} />
+            </div>
           </div>
         </div>
       </section>
@@ -217,7 +227,7 @@ export default async function PostPage({ params }: { params: Promise<Params> }) 
           deliberate deviation for internal linking/engagement value. */}
       {related.length ? (
         <section className="section !pt-0">
-          <div className="wrap max-w-5xl">
+          <div className="wrap max-w-6xl">
             <h2 className="font-heading text-2xl font-bold text-white">Related posts</h2>
             <div className="mt-6 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
               {related.map((r) => (
