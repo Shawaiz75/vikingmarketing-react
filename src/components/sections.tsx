@@ -198,25 +198,46 @@ export function ReviewsSection() {
   );
 }
 
-/** Final gradient-floor CTA used at the bottom of most pages. */
+/** Final gradient-floor CTA used at the bottom of most pages. Pass
+ *  `backgroundImage` to swap in a real image behind the content instead of
+ *  the default CSS grid-glow (used for the home page's main closing CTA). */
 export function FinalCta({
   title,
   body,
   ctaLabel,
   note,
   smallPrint,
+  backgroundImage,
 }: {
   title: string;
   body: string;
   ctaLabel: string;
   note?: React.ReactNode;
   smallPrint?: string;
+  backgroundImage?: string;
 }) {
   return (
     <section className="section overflow-hidden">
-      <div className="grid-backdrop grid-bottom" aria-hidden>
-        <div className="grid-glow bottom-0" />
-      </div>
+      {backgroundImage ? (
+        // Sized to its own aspect ratio and anchored to the bottom edge,
+        // not `fill`+cover: covering a short/wide image into a much taller
+        // mobile section would scale it up to fill the height, dragging its
+        // bright glow band up behind the heading and wrecking text contrast.
+        // Anchoring by width keeps the glow pinned at the bottom regardless
+        // of how tall the section gets, matching the CSS grid-glow it replaces.
+        <Image
+          src={backgroundImage}
+          alt=""
+          width={1200}
+          height={427}
+          aria-hidden
+          className="pointer-events-none absolute inset-x-0 bottom-0 h-auto w-full select-none"
+        />
+      ) : (
+        <div className="grid-backdrop grid-bottom" aria-hidden>
+          <div className="grid-glow bottom-0" />
+        </div>
+      )}
       <div className="wrap relative text-center">
         <Reveal>
           <h2 className="mx-auto max-w-[1120px] font-heading text-[clamp(30px,3.9vw,52px)] font-bold leading-[1.5] text-white">

@@ -624,6 +624,7 @@ export default function HomePage() {
         body="Every day you wait, more leads go unanswered, more leads go cold, and more customers choose your competitor. Viking changes that, automatically. Book a 15-minute walkthrough with our Chandler-based team and we'll show you exactly how Viking would work for your business, using your real numbers."
         ctaLabel="Book My Custom Demo"
         note={<CallNote />}
+        backgroundImage="/images/final-cta-glow.webp"
       />
     </>
   );
