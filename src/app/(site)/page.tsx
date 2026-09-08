@@ -13,6 +13,7 @@ import {
 import { CtaButton, SectionHeading, JsonLd, CheckLine } from "@/components/ui";
 import Reveal from "@/components/Reveal";
 import GrowthTabs, { type GrowthRow } from "@/components/GrowthTabs";
+import ChatDemo from "@/components/ChatDemo";
 import VideoModal from "@/components/VideoModal";
 import LogoMarquee from "@/components/LogoMarquee";
 import FaqSection, { type Faq } from "@/components/FaqSection";
@@ -499,13 +500,7 @@ export default function HomePage() {
       <section className="section">
         <div className="wrap grid items-center gap-12 lg:grid-cols-2">
           <Reveal>
-            <Image
-              src="/images/ai-power.webp"
-              alt="Viking Marketing Ai.Power AI sales assistant that engages and books leads 24/7"
-              width={775}
-              height={775}
-              className="mx-auto w-full max-w-[520px]"
-            />
+            <ChatDemo />
           </Reveal>
           <Reveal delay={120}>
             <h2 className="font-heading text-[clamp(30px,3.5vw,47px)] font-bold leading-[1.38] text-white">
