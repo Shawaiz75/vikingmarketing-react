@@ -12,8 +12,16 @@ const socialLinks = [
 
 export default function Footer() {
   return (
-    <footer className="border-t border-white/5 bg-[#020114]">
-      <div className="wrap pt-14 pb-8">
+    <footer className="bg-black">
+      {/* Same divider-glow treatment used between page sections, placed
+          here (in the footer itself, not per-page) so every page gets a
+          clear, consistent break above the footer - not just the ones
+          that happen to end on FinalCta's own distinct backdrop. Paired
+          with a footer background darker than the page body (--bg) so
+          the two are visually distinct even where the divider's glow
+          has faded out. */}
+      <div className="divider-glow" aria-hidden />
+      <div className="wrap pt-16 pb-10">
         <div className="flex flex-col items-start justify-between gap-6 sm:flex-row sm:items-center">
           <Link href="/" aria-label="Viking Marketing home">
             <Image
@@ -35,7 +43,7 @@ export default function Footer() {
           </ul>
         </div>
 
-        <div className="mt-8 grid gap-5 md:grid-cols-2">
+        <div className="mt-10 grid gap-5 md:grid-cols-2">
           <a href={`tel:${PHONE_TEL}`} className="card block min-w-0 px-8 py-6 text-center transition hover:border-white/20">
             <p className="text-[16px] text-white/70">Phone Number</p>
             <p className="mt-1 font-heading text-[clamp(20px,5vw,26px)] font-bold text-white">{PHONE_DISPLAY}</p>
@@ -46,7 +54,7 @@ export default function Footer() {
           </a>
         </div>
 
-        <nav aria-label="Footer" className="mt-12 grid grid-cols-2 gap-x-6 gap-y-10 sm:grid-cols-3 lg:grid-cols-5">
+        <nav aria-label="Footer" className="mt-14 grid grid-cols-2 gap-x-6 gap-y-12 sm:grid-cols-3 lg:grid-cols-5">
           {FOOTER_COLUMNS.map((col) => (
             <div key={col.title}>
               <h3 className="font-heading text-[22px] font-bold text-white">{col.title}</h3>
@@ -63,7 +71,7 @@ export default function Footer() {
           ))}
         </nav>
 
-        <div className="mt-14 flex flex-col items-center justify-between gap-4 border-t border-white/10 pt-6 text-[13.5px] text-white/60 sm:flex-row">
+        <div className="mt-16 flex flex-col items-center justify-between gap-4 border-t border-white/10 pt-6 text-[13.5px] text-white/60 sm:flex-row">
           <p>
             © 2026, <strong className="text-white/85">Viking Marketing.</strong> All rights reserved.
           </p>
