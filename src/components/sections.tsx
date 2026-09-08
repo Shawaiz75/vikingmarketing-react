@@ -2,62 +2,159 @@ import Image from "next/image";
 import Link from "next/link";
 import { CtaButton, SectionHeading } from "./ui";
 import Reveal from "./Reveal";
+import ReviewsCarousel from "./ReviewsCarousel";
+import { Star, GoogleG } from "./review-icons";
 import { CITY_LIST } from "@/lib/nav";
 import { PHONE_DISPLAY, PHONE_TEL, RATING, GOOGLE_MAPS_URL, ADDRESS } from "@/lib/site";
 
 const MAP_EMBED_SRC =
   "https://www.google.com/maps?q=Viking+Marketing,4240+S+Arizona+Ave+%231063,Chandler,AZ+85248&z=15&output=embed";
 
-/** Real, attributed reviews from Viking Marketing's Google Business Profile
- *  (see GOOGLE_MAPS_URL). Text is quoted verbatim, including Google's own
- *  truncation — each card links out to the full review rather than having
- *  the cut-off text guessed or rewritten. All 21 reviews on the listing are
- *  5-star; update this list by hand if new ones are worth featuring. */
-const TESTIMONIALS: { name: string; reviewCount: number; date: string; text: string }[] = [
-  {
-    name: "Aaron Waxman",
-    reviewCount: 7,
-    date: "7 months ago",
-    text: "Charlie went above and beyond for my business. There are a lot of marketing companies out there, but very few operate like Viking Marketing. Charlie and his team delivered exactly what I wanted, within the timeline they promised, handled…",
-  },
+/** Every review on Viking Marketing's Google Business Profile (see
+ *  GOOGLE_MAPS_URL), pulled verbatim from the business's own reviews widget
+ *  (backend.leadconnectorhq.com/appengine/reviews/get_widget/<location id>),
+ *  which mirrors the connected Google listing. Text is the full review, not
+ *  Google's UI truncation. All 22 are 5-star as of this writing; `rating`
+ *  is still per-review since that won't always be true. One entry (Réal
+ *  Binette) is a real star-only rating with no written comment. */
+const TESTIMONIALS: { name: string; rating: number; date: string; text: string }[] = [
   {
     name: "Christie Issey",
-    reviewCount: 2,
-    date: "7 months ago",
+    rating: 5,
+    date: "Jan 13, 2026",
     text: "We had a great experience working with Viking Marketing. They helped us set up an automated text messaging system and improve lead funnel. They're really knowledge and just really great to work with.",
   },
   {
+    name: "aaron waxman",
+    rating: 5,
+    date: "Jan 13, 2026",
+    text: "Charlie went above and beyond for my business. There are a lot of marketing companies out there, but very few operate like Viking Marketing. Charlie and his team delivered exactly what I wanted, within the timeline they promised, handled every change I requested without issue, and made the entire process smooth. 10/10 experience. Highly recommend.",
+  },
+  {
+    name: "Andrew Philbrick",
+    rating: 5,
+    date: "Sep 7, 2025",
+    text: "Charlie helped me build a conversational chatbot for one of my clients. Super easy to work with and delivered exactly what we needed. Highly recommend!",
+  },
+  {
     name: "Leigh Hendrickson",
-    reviewCount: 5,
-    date: "a year ago",
-    text: "This company is the best! Their custom support is so quick and knowledgeable. I've never had an issue and not had it addressed and also been taught how to fix it in the future myself at the same time…",
+    rating: 5,
+    date: "Sep 1, 2025",
+    text: "This company is the best!  Their custom support is so quick and knowledgeable. I’ve never had an issue and not had it addressed and also been taught how to fix it in the future myself at the same time.Charles and his team are the best at what they do. Look not further for help from this company is you’re a small business!",
+  },
+  {
+    name: "Balint Adorjan",
+    rating: 5,
+    date: "Jul 16, 2025",
+    text: "Charlie is super knowledgeable about AI bots and makes amazing booking bots. I don’t know what my business would do without him.",
+  },
+  {
+    name: "Noah Amparano",
+    rating: 5,
+    date: "Feb 28, 2025",
+    text: "Charlie is hands down the most knowledgeable person when it comes to AI Assistants. He’s ability to breakdown such complex systems and prompts makes it easy to understand and absorb!",
+  },
+  {
+    name: "Jump Manual Coaching",
+    rating: 5,
+    date: "Dec 30, 2024",
+    text: "These guys are INCREDIBLE! Super responsive; their customer support is OFF THE CHARTS! We were able to scale to 20+ Inbound booked apts PER DAY in just a few weeks.No more dialing leads - just inbound apts- its a beautiful thing",
+  },
+  {
+    name: "Max Witcher",
+    rating: 5,
+    date: "Dec 29, 2024",
+    text: "Charles has helped grow my company exponentially. He is a marketing genius. I’m extremely blessed to have crossed paths with him and very grateful for everything he has done for me and my company. Best customer service I could ever ask for. I highly recommend Charles if you are trying to grow your business.",
+  },
+  {
+    name: "Steve R",
+    rating: 5,
+    date: "Aug 26, 2024",
+    text: "Charles and his team has helped us grow our business in various ways. With his CRM and automation setup it provides an opportunity so we can focus more on our sales and let the automation help us. Charles is very supportive whenever we need any help with the systems he manages for us.",
+  },
+  {
+    name: "Nadav Buzaglo",
+    rating: 5,
+    date: "Aug 26, 2024",
+    text: "the Viking Marketing is awesome! Charlie and his team are help me alot. they always respond super fast. They're super friendly and helpful too. They're great at advertising and all what you need for your business ! Definitely recommend them!",
+  },
+  {
+    name: "Phil Hamilton",
+    rating: 5,
+    date: "Aug 23, 2024",
+    text: "Charlie and crew are the best marketing group out there. Highly recommend.",
+  },
+  {
+    name: "Jacob Hiller",
+    rating: 5,
+    date: "Aug 1, 2024",
+    text: "Launched an AI bot and Charlie has been super helpful launching and updating the bot.  It was an instant win for us and has booked hundreds of appointments for us and removed the need to have full time engagement specialist replying.If you’re in the fence about AI campaigns … don’t be… this does an amazing job.Charlie is the man for this!",
+  },
+  {
+    name: "Wendell Laidley",
+    rating: 5,
+    date: "May 21, 2024",
+    text: "Working with Charlie @ Viking Marketing has been thoroughly delightful and I can give him the strongest of endorsements.  He helped us stand up our High Level instance, complete with automations and integrations, in less than two weeks.  Once we signed on I felt like Charlie was very dedicated to getting us stood up.  I regard him as being a subject matter expert, valuable resource, and advocate for the success of our business.  Go Viking Marketing!",
+  },
+  {
+    name: "Ben Steveken",
+    rating: 5,
+    date: "Mar 2, 2024",
+    text: "Charlie and the team at Viking Marketing are great and easy to work with! Very helpful to my business.",
+  },
+  {
+    name: "Brian Griffith",
+    rating: 5,
+    date: "Mar 1, 2024",
+    text: "Viking Marketing has been amazing to work with. They have a platform that has blown me away and I would highly recommend them. Excellent communication and customer support.",
+  },
+  {
+    name: "Réal Binette",
+    rating: 5,
+    date: "Feb 16, 2024",
+    text: "",
+  },
+  {
+    name: "Real Binette",
+    rating: 5,
+    date: "Feb 16, 2024",
+    text: "Top-notch service! Charles and his team quickly and efficiently set me up with a solution that will no doubt catapult my business forward. Always goes above and beyond to deliver an exceptional product, give these guys a shot you will not be disappointed!",
+  },
+  {
+    name: "January Harrison",
+    rating: 5,
+    date: "Nov 7, 2023",
+    text: "I am a momprenuer and I own two companies, a solar company  and a holiday lighting installation company. I found myself beneath an overwhelming amount of admin work and I turned to Viking Marketing tor help! They helped me to move all my current customers & custom designed automation that  (in the middle of my busiest time). On top of that they helped me to connect all my socials, my website, my business google,  and my multiple phone numbers to one centralized location. This company CARES! They spent countless hours making sure I am set up perfectly! All my systems are working! Invoicing is automatic now! Scheduling is automatic! Just that alone saves me hours of time DAILY! Allowing me more time to grow my business and focus on the things! SEO is integrated too! I am excited for the future of my business! Thank you Viking Marketing! You are an answer to my prayers!",
+  },
+  {
+    name: "Anthony Grappone",
+    rating: 5,
+    date: "Oct 11, 2023",
+    text: "A pleasure to work with is an understatement. Responsive and willing to do whatever it takes to get the job done and have their customers satisfied is certainly my experience. I will gladly refer Charles and his team at Viking Marketing to anyone. 5 out of 5 stars for service and overall customer experience.",
+  },
+  {
+    name: "Joseph Nunziato",
+    rating: 5,
+    date: "Oct 11, 2023",
+    text: "Charles was great to work with. Always answers thr phone when you need him and works diligently to complete the task.",
+  },
+  {
+    name: "David Kyle",
+    rating: 5,
+    date: "Sep 1, 2023",
+    text: "Charlie just helped me out big time with setting up a ChatAI Bot.I was really struggling to get it up & running & Charlie was kind enough to jump on a quick Zoom to help me get this fixedHe knows his stuff 💪",
+  },
+  {
+    name: "Tarek Maximus",
+    rating: 5,
+    date: "Aug 25, 2023",
+    text: "WOW! Viking Marketing have transformed my solar installation business with their new and cutting edge AI automation solution.Because of their innovation I no longer have to pay out commissions and now have a 24/7 sales team without the cost, this has solved all my speed to lead and out of hours problem.Highly recommend contacting them, Charles will over deliver with unreasonable hospitality.You have nothing to lose and will likely regret not doing so in the next year, this AI tech is mind blowing. You don't want to get left behind.Thank you!",
   },
 ];
 
-/** Five-pointed solid star, used at a fixed gold fill for review ratings. */
-function Star({ className = "h-4 w-4" }: { className?: string }) {
-  return (
-    <svg viewBox="0 0 20 20" fill="#FBBC05" className={className} aria-hidden>
-      <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.958a1 1 0 00.95.69h4.162c.969 0 1.371 1.24.588 1.81l-3.37 2.448a1 1 0 00-.363 1.118l1.287 3.957c.3.922-.755 1.688-1.54 1.118l-3.37-2.448a1 1 0 00-1.176 0l-3.37 2.448c-.784.57-1.838-.196-1.539-1.118l1.286-3.957a1 1 0 00-.363-1.118l-3.37-2.448c-.783-.57-.38-1.81.588-1.81h4.163a1 1 0 00.95-.69l1.285-3.958z" />
-    </svg>
-  );
-}
-
-/** The standard multicolor Google "G" mark, used nominatively to indicate
- *  these are real Google reviews and to badge the outbound links. */
-function GoogleG({ className = "h-5 w-5" }: { className?: string }) {
-  return (
-    <svg viewBox="0 0 48 48" className={className} aria-hidden>
-      <path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z" />
-      <path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z" />
-      <path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z" />
-      <path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z" />
-    </svg>
-  );
-}
-
-/** "What Real Businesses Say About Viking" — real Google reviews, hardcoded
- *  from the business's own Google Business Profile (see GOOGLE_MAPS_URL). */
+/** "What Real Businesses Say About Viking" — every real Google review,
+ *  hardcoded from the business's own Google Business Profile (see
+ *  GOOGLE_MAPS_URL), scrollable horizontally on every screen size. */
 export function ReviewsSection() {
   return (
     <section className="section">
@@ -82,50 +179,11 @@ export function ReviewsSection() {
           </a>
         </Reveal>
 
-        <div className="mt-10 grid gap-5 md:grid-cols-3">
-          {TESTIMONIALS.map((r, i) => (
-            <Reveal key={r.name} delay={i * 90} className="h-full">
-              <div className="card-strong flex h-full flex-col p-6">
-                <div className="flex items-center justify-between">
-                  <span className="flex gap-0.5" role="img" aria-label="5 out of 5 stars">
-                    {Array.from({ length: 5 }).map((_, j) => (
-                      <Star key={j} />
-                    ))}
-                  </span>
-                  <span className="text-[13px] text-white/45">{r.date}</span>
-                </div>
-                <p className="mt-4 flex-1 text-[15px] leading-relaxed text-white/80">{r.text}</p>
-                <div className="mt-5 flex items-center justify-between border-t border-white/10 pt-4">
-                  <div className="flex items-center gap-3">
-                    <span className="inline-flex h-9 w-9 flex-none items-center justify-center rounded-full bg-gradient-to-br from-[#efa4f2] to-[#3d05dd] text-[13px] font-semibold text-white">
-                      {r.name
-                        .split(" ")
-                        .map((n) => n[0])
-                        .join("")}
-                    </span>
-                    <div>
-                      <p className="text-[14px] font-semibold text-white">{r.name}</p>
-                      <p className="text-[12.5px] text-white/50">
-                        {r.reviewCount} review{r.reviewCount === 1 ? "" : "s"} on Google
-                      </p>
-                    </div>
-                  </div>
-                  <a
-                    href={GOOGLE_MAPS_URL}
-                    target="_blank"
-                    rel="noopener"
-                    aria-label={`Read ${r.name}'s full review on Google`}
-                    className="flex-none transition hover:opacity-80"
-                  >
-                    <GoogleG />
-                  </a>
-                </div>
-              </div>
-            </Reveal>
-          ))}
-        </div>
+        <Reveal className="mt-10" delay={90}>
+          <ReviewsCarousel reviews={TESTIMONIALS} />
+        </Reveal>
 
-        <div className="mt-10 flex justify-center">
+        <div className="mt-2 flex justify-center">
           <a
             href={GOOGLE_MAPS_URL}
             target="_blank"

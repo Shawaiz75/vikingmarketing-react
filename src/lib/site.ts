@@ -19,7 +19,7 @@ export const SOCIAL = {
   youtube: "https://www.youtube.com/@VikingMarketingAI",
 };
 export const APP_LOGIN_URL = "https://app.vikingmarketing.ai/";
-export const RATING = { value: "5.0", count: "21" };
+export const RATING = { value: "5.0", count: "22" };
 export const PRICE_RANGE = "$297-$997";
 // Google Business Profile — source of truth for the testimonials section
 // and the "read more reviews" links out to the real listing.
