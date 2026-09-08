@@ -5,7 +5,9 @@ import { notFound } from "next/navigation";
 import { jsonLdGraph, personLd, breadcrumbLd, organizationLd } from "@/lib/seo";
 import { JsonLd } from "@/components/ui";
 import { FinalCta, CallNote } from "@/components/sections";
-import { getPost, getPostSlugs, getPostsIndex, AUTHOR_ID } from "@/lib/blog";
+import AuthorBio from "@/components/AuthorBio";
+import BackToTop from "@/components/BackToTop";
+import { getPost, getPostSlugs, getPostsIndex, AUTHOR_ID, AUTHOR } from "@/lib/blog";
 import { SITE_URL, SITE_NAME, DEFAULT_OG_IMAGE } from "@/lib/site";
 
 type Params = { slug: string };
@@ -24,6 +26,7 @@ export async function generateMetadata({ params }: { params: Promise<Params> }):
   return {
     title: post.title,
     description: post.description,
+    keywords: post.tags.length ? post.tags : undefined,
     alternates: { canonical: url },
     openGraph: {
       title: post.title,
@@ -74,6 +77,7 @@ export default async function PostPage({ params }: { params: Promise<Params> }) 
       ...(published ? { datePublished: published } : {}),
       ...(post.lastmod ? { dateModified: post.lastmod } : {}),
       ...(post.category ? { articleSection: post.category.name } : {}),
+      ...(post.tags.length ? { keywords: post.tags.join(", ") } : {}),
     },
     breadcrumbLd([
       { name: "Home", path: "/" },
@@ -86,35 +90,24 @@ export default async function PostPage({ params }: { params: Promise<Params> }) 
     <>
       <JsonLd json={ld} />
 
-      {/* Post header */}
-      <section className="relative overflow-hidden pt-36 pb-8 md:pt-44">
-        <div className="grid-backdrop" aria-hidden>
-          <div className="grid-glow top-0" />
-        </div>
-        <div className="wrap relative max-w-4xl">
-          <nav aria-label="Breadcrumb" className="text-[13px] text-white/55">
-            <Link href="/" className="hover:text-white">Home</Link>
-            <span className="mx-2" aria-hidden>/</span>
-            <Link href="/blog" className="hover:text-white">Blog</Link>
-            {post.category ? (
-              <>
-                <span className="mx-2" aria-hidden>/</span>
-                <Link href={`/blog/category/${post.category.slug}`} className="hover:text-white">
-                  {post.category.name}
-                </Link>
-              </>
-            ) : null}
-          </nav>
-          <h1 className="mt-5 font-heading text-[clamp(28px,4vw,44px)] font-bold leading-[1.2] text-white">
-            {post.h1 || post.title}
-          </h1>
-          <div className="mt-5 flex flex-wrap items-center gap-x-4 gap-y-2 text-[13.5px] text-white/60">
-            <Link href={`/blog/author/${AUTHOR_ID}`} className="font-medium text-white/85 hover:text-white">
-              {post.authorName}
+      {/* Post header — no breadcrumb, category as its own line, and no
+          grid/glow backdrop, matching the live site exactly (confirmed via
+          computed styles: no background-image anywhere above the h1). */}
+      <section className="pt-36 pb-8 md:pt-44">
+        <div className="wrap">
+          <h1 className="text-[28px] font-bold leading-[38.5px] text-white">{post.h1 || post.title}</h1>
+          {post.category ? (
+            <Link
+              href={`/blog/category/${post.category.slug}`}
+              className="mt-2 inline-block text-[14px] text-[#335dff] hover:underline"
+            >
+              {post.category.name}
             </Link>
-            <span className="text-white/40">{post.authorRole}</span>
-            {post.date ? <span>· {post.date}</span> : null}
-            {post.readTime ? <span>· {post.readTime}</span> : null}
+          ) : null}
+          <div className="mt-2 flex flex-wrap items-center gap-x-2 text-[14px] text-white/70">
+            {post.date ? <span>{post.date}</span> : null}
+            {post.date && post.readTime ? <span aria-hidden>•</span> : null}
+            {post.readTime ? <span>{post.readTime}</span> : null}
           </div>
           {post.hero ? (
             <Image
@@ -123,7 +116,7 @@ export default async function PostPage({ params }: { params: Promise<Params> }) 
               width={1200}
               height={630}
               priority
-              className="mt-8 w-full rounded-2xl border border-white/10"
+              className="mt-8 w-full"
             />
           ) : null}
         </div>
@@ -131,35 +124,72 @@ export default async function PostPage({ params }: { params: Promise<Params> }) 
 
       {/* Article body (migrated verbatim from the source post) */}
       <section className="pb-16">
-        <div className="wrap max-w-3xl">
-          <div className="blog-html" dangerouslySetInnerHTML={{ __html: post.contentHtml }} />
+        <div className="wrap">
+          <div className="mx-auto max-w-3xl">
+            <div className="blog-html" dangerouslySetInnerHTML={{ __html: post.contentHtml }} />
 
-          {/* Author box */}
-          <aside className="card-strong mt-14 p-7">
-            <p className="text-[12.5px] font-semibold uppercase tracking-wide text-white/50">
-              About the author
-            </p>
-            <p className="mt-2 font-heading text-lg font-bold text-white">
-              {post.authorName}{" "}
-              <span className="font-body text-[13.5px] font-normal text-white/60">— {post.authorRole}</span>
-            </p>
-            {post.authorBio ? (
-              <p className="mt-3 text-[14px] leading-relaxed text-white/70">{post.authorBio}</p>
+            {/* Tags — sourced from the source site's own per-post keywords;
+                three of nineteen posts have none, matching the source. */}
+            {post.tags.length ? (
+              <div className="mt-10 flex flex-wrap gap-2">
+                {post.tags.map((tag) => (
+                  <span
+                    key={tag}
+                    className="rounded-[10px] bg-[#e5e7eb] px-2.5 py-1 text-[13px] text-[#6b7280]"
+                  >
+                    {tag}
+                  </span>
+                ))}
+              </div>
             ) : null}
-            <Link
-              href={`/blog/author/${AUTHOR_ID}`}
-              className="mt-4 inline-flex items-center gap-1.5 text-[14px] font-medium text-[#efa4f2] hover:text-white"
-            >
-              More from {post.authorName.split(" ")[0]}
-              <svg width="13" height="9" viewBox="0 0 14 10" fill="none" aria-hidden>
-                <path d="M1 5h12m0 0L9 1m4 4L9 9" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-              </svg>
-            </Link>
-          </aside>
+
+            {/* Author box */}
+            <div className="mt-6 rounded-[4px] bg-[#1f113a] px-10 py-5">
+              <div className="flex items-center gap-4">
+                <Link href={`/blog/author/${AUTHOR_ID}`} className="flex-none">
+                  <Image
+                    src={AUTHOR.avatar}
+                    alt={post.authorName}
+                    width={64}
+                    height={64}
+                    className="h-16 w-16 rounded-[25px] object-cover"
+                  />
+                </Link>
+                <div className="flex flex-wrap items-center gap-2 text-[16px] text-white">
+                  <Link href={`/blog/author/${AUTHOR_ID}`} className="font-semibold hover:underline">
+                    {post.authorName}
+                  </Link>
+                  <span className="text-white/40" aria-hidden>|</span>
+                  <span>{post.authorRole}</span>
+                  <span className="text-white/40" aria-hidden>|</span>
+                  <a href={AUTHOR.facebook} target="_blank" rel="noreferrer noopener" aria-label="Facebook">
+                    <Image src="/images/social-facebook-white.svg" alt="" width={22} height={22} />
+                  </a>
+                  <a href={AUTHOR.linkedin} target="_blank" rel="noreferrer noopener" aria-label="LinkedIn">
+                    <Image src="/images/social-linkedin-white.svg" alt="" width={22} height={22} />
+                  </a>
+                </div>
+              </div>
+              <div className="mt-3">
+                <AuthorBio text={`Author description: ${post.authorBio}`} />
+              </div>
+            </div>
+
+            <div className="mt-8">
+              <BackToTop />
+            </div>
+            <p className="mt-4">
+              <Link href="/blog" className="text-[13px] text-[#6b7280] hover:text-white">
+                Back to Blog
+              </Link>
+            </p>
+          </div>
         </div>
       </section>
 
-      {/* Related posts */}
+      {/* Related posts. Not present on the live post template (which ends
+          at "Back to Blog"), kept as a deliberate, pre-existing deviation
+          for internal linking/engagement - see docs/DIFFERENCES.md. */}
       {related.length ? (
         <section className="section !pt-0">
           <div className="wrap max-w-5xl">

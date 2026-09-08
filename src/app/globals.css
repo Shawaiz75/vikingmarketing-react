@@ -287,7 +287,7 @@ h1, h2, h3, .font-heading {
 .blog-html ul { list-style: disc; }
 .blog-html ol { list-style: decimal; }
 .blog-html li { margin-bottom: 0.5em; }
-.blog-html img { border-radius: 16px; margin: 1.6em auto; max-width: 100%; height: auto; }
+.blog-html img { margin: 1.6em auto; max-width: 100%; height: auto; }
 .blog-html strong { color: #fff; }
 .blog-html blockquote {
   border-left: 3px solid var(--purple);

@@ -3,13 +3,25 @@
 import { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import type { PostCard } from "@/lib/blog";
+import { AUTHOR, type PostCard } from "@/lib/blog-constants";
 
 const PER_PAGE = 4;
 
+/** "August 18, 2026" -> "18/08/2026", matching the listing page's own date
+ *  format on the live site (its post-detail pages use the stored format
+ *  as-is; the listing reformats it - a real, preserved source quirk). */
+function toListingDate(date: string | null): string | null {
+  if (!date) return null;
+  const d = new Date(date);
+  if (Number.isNaN(d.getTime())) return date;
+  const dd = String(d.getDate()).padStart(2, "0");
+  const mm = String(d.getMonth() + 1).padStart(2, "0");
+  return `${dd}/${mm}/${d.getFullYear()}`;
+}
+
 function Card({ post }: { post: PostCard }) {
   return (
-    <article className="card overflow-hidden transition hover:border-white/20">
+    <article className="overflow-hidden">
       <Link href={`/post/${post.slug}`} className="block">
         {post.hero ? (
           <Image
@@ -21,35 +33,26 @@ function Card({ post }: { post: PostCard }) {
           />
         ) : null}
       </Link>
-      <div className="p-6">
-        <div className="flex flex-wrap items-center gap-3 text-[12.5px] text-white/55">
-          {post.category ? (
-            <Link
-              href={`/blog/category/${post.category.slug}`}
-              className="rounded-full border border-white/15 bg-white/[0.04] px-3 py-1 font-medium text-white/80 transition hover:border-white/30 hover:text-white"
-            >
-              {post.category.name}
-            </Link>
-          ) : null}
-          {post.date ? <span>{post.date}</span> : null}
-          {post.readTime ? <span>· {post.readTime}</span> : null}
-        </div>
-        <h2 className="mt-3 font-heading text-[19px] font-bold leading-snug text-white">
+      <div className="pt-4">
+        <h2 className="text-[20px] font-medium uppercase leading-snug text-white">
           <Link href={`/post/${post.slug}`} className="hover:text-[#efa4f2]">
             {post.title}
           </Link>
         </h2>
-        <p className="mt-2.5 line-clamp-3 text-[14px] leading-relaxed text-white/65">
-          {post.description}
-        </p>
+        <div className="mt-2 flex items-center gap-2 text-[12px] text-white">
+          <Image src={AUTHOR.avatar} alt="" width={24} height={24} className="h-6 w-6 rounded-full object-cover" />
+          <span>{AUTHOR.name}</span>
+        </div>
+        {post.date ? <p className="mt-1 text-[12px] text-white">Published on: {toListingDate(post.date)}</p> : null}
+        <p className="mt-3 text-[14px] leading-relaxed text-white/80">{post.description}</p>
+        {post.category ? (
+          <p className="mt-2 text-[12px] text-white">{post.category.name}</p>
+        ) : null}
         <Link
           href={`/post/${post.slug}`}
-          className="mt-4 inline-flex items-center gap-1.5 text-[14px] font-medium text-[#efa4f2] transition hover:text-white"
+          className="mt-3 inline-block rounded-full bg-[#b771eb] px-2.5 py-1.5 text-[14px] text-white transition hover:opacity-90"
         >
-          Read more
-          <svg width="13" height="9" viewBox="0 0 14 10" fill="none" aria-hidden>
-            <path d="M1 5h12m0 0L9 1m4 4L9 9" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-          </svg>
+          Read More
         </Link>
       </div>
     </article>
