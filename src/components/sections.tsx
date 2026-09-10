@@ -198,44 +198,36 @@ export function ReviewsSection() {
   );
 }
 
-/** Final gradient-floor CTA used at the bottom of most pages. Pass
- *  `backgroundImage` to swap in a real image behind the content instead of
- *  the default CSS grid-glow (used for the home page's main closing CTA). */
+/** Final gradient-floor CTA used at the bottom of every page - same glow
+ *  background site-wide, so every page's closing CTA matches the home
+ *  page's. */
 export function FinalCta({
   title,
   body,
   ctaLabel,
   note,
   smallPrint,
-  backgroundImage,
 }: {
   title: string;
   body: string;
   ctaLabel: string;
   note?: React.ReactNode;
   smallPrint?: string;
-  backgroundImage?: string;
 }) {
   return (
     <section className="section overflow-hidden">
-      {backgroundImage ? (
-        // sm+ (where wrapped copy stays short) keeps the exact width-locked
-        // aspect ratio this always used. Below that, mobile's much longer
-        // line-wrap makes the section far taller than this image is wide,
-        // so a width-locked image shrinks to a barely-there sliver behind
-        // the CTA - a fixed min band + object-cover keeps a real glow
-        // behind the button/phone line without stretching the image.
-        <div
-          className="pointer-events-none absolute inset-x-0 bottom-0 h-[260px] w-full select-none sm:aspect-[1200/427] sm:h-auto"
-          aria-hidden
-        >
-          <Image src={backgroundImage} alt="" fill sizes="100vw" className="object-cover object-bottom" />
-        </div>
-      ) : (
-        <div className="grid-backdrop grid-bottom" aria-hidden>
-          <div className="grid-glow bottom-0" />
-        </div>
-      )}
+      {/* sm+ (where wrapped copy stays short) keeps the exact width-locked
+          aspect ratio this always used. Below that, mobile's much longer
+          line-wrap makes the section far taller than this image is wide,
+          so a width-locked image shrinks to a barely-there sliver behind
+          the CTA - a fixed min band + object-cover keeps a real glow
+          behind the button/phone line without stretching the image. */}
+      <div
+        className="pointer-events-none absolute inset-x-0 bottom-0 h-[260px] w-full select-none sm:aspect-[1200/427] sm:h-auto"
+        aria-hidden
+      >
+        <Image src="/images/final-cta-glow.webp" alt="" fill sizes="100vw" className="object-cover object-bottom" />
+      </div>
       <div className="wrap relative text-center">
         <Reveal>
           <h2 className="mx-auto max-w-[1120px] font-heading text-[clamp(30px,3.9vw,52px)] font-bold leading-[1.5] text-white">
