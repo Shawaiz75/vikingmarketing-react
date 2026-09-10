@@ -29,7 +29,6 @@ export const GOOGLE_MAPS_URL =
 // Integrations — set these in .env.local (see .env.example). Never hardcode IDs.
 export const GTM_ID = process.env.NEXT_PUBLIC_GTM_ID || "";
 export const BOOKING_WIDGET_URL = process.env.NEXT_PUBLIC_BOOKING_WIDGET_URL || "";
-export const CHAT_WIDGET_SRC = process.env.NEXT_PUBLIC_CHAT_WIDGET_SRC || "";
 
 export const ORG_LOGO = "/images/logo.svg";
 export const DEFAULT_OG_IMAGE = "/images/og-home.webp";

@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { pageMetadata, jsonLdGraph, webPageLd } from "@/lib/seo";
-import { SectionHeading, JsonLd } from "@/components/ui";
+import { JsonLd } from "@/components/ui";
 import Reveal from "@/components/Reveal";
 import { FinalCta, CallNote, CityChips } from "@/components/sections";
 

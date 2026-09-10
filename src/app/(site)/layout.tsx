@@ -2,7 +2,7 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import StickyCta from "@/components/StickyCta";
 
-/** Chrome for the faithful-rebuild pages. The /v2 redesign renders its own. */
+/** Shared chrome (header, footer, sticky CTA) for every page under this group. */
 export default function SiteLayout({ children }: { children: React.ReactNode }) {
   return (
     <>

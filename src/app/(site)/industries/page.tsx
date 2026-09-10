@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { pageMetadata, jsonLdGraph, webPageLd } from "@/lib/seo";
-import { SectionHeading, JsonLd, CtaButton } from "@/components/ui";
+import { SectionHeading, JsonLd } from "@/components/ui";
 import Reveal from "@/components/Reveal";
 import { FinalCta, CallNote } from "@/components/sections";
 import { INDUSTRY_LINKS } from "@/lib/nav";
