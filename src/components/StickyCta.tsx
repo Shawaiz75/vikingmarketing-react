@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import { motion, AnimatePresence } from "framer-motion";
 
 const DISMISS_KEY = "viking-sticky-cta-dismissed";
 
@@ -55,43 +56,47 @@ export default function StickyCta() {
   };
 
   return (
-    <div
-      className={`fixed inset-x-0 bottom-0 z-40 transition-transform duration-500 ease-out ${
-        visible ? "translate-y-0" : "translate-y-full"
-      }`}
-      role="region"
-      aria-label="Quick contact"
-      aria-hidden={!visible}
-    >
-      <div className="border-t border-white/10 bg-[#0b0920]/95 backdrop-blur-sm">
-        <div className="wrap flex items-center justify-between gap-4 py-3">
-          <p className="hidden text-[14.5px] font-medium text-white sm:block">
-            Ready to stop losing leads? Book a free 15-minute demo.
-          </p>
-          <p className="text-[14px] font-medium text-white sm:hidden">Book your free demo</p>
-          <div className="flex flex-none items-center gap-2">
-            <Link
-              href="/book-a-call"
-              tabIndex={visible ? 0 : -1}
-              className="rounded-full px-5 py-2.5 text-[14px] font-semibold text-white transition hover:opacity-90"
-              style={{ backgroundImage: "var(--grad-cta)" }}
-            >
-              Book Free Demo
-            </Link>
-            <button
-              type="button"
-              onClick={handleDismiss}
-              tabIndex={visible ? 0 : -1}
-              aria-label="Dismiss"
-              className="flex h-9 w-9 flex-none items-center justify-center rounded-full text-white/50 transition hover:bg-white/10 hover:text-white"
-            >
-              <svg width="13" height="13" viewBox="0 0 14 14" fill="none" aria-hidden>
-                <path d="M1 1l12 12M13 1L1 13" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-              </svg>
-            </button>
+    <AnimatePresence>
+      {visible && (
+        <motion.div
+          className="fixed inset-x-0 bottom-0 z-40"
+          role="region"
+          aria-label="Quick contact"
+          initial={{ y: "100%" }}
+          animate={{ y: 0 }}
+          exit={{ y: "100%" }}
+          transition={{ type: "spring", stiffness: 300, damping: 32 }}
+        >
+          <div className="border-t border-white/10 bg-[#0b0920]/95 backdrop-blur-sm">
+            <div className="wrap flex items-center justify-between gap-4 py-3">
+              <p className="hidden text-[14.5px] font-medium text-white sm:block">
+                Ready to stop losing leads? Book a free 15-minute demo.
+              </p>
+              <p className="text-[14px] font-medium text-white sm:hidden">Book your free demo</p>
+              <div className="flex flex-none items-center gap-2">
+                <Link
+                  href="/book-a-call"
+                  className="rounded-full px-5 py-2.5 text-[14px] font-semibold text-white transition hover:opacity-90"
+                  style={{ backgroundImage: "var(--grad-cta)" }}
+                >
+                  Book Free Demo
+                </Link>
+                <motion.button
+                  type="button"
+                  onClick={handleDismiss}
+                  whileTap={{ scale: 0.85 }}
+                  aria-label="Dismiss"
+                  className="flex h-9 w-9 flex-none items-center justify-center rounded-full text-white/50 transition hover:bg-white/10 hover:text-white"
+                >
+                  <svg width="13" height="13" viewBox="0 0 14 14" fill="none" aria-hidden>
+                    <path d="M1 1l12 12M13 1L1 13" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+                  </svg>
+                </motion.button>
+              </div>
+            </div>
           </div>
-        </div>
-      </div>
-    </div>
+        </motion.div>
+      )}
+    </AnimatePresence>
   );
 }
