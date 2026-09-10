@@ -219,20 +219,18 @@ export function FinalCta({
   return (
     <section className="section overflow-hidden">
       {backgroundImage ? (
-        // Sized to its own aspect ratio and anchored to the bottom edge,
-        // not `fill`+cover: covering a short/wide image into a much taller
-        // mobile section would scale it up to fill the height, dragging its
-        // bright glow band up behind the heading and wrecking text contrast.
-        // Anchoring by width keeps the glow pinned at the bottom regardless
-        // of how tall the section gets, matching the CSS grid-glow it replaces.
-        <Image
-          src={backgroundImage}
-          alt=""
-          width={1200}
-          height={427}
+        // sm+ (where wrapped copy stays short) keeps the exact width-locked
+        // aspect ratio this always used. Below that, mobile's much longer
+        // line-wrap makes the section far taller than this image is wide,
+        // so a width-locked image shrinks to a barely-there sliver behind
+        // the CTA - a fixed min band + object-cover keeps a real glow
+        // behind the button/phone line without stretching the image.
+        <div
+          className="pointer-events-none absolute inset-x-0 bottom-0 h-[260px] w-full select-none sm:aspect-[1200/427] sm:h-auto"
           aria-hidden
-          className="pointer-events-none absolute inset-x-0 bottom-0 h-auto w-full select-none"
-        />
+        >
+          <Image src={backgroundImage} alt="" fill sizes="100vw" className="object-cover object-bottom" />
+        </div>
       ) : (
         <div className="grid-backdrop grid-bottom" aria-hidden>
           <div className="grid-glow bottom-0" />
