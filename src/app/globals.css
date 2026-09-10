@@ -400,3 +400,5 @@ h1, h2, h3, .font-heading {
 }
 .compare-table th { color: #fff; font-size: 16px; }
 .compare-table td { color: var(--text-dim); }
+.compare-table tbody tr { transition: background-color 0.2s ease; }
+.compare-table tbody tr:hover { background-color: rgba(255, 255, 255, 0.03); }

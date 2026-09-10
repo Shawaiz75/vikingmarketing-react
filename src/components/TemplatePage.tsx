@@ -29,11 +29,11 @@ function SectionBlock({ section }: { section: TplSection }) {
         <section className="section">
           <div className="wrap max-w-4xl">
             <SectionHeading title={section.title} />
-            <div className="mt-6 space-y-4 text-center text-[15.5px] leading-relaxed text-white/70">
+            <Reveal className="mt-6 space-y-4 text-center text-[15.5px] leading-relaxed text-white/70">
               {section.paragraphs.map((p) => (
                 <p key={p.slice(0, 40)}>{p}</p>
               ))}
-            </div>
+            </Reveal>
           </div>
         </section>
       );
@@ -41,13 +41,15 @@ function SectionBlock({ section }: { section: TplSection }) {
     case "split": {
       const img = (
         <Reveal delay={100}>
-          <Image
-            src={section.image}
-            alt={section.imageAlt}
-            width={620}
-            height={460}
-            className="w-full rounded-2xl border border-white/10"
-          />
+          <HoverLift>
+            <Image
+              src={section.image}
+              alt={section.imageAlt}
+              width={620}
+              height={460}
+              className="w-full rounded-2xl border border-white/10"
+            />
+          </HoverLift>
         </Reveal>
       );
       return (
@@ -159,7 +161,7 @@ function SectionBlock({ section }: { section: TplSection }) {
                   <thead>
                     <tr>
                       {section.headers.map((h, i) => (
-                        <th key={h} scope="col" className={i === 2 ? "text-[#efa4f2]" : undefined}>
+                        <th key={h} scope="col" className={i === 2 ? "!bg-[#efa4f2]/[0.07] text-[#efa4f2]" : undefined}>
                           {h}
                         </th>
                       ))}
@@ -170,7 +172,7 @@ function SectionBlock({ section }: { section: TplSection }) {
                       <tr key={row[0]}>
                         <th scope="row" className="!font-medium !text-white/85">{row[0]}</th>
                         <td>{row[1]}</td>
-                        <td className="!text-white">{row[2]}</td>
+                        <td className="!bg-[#efa4f2]/[0.07] !text-white">{row[2]}</td>
                       </tr>
                     ))}
                   </tbody>
@@ -220,12 +222,12 @@ function SectionBlock({ section }: { section: TplSection }) {
         <section className="section">
           <div className="wrap">
             <SectionHeading title="Built for Every Local Service Industry" />
-            <div className="mx-auto mt-10 flex max-w-4xl flex-wrap justify-center gap-3">
+            <Reveal className="mx-auto mt-10 flex max-w-4xl flex-wrap justify-center gap-3">
               {INDUSTRY_LINKS.map((l) => (
                 <Link
                   key={l.href}
                   href={l.href}
-                  className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.04] px-5 py-2.5 text-[14.5px] font-medium text-white/85 transition hover:border-white/25 hover:text-white"
+                  className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.04] px-5 py-2.5 text-[14.5px] font-medium text-white/85 transition hover:-translate-y-0.5 hover:border-white/25 hover:bg-white/[0.07] hover:text-white"
                 >
                   {l.label}
                   <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden>
@@ -233,17 +235,19 @@ function SectionBlock({ section }: { section: TplSection }) {
                   </svg>
                 </Link>
               ))}
-            </div>
-            <p className="mt-8 text-center text-[14.5px] text-white/70">
-              Not on this list? The AI works for any appointment-based or service business that lives
-              by its lead response time.
-            </p>
-            <p className="mt-2 text-center text-[14px] text-white/60">
-              Serving agencies in Phoenix, Scottsdale, Tempe, Chandler, and across the U.S.{" "}
-              <Link href="/locations" className="text-[#efa4f2] hover:text-white">
-                See all locations →
-              </Link>
-            </p>
+            </Reveal>
+            <Reveal delay={100} className="mt-8 text-center">
+              <p className="text-[14.5px] text-white/70">
+                Not on this list? The AI works for any appointment-based or service business that lives
+                by its lead response time.
+              </p>
+              <p className="mt-2 text-[14px] text-white/60">
+                Serving agencies in Phoenix, Scottsdale, Tempe, Chandler, and across the U.S.{" "}
+                <Link href="/locations" className="text-[#efa4f2] hover:text-white">
+                  See all locations →
+                </Link>
+              </p>
+            </Reveal>
           </div>
         </section>
       );
@@ -253,14 +257,14 @@ function SectionBlock({ section }: { section: TplSection }) {
         <section className="section">
           <div className="wrap">
             <SectionHeading title={section.title} />
-            <div className="mx-auto mt-6 max-w-3xl space-y-4 text-center text-[15.5px] leading-relaxed text-white/70">
+            <Reveal className="mx-auto mt-6 max-w-3xl space-y-4 text-center text-[15.5px] leading-relaxed text-white/70">
               {section.paragraphs.map((p) => (
                 <p key={p.slice(0, 40)}>{p}</p>
               ))}
-            </div>
-            <div className="mt-10">
+            </Reveal>
+            <Reveal delay={100} className="mt-10">
               <CityChips />
-            </div>
+            </Reveal>
             {section.note ? (
               <p className="mx-auto mt-6 max-w-2xl text-center text-[14px] text-white/60">{section.note}</p>
             ) : null}
@@ -275,23 +279,27 @@ function SectionBlock({ section }: { section: TplSection }) {
             <SectionHeading title={section.title} lede={section.intro} />
             {section.image ? (
               <Reveal className="mt-10">
-                <Image
-                  src={section.image}
-                  alt={section.imageAlt ?? ""}
-                  width={1100}
-                  height={340}
-                  className="mx-auto w-full max-w-4xl rounded-2xl"
-                />
+                <HoverLift>
+                  <Image
+                    src={section.image}
+                    alt={section.imageAlt ?? ""}
+                    width={1100}
+                    height={340}
+                    className="mx-auto w-full max-w-4xl rounded-2xl"
+                  />
+                </HoverLift>
               </Reveal>
             ) : null}
             <div className="mt-12 grid gap-10 md:grid-cols-3">
               {section.steps.map((s, i) => (
-                <Reveal key={(s.title ?? s.body).slice(0, 40)} delay={i * 120} className="text-center">
-                  <Image src={s.icon} alt={s.alt ?? ""} width={82} height={82} className="mx-auto h-[82px] w-[82px]" />
-                  {s.title ? (
-                    <h3 className="mt-5 font-heading text-xl font-bold text-white">{s.title}</h3>
-                  ) : null}
-                  <p className="mt-3 text-[14.5px] leading-relaxed text-white/70">{s.body}</p>
+                <Reveal key={(s.title ?? s.body).slice(0, 40)} delay={i * 120}>
+                  <HoverLift className="text-center">
+                    <Image src={s.icon} alt={s.alt ?? ""} width={82} height={82} className="mx-auto h-[82px] w-[82px]" />
+                    {s.title ? (
+                      <h3 className="mt-5 font-heading text-xl font-bold text-white">{s.title}</h3>
+                    ) : null}
+                    <p className="mt-3 text-[14.5px] leading-relaxed text-white/70">{s.body}</p>
+                  </HoverLift>
                 </Reveal>
               ))}
             </div>
