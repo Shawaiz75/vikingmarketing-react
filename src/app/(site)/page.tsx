@@ -13,6 +13,7 @@ import {
 import { CtaButton, SectionHeading, JsonLd, CheckLine } from "@/components/ui";
 import Reveal from "@/components/Reveal";
 import HoverLift from "@/components/HoverLift";
+import StatPop from "@/components/StatPop";
 import GrowthTabs, { type GrowthRow } from "@/components/GrowthTabs";
 import ChatDemo from "@/components/ChatDemo";
 import VideoModal from "@/components/VideoModal";
@@ -425,7 +426,7 @@ export default function HomePage() {
           <div className="mt-12 grid gap-10 text-center md:grid-cols-3">
             {STATS.map((s, i) => (
               <Reveal key={s.value} delay={i * 100} className="flex items-center justify-center gap-4 md:flex-col lg:flex-row">
-                <p className="grad-text font-heading text-[clamp(38px,3.9vw,52px)] font-bold leading-[1.2]">{s.value}</p>
+                <StatPop className="grad-text font-heading text-[clamp(38px,3.9vw,52px)] font-bold leading-[1.2]">{s.value}</StatPop>
                 <p className="font-heading max-w-[180px] text-left text-[18px] font-medium leading-[26px] text-white md:text-center lg:text-left">
                   {s.label}
                 </p>
