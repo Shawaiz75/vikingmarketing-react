@@ -12,6 +12,7 @@ import {
 } from "@/lib/seo";
 import { CtaButton, SectionHeading, JsonLd, CheckLine } from "@/components/ui";
 import Reveal from "@/components/Reveal";
+import HoverLift from "@/components/HoverLift";
 import GrowthTabs, { type GrowthRow } from "@/components/GrowthTabs";
 import ChatDemo from "@/components/ChatDemo";
 import VideoModal from "@/components/VideoModal";
@@ -550,32 +551,34 @@ export default function HomePage() {
           <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
             {PLATFORM_FEATURES.map((f, i) => (
               <Reveal key={f.title} delay={(i % 4) * 80}>
-                <Link
-                  href={f.href}
-                  className="card-feature group flex h-full flex-col transition hover:border-white/20 focus-visible:border-white/20"
-                >
-                  {/* Icon files are already complete self-styled 63x63 tiles
-                      (blue rounded-square + glyph baked in) - no wrapper.
-                      Decorative: the title text right below already names
-                      the feature, so a descriptive alt here would just
-                      have screen readers announce it twice. */}
-                  <Image src={f.icon} alt="" aria-hidden width={63} height={63} className="h-[63px] w-[63px]" />
-                  <h3 className="mt-[50px] text-[20px] font-bold text-white">{f.title}</h3>
-                  <p className="mt-2.5 flex-1 text-[16px] leading-[29px] text-[#CBD5E0]">{f.body}</p>
-                  <span className="mt-4 inline-flex items-center gap-1.5 text-[13.5px] font-medium text-white/50 transition group-hover:text-[#efa4f2] group-focus-visible:text-[#efa4f2]">
-                    Learn more
-                    <svg
-                      width="13"
-                      height="9"
-                      viewBox="0 0 14 10"
-                      fill="none"
-                      aria-hidden
-                      className="transition-transform group-hover:translate-x-1 group-focus-visible:translate-x-1"
-                    >
-                      <path d="M1 5h12m0 0L9 1m4 4L9 9" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-                    </svg>
-                  </span>
-                </Link>
+                <HoverLift className="h-full">
+                  <Link
+                    href={f.href}
+                    className="card-feature group flex h-full flex-col transition hover:border-white/20 focus-visible:border-white/20"
+                  >
+                    {/* Icon files are already complete self-styled 63x63 tiles
+                        (blue rounded-square + glyph baked in) - no wrapper.
+                        Decorative: the title text right below already names
+                        the feature, so a descriptive alt here would just
+                        have screen readers announce it twice. */}
+                    <Image src={f.icon} alt="" aria-hidden width={63} height={63} className="h-[63px] w-[63px]" />
+                    <h3 className="mt-[50px] text-[20px] font-bold text-white">{f.title}</h3>
+                    <p className="mt-2.5 flex-1 text-[16px] leading-[29px] text-[#CBD5E0]">{f.body}</p>
+                    <span className="mt-4 inline-flex items-center gap-1.5 text-[13.5px] font-medium text-white/50 transition group-hover:text-[#efa4f2] group-focus-visible:text-[#efa4f2]">
+                      Learn more
+                      <svg
+                        width="13"
+                        height="9"
+                        viewBox="0 0 14 10"
+                        fill="none"
+                        aria-hidden
+                        className="transition-transform group-hover:translate-x-1 group-focus-visible:translate-x-1"
+                      >
+                        <path d="M1 5h12m0 0L9 1m4 4L9 9" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+                      </svg>
+                    </span>
+                  </Link>
+                </HoverLift>
               </Reveal>
             ))}
           </div>
