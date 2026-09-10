@@ -3,6 +3,7 @@
 import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { motion, AnimatePresence } from "framer-motion";
 import { SectionHeading } from "./ui";
 import Reveal from "./Reveal";
 
@@ -21,18 +22,35 @@ function FaqItem({ faq, index, open, onToggle }: { faq: Faq; index: number; open
           onClick={onToggle}
         >
           <span>{faq.q}</span>
-          <span className="faq-toggle" aria-hidden>
-            {open ? (
-              <svg width="12" height="2" viewBox="0 0 12 2"><path d="M0 1h12" stroke="#fff" strokeWidth="2" /></svg>
-            ) : (
-              <svg width="12" height="12" viewBox="0 0 12 12"><path d="M6 0v12M0 6h12" stroke="#fff" strokeWidth="2" /></svg>
-            )}
-          </span>
+          {/* Single "+" glyph rotated 45deg into an "x" on open, spring-eased,
+              instead of cross-fading two separate svgs. */}
+          <motion.span
+            className="faq-toggle"
+            aria-hidden
+            animate={{ rotate: open ? 45 : 0 }}
+            transition={{ type: "spring", stiffness: 320, damping: 24 }}
+          >
+            <svg width="12" height="12" viewBox="0 0 12 12"><path d="M6 0v12M0 6h12" stroke="#fff" strokeWidth="2" /></svg>
+          </motion.span>
         </button>
       </h3>
-      <div id={panelId} className="faq-a" style={{ maxHeight: open ? "600px" : 0, transition: "max-height .35s ease" }}>
-        <p className="pb-6 pr-10">{faq.a}</p>
-      </div>
+      <AnimatePresence initial={false}>
+        {open && (
+          <motion.div
+            id={panelId}
+            className="faq-a"
+            initial={{ height: 0, opacity: 0 }}
+            animate={{ height: "auto", opacity: 1 }}
+            exit={{ height: 0, opacity: 0 }}
+            transition={{
+              height: { duration: 0.35, ease: [0.16, 1, 0.3, 1] },
+              opacity: { duration: 0.25, ease: "easeOut" },
+            }}
+          >
+            <p className="pb-6 pr-10">{faq.a}</p>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }
