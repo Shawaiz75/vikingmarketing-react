@@ -386,45 +386,55 @@ export default function TemplatePage({ data }: { data: TemplatePageData }) {
     <>
       <JsonLd json={jsonLdGraph(nodes)} />
 
-      {/* Hero */}
-      <section className="relative overflow-hidden pt-36 pb-14 md:pt-44">
-        <div className="grid-backdrop" aria-hidden>
-          <div className="grid-glow top-0" />
-        </div>
-        <div className="wrap relative text-center">
-          {data.hero.badge ? <p className="text-[15px] text-white/80">{data.hero.badge}</p> : null}
-          <h1 className="mx-auto mt-5 max-w-4xl font-heading text-[clamp(32px,4.6vw,54px)] font-bold leading-[1.16] tracking-[-0.02em] text-white">
-            {data.hero.h1}
-          </h1>
-          {data.hero.reviewedBy ? (
-            <p className="mt-4 text-[13.5px] text-white/55">{data.hero.reviewedBy}</p>
-          ) : null}
-          <p className="mx-auto mt-6 max-w-3xl text-[16px] leading-relaxed text-white/75">
-            {data.hero.lede}
-          </p>
-          <div className="mt-9 flex justify-center">
-            <CtaButton href="/book-a-call">{data.hero.ctaLabel}</CtaButton>
+      {/* Hero: side-by-side on lg+ (copy left, art right), matching the
+          live site - stacked (copy, then art) below that, where there's no
+          room for two columns. */}
+      <section className="relative overflow-hidden pt-32 pb-14 md:pt-40">
+        <Image
+          src="/images/inner-hero-glow.webp"
+          alt=""
+          width={1200}
+          height={552}
+          priority
+          aria-hidden
+          className="pointer-events-none absolute inset-x-0 top-0 -z-10 h-auto w-full select-none"
+        />
+        <div className="wrap relative grid items-center gap-10 lg:grid-cols-2 lg:gap-16">
+          <div className="text-center lg:text-left">
+            {data.hero.badge ? <p className="text-[15px] text-white/80">{data.hero.badge}</p> : null}
+            <h1 className="mx-auto mt-5 max-w-2xl font-heading text-[clamp(32px,4.2vw,50px)] font-bold leading-[1.16] tracking-[-0.02em] text-white lg:mx-0">
+              {data.hero.h1}
+            </h1>
+            {data.hero.reviewedBy ? (
+              <p className="mt-4 text-[13.5px] text-white/55">{data.hero.reviewedBy}</p>
+            ) : null}
+            <p className="mx-auto mt-6 max-w-xl text-[16px] leading-relaxed text-white/75 lg:mx-0">
+              {data.hero.lede}
+            </p>
+            <div className="mt-9 flex justify-center lg:justify-start">
+              <CtaButton href="/book-a-call">{data.hero.ctaLabel}</CtaButton>
+            </div>
+            {data.hero.checkLines?.length ? (
+              <div className="mx-auto mt-8 max-w-xl space-y-1.5 lg:mx-0">
+                {data.hero.checkLines.map((line) => (
+                  <p key={line.slice(0, 40)} className="text-[14.5px] text-white/70">
+                    {line}
+                  </p>
+                ))}
+              </div>
+            ) : null}
           </div>
           {data.hero.image ? (
-            <Reveal className="mt-12">
+            <Reveal delay={100}>
               <Image
                 src={data.hero.image}
                 alt={data.hero.imageAlt ?? ""}
-                width={1160}
-                height={640}
+                width={620}
+                height={580}
                 priority
-                className="mx-auto w-full max-w-4xl rounded-2xl border border-white/10 shadow-[0_30px_120px_rgba(139,92,246,0.22)]"
+                className="mx-auto w-full max-w-md rounded-2xl lg:max-w-none"
               />
             </Reveal>
-          ) : null}
-          {data.hero.checkLines?.length ? (
-            <div className="mt-8 space-y-1.5">
-              {data.hero.checkLines.map((line) => (
-                <p key={line.slice(0, 40)} className="text-[14.5px] text-white/70">
-                  {line}
-                </p>
-              ))}
-            </div>
           ) : null}
         </div>
       </section>
