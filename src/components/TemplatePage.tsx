@@ -15,6 +15,8 @@ import {
 } from "@/lib/seo";
 import { CtaButton, SectionHeading, JsonLd } from "@/components/ui";
 import Reveal from "@/components/Reveal";
+import HoverLift from "@/components/HoverLift";
+import StatPop from "@/components/StatPop";
 import FaqSection from "@/components/FaqSection";
 import { ReviewsSection, FinalCta, CallNote, CityChips } from "@/components/sections";
 import { INDUSTRY_LINKS } from "@/lib/nav";
@@ -99,15 +101,17 @@ function SectionBlock({ section }: { section: TplSection }) {
               }`}
             >
               {section.steps.map((s, i) => (
-                <Reveal key={(s.title ?? s.body).slice(0, 40)} delay={i * 90} className="card h-full p-6 text-center">
-                  {/* Icon files are already complete self-styled tiles - no
-                      wrapper background. h-auto/w-auto since a few of these
-                      per-page icon sets aren't perfectly square. */}
-                  <Image src={s.icon} alt={s.alt ?? ""} width={63} height={63} className="mx-auto h-[63px] w-auto" />
-                  {s.title ? (
-                    <h3 className="mt-4 font-heading text-[17px] font-bold text-white">{s.title}</h3>
-                  ) : null}
-                  <p className="mt-2.5 text-[14px] leading-relaxed text-white/70">{s.body}</p>
+                <Reveal key={(s.title ?? s.body).slice(0, 40)} delay={i * 90} className="h-full">
+                  <HoverLift className="card h-full p-6 text-center">
+                    {/* Icon files are already complete self-styled tiles - no
+                        wrapper background. h-auto/w-auto since a few of these
+                        per-page icon sets aren't perfectly square. */}
+                    <Image src={s.icon} alt={s.alt ?? ""} width={63} height={63} className="mx-auto h-[63px] w-auto" />
+                    {s.title ? (
+                      <h3 className="mt-4 font-heading text-[17px] font-bold text-white">{s.title}</h3>
+                    ) : null}
+                    <p className="mt-2.5 text-[14px] leading-relaxed text-white/70">{s.body}</p>
+                  </HoverLift>
                 </Reveal>
               ))}
             </div>
@@ -130,13 +134,13 @@ function SectionBlock({ section }: { section: TplSection }) {
             <SectionHeading title={section.title} lede={section.intro} />
             <div className="mx-auto mt-10 grid max-w-4xl gap-4 sm:grid-cols-2">
               {section.items.map((item, i) => (
-                <Reveal key={item.text.slice(0, 40)} delay={(i % 2) * 80}>
-                  <div className="card flex h-full items-start gap-4 p-5">
+                <Reveal key={item.text.slice(0, 40)} delay={(i % 2) * 80} className="h-full">
+                  <HoverLift className="card flex h-full items-start gap-4 p-5">
                     <span className="inline-flex h-11 w-11 flex-none items-center justify-center rounded-xl bg-[#188bf6]/15">
                       <Image src={item.icon} alt={item.alt ?? ""} width={24} height={24} className="h-6 w-6" />
                     </span>
                     <p className="text-[14.5px] leading-relaxed text-white/80">{item.text}</p>
-                  </div>
+                  </HoverLift>
                 </Reveal>
               ))}
             </div>
@@ -190,10 +194,12 @@ function SectionBlock({ section }: { section: TplSection }) {
             <SectionHeading title={section.title} lede={section.intro} />
             <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
               {section.cards.map((c, i) => (
-                <Reveal key={c.title} delay={(i % 3) * 80} className="card-feature h-full">
-                  <Image src={c.icon} alt={c.alt ?? ""} width={63} height={63} className="h-[63px] w-[63px]" />
-                  <h3 className="mt-5 text-[20px] font-bold text-white">{c.title}</h3>
-                  <p className="mt-2.5 text-[16px] leading-[29px] text-[#CBD5E0]">{c.body}</p>
+                <Reveal key={c.title} delay={(i % 3) * 80} className="h-full">
+                  <HoverLift className="card-feature h-full">
+                    <Image src={c.icon} alt={c.alt ?? ""} width={63} height={63} className="h-[63px] w-[63px]" />
+                    <h3 className="mt-5 text-[20px] font-bold text-white">{c.title}</h3>
+                    <p className="mt-2.5 text-[16px] leading-[29px] text-[#CBD5E0]">{c.body}</p>
+                  </HoverLift>
                 </Reveal>
               ))}
             </div>
@@ -310,13 +316,13 @@ function SectionBlock({ section }: { section: TplSection }) {
           <div className="wrap">
             <SectionHeading title={section.title} lede={section.intro} />
             <div className="mt-12 grid gap-10 text-center md:grid-cols-3">
-              {section.stats.map((s) => (
-                <div key={s.value} className="flex items-center justify-center gap-4">
-                  <p className="grad-text font-heading text-[clamp(36px,4.4vw,52px)] font-bold leading-none">
+              {section.stats.map((s, i) => (
+                <Reveal key={s.value} delay={i * 100} className="flex items-center justify-center gap-4">
+                  <StatPop className="grad-text font-heading text-[clamp(36px,4.4vw,52px)] font-bold leading-none">
                     {s.value}
-                  </p>
+                  </StatPop>
                   <p className="max-w-[190px] text-left text-[15px] leading-snug text-white/70">{s.label}</p>
-                </div>
+                </Reveal>
               ))}
             </div>
           </div>
