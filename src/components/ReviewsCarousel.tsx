@@ -1,6 +1,7 @@
 "use client";
 
 import { useRef } from "react";
+import { motion } from "framer-motion";
 import { GOOGLE_MAPS_URL } from "@/lib/site";
 import { Star, GoogleG } from "./review-icons";
 
@@ -8,16 +9,19 @@ export type Testimonial = { name: string; rating: number; date: string; text: st
 
 function ArrowButton({ direction, onClick }: { direction: "left" | "right"; onClick: () => void }) {
   return (
-    <button
+    <motion.button
       type="button"
       onClick={onClick}
+      whileHover={{ scale: 1.08 }}
+      whileTap={{ scale: 0.92 }}
+      transition={{ type: "spring", stiffness: 400, damping: 20 }}
       aria-label={direction === "left" ? "Scroll to previous reviews" : "Scroll to more reviews"}
-      className="flex h-10 w-10 flex-none items-center justify-center rounded-full border border-white/15 text-white/70 transition hover:border-white/35 hover:text-white"
+      className="flex h-10 w-10 flex-none items-center justify-center rounded-full border border-white/15 text-white/70 transition-colors hover:border-white/35 hover:text-white"
     >
       <svg width="16" height="12" viewBox="0 0 14 10" fill="none" aria-hidden style={direction === "left" ? { transform: "scaleX(-1)" } : undefined}>
         <path d="M1 5h12m0 0L9 1m4 4L9 9" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
       </svg>
-    </button>
+    </motion.button>
   );
 }
 
@@ -48,9 +52,11 @@ export default function ReviewsCarousel({ reviews }: { reviews: Testimonial[] })
         style={{ scrollPaddingLeft: "1px" }}
       >
         {reviews.map((r) => (
-          <div
+          <motion.div
             key={`${r.name}-${r.date}`}
             data-review-card
+            whileHover={{ y: -4 }}
+            transition={{ type: "spring", stiffness: 300, damping: 24 }}
             className="card-strong flex w-[300px] flex-none snap-start flex-col p-6 sm:w-[340px]"
           >
             <div className="flex items-center justify-between">
@@ -91,7 +97,7 @@ export default function ReviewsCarousel({ reviews }: { reviews: Testimonial[] })
                 <GoogleG />
               </a>
             </div>
-          </div>
+          </motion.div>
         ))}
       </div>
     </div>
