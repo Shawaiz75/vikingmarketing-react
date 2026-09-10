@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState, type KeyboardEvent } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { motion, AnimatePresence } from "framer-motion";
 
 export type GrowthRow = {
   problem: string;
@@ -165,76 +166,88 @@ export default function GrowthTabs({ rows }: { rows: GrowthRow[] }) {
         id={`growth-panel-${active}`}
         aria-labelledby={`growth-tab-${active}`}
         tabIndex={0}
-        className="card-strong p-6 md:p-8"
+        className="card-strong overflow-hidden p-6 md:p-8"
       >
-        <div className="grid items-center gap-8 md:grid-cols-[1fr_auto_1fr]">
-          <div className="flex items-center gap-4 md:flex-col md:items-start">
-            {/* Icon files are already complete 59x59 tiles (dark
-                rounded-square + gradient border + glyph baked in), so no
-                wrapper background is needed — the drop shadow adds a red
-                "problem" glow without touching the tile art itself. */}
-            <Image
-              src="/images/icon-missed.svg"
-              alt="Missed call icon representing a lost customer"
-              width={59}
-              height={59}
-              className="h-[59px] w-[59px] flex-none drop-shadow-[0_0_20px_rgba(239,68,68,0.25)]"
-            />
-            <p className="text-[15.5px] font-medium text-white/60">{row.problem}</p>
-          </div>
-          <div className="hidden items-center justify-center md:flex">
-            <svg width="24" height="12" viewBox="0 0 24 12" fill="none" aria-hidden>
-              <path d="M1 6h20m0 0l-6-5m6 5l-6 5" stroke="rgba(255,255,255,0.22)" strokeWidth="1.5" strokeLinecap="round" />
-            </svg>
-          </div>
-          <div className="flex items-center gap-4 md:flex-col md:items-start">
-            <Image
-              src="/images/icon-viking-mark.svg"
-              alt={`Viking Marketing ${row.solution} icon`}
-              width={59}
-              height={59}
-              className="h-[59px] w-[59px] flex-none drop-shadow-[0_0_20px_rgba(139,92,246,0.35)]"
-            />
-            <p className="text-[16px] font-semibold text-white">{row.solution}</p>
-          </div>
-        </div>
-
-        <div className="mt-6 flex flex-wrap items-center justify-between gap-4">
-          <p className="font-heading text-[19px] font-bold leading-snug text-white">{row.headline}</p>
-          <Link
-            href={row.href}
-            className="inline-flex flex-none items-center gap-1.5 rounded-full border border-white/15 px-4 py-2 text-[13.5px] font-medium text-white transition hover:border-[#efa4f2]/50 hover:bg-white/[0.04] hover:text-[#efa4f2]"
+        {/* Keyed on the active row so switching tabs crossfades the panel's
+            content instead of snapping instantly. */}
+        <AnimatePresence mode="wait" initial={false}>
+          <motion.div
+            key={row.solution}
+            initial={{ opacity: 0, x: 12 }}
+            animate={{ opacity: 1, x: 0 }}
+            exit={{ opacity: 0, x: -12 }}
+            transition={{ duration: 0.28, ease: [0.16, 1, 0.3, 1] }}
           >
-            Learn More
-            <svg width="14" height="10" viewBox="0 0 14 10" fill="none" aria-hidden>
-              <path d="M1 5h12m0 0L9 1m4 4L9 9" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-            </svg>
-          </Link>
-        </div>
-
-        {row.images ? (
-          <div className="mt-5 flex items-stretch justify-between gap-4">
-            {row.images.map((src, idx) => (
-              <div key={src} className="w-[31.5%] overflow-hidden rounded-xl">
+            <div className="grid items-center gap-8 md:grid-cols-[1fr_auto_1fr]">
+              <div className="flex items-center gap-4 md:flex-col md:items-start">
+                {/* Icon files are already complete 59x59 tiles (dark
+                    rounded-square + gradient border + glyph baked in), so no
+                    wrapper background is needed — the drop shadow adds a red
+                    "problem" glow without touching the tile art itself. */}
                 <Image
-                  src={src}
-                  alt={idx === 0 ? row.imageAlt : ""}
-                  width={182}
-                  height={121}
-                  className="h-auto w-full"
+                  src="/images/icon-missed.svg"
+                  alt="Missed call icon representing a lost customer"
+                  width={59}
+                  height={59}
+                  className="h-[59px] w-[59px] flex-none drop-shadow-[0_0_20px_rgba(239,68,68,0.25)]"
                 />
+                <p className="text-[15.5px] font-medium text-white/60">{row.problem}</p>
               </div>
-            ))}
-          </div>
-        ) : (
-          <div className="mt-5 overflow-hidden rounded-xl border border-white/10 bg-black/30 shadow-[0_16px_50px_rgba(0,0,0,0.35)]">
-            {row.image ? (
-              <Image src={row.image} alt={row.imageAlt} width={1144} height={296} className="w-full object-cover" />
+              <div className="hidden items-center justify-center md:flex">
+                <svg width="24" height="12" viewBox="0 0 24 12" fill="none" aria-hidden>
+                  <path d="M1 6h20m0 0l-6-5m6 5l-6 5" stroke="rgba(255,255,255,0.22)" strokeWidth="1.5" strokeLinecap="round" />
+                </svg>
+              </div>
+              <div className="flex items-center gap-4 md:flex-col md:items-start">
+                <Image
+                  src="/images/icon-viking-mark.svg"
+                  alt={`Viking Marketing ${row.solution} icon`}
+                  width={59}
+                  height={59}
+                  className="h-[59px] w-[59px] flex-none drop-shadow-[0_0_20px_rgba(139,92,246,0.35)]"
+                />
+                <p className="text-[16px] font-semibold text-white">{row.solution}</p>
+              </div>
+            </div>
+
+            <div className="mt-6 flex flex-wrap items-center justify-between gap-4">
+              <p className="font-heading text-[19px] font-bold leading-snug text-white">{row.headline}</p>
+              <Link
+                href={row.href}
+                className="inline-flex flex-none items-center gap-1.5 rounded-full border border-white/15 px-4 py-2 text-[13.5px] font-medium text-white transition hover:border-[#efa4f2]/50 hover:bg-white/[0.04] hover:text-[#efa4f2]"
+              >
+                Learn More
+                <svg width="14" height="10" viewBox="0 0 14 10" fill="none" aria-hidden>
+                  <path d="M1 5h12m0 0L9 1m4 4L9 9" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+                </svg>
+              </Link>
+            </div>
+
+            {row.images ? (
+              <div className="mt-5 flex items-stretch justify-between gap-4">
+                {row.images.map((src, idx) => (
+                  <div key={src} className="w-[31.5%] overflow-hidden rounded-xl">
+                    <Image
+                      src={src}
+                      alt={idx === 0 ? row.imageAlt : ""}
+                      width={182}
+                      height={121}
+                      className="h-auto w-full"
+                    />
+                  </div>
+                ))}
+              </div>
             ) : (
-              <SocialMarquee />
+              <div className="mt-5 overflow-hidden rounded-xl border border-white/10 bg-black/30 shadow-[0_16px_50px_rgba(0,0,0,0.35)]">
+                {row.image ? (
+                  <Image src={row.image} alt={row.imageAlt} width={1144} height={296} className="w-full object-cover" />
+                ) : (
+                  <SocialMarquee />
+                )}
+              </div>
             )}
-          </div>
-        )}
+          </motion.div>
+        </AnimatePresence>
       </div>
     </div>
   );
