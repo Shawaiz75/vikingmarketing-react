@@ -295,12 +295,17 @@ export default function HomePage() {
           <h1 className="relative mx-auto mt-6 max-w-[1300px] font-heading text-[clamp(38px,4.62vw,62px)] font-bold leading-[1.29] tracking-[-0.035em] text-white">
             The{" "}
             <span className="relative sm:whitespace-nowrap">
+              {/* Below sm the phrase can still wrap onto two lines (nowrap
+                  there would risk pushing it wider than the viewport), and
+                  these corner-pinned sparkles would land on the wrapped
+                  letters instead of hugging one edge - so they only render
+                  once nowrap keeps the phrase on a single line. */}
               <Image
                 src="/images/hero-sparkle.svg"
                 alt=""
                 width={26}
                 height={26}
-                className="absolute -left-4 -top-3 h-5 w-5 md:h-6 md:w-6"
+                className="absolute -left-4 -top-3 hidden h-5 w-5 sm:block md:h-6 md:w-6"
                 aria-hidden
               />
               <em className="accent-italic">AI Appointment Setter</em>
@@ -309,7 +314,7 @@ export default function HomePage() {
                 alt=""
                 width={18}
                 height={18}
-                className="absolute -bottom-2 -right-2 h-4 w-4"
+                className="absolute -bottom-2 -right-2 hidden h-4 w-4 sm:block"
                 aria-hidden
               />
             </span>{" "}
@@ -345,7 +350,7 @@ export default function HomePage() {
                       width={124}
                       height={124}
                       aria-hidden
-                      className="h-[76px] w-[76px] transition-transform duration-200 group-hover:scale-105"
+                      className="h-[92px] w-[92px] transition-transform duration-200 group-hover:scale-105"
                     />
                     {/* Hand-drawn curved arrow + handwritten label (one asset). */}
                     <Image
@@ -388,7 +393,7 @@ export default function HomePage() {
                 height={1413}
                 priority
                 sizes="100vw"
-                className="w-[100vw] min-w-[620px] max-w-none shrink-0 -translate-y-[68%] md:min-w-[1200px]"
+                className="w-[100vw] max-w-none shrink-0 -translate-y-[68%] sm:min-w-[620px] md:min-w-[1200px]"
               />
             </span>
             {/* Supplied Background2.png, used unmodified at its original
