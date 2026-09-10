@@ -413,7 +413,10 @@ export default function HomePage() {
       </section>
 
       {/* -------------------------- AS FEATURED IN ------------------------ */}
-      <section className="section">
+      {/* Tighter than the standard section rhythm on purpose: this is a
+          compact logo strip, not a full content block, so it doesn't need
+          the same breathing room on either side. */}
+      <section className="section !py-10 md:!py-14">
         <div className="wrap">
           <p className="text-center text-[13px] font-semibold uppercase tracking-[0.2em] text-white/45">
             Featured across 40+ news networks
