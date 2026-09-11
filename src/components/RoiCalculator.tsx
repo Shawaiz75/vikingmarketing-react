@@ -3,73 +3,95 @@
 import { useState } from "react";
 import Link from "next/link";
 
-const fmt = (n: number) =>
-  n.toLocaleString("en-US", { style: "currency", currency: "USD", maximumFractionDigits: 0 });
+const money = (n: number) => "$" + Math.round(n).toLocaleString("en-US");
 
-/**
- * Missed Call ROI Calculator.
- * Lost revenue = missed calls × close rate × average value.
- * Recovered revenue assumes a conservative 60% recovery rate.
- * ROI = (recovered − monthly cost) ÷ monthly cost.
- */
+/** Missed Call ROI Calculator.
+ *  Lost revenue = missed calls × close rate × average value.
+ *  Recovered revenue assumes a conservative 60% recovery rate, because no
+ *  tool catches 100% - stated in the page copy right below this component. */
+const RECOVERY = 0.6;
+
+const fieldClass =
+  "w-full rounded-xl border border-[#c17ded]/30 bg-black/30 px-4 py-3.5 text-[16px] text-white outline-none transition focus:border-[#8b5cf6] focus:shadow-[0_0_0_3px_rgba(92,29,232,0.3)]";
+
+function ResultRow({
+  label,
+  value,
+  highlight,
+  last,
+}: {
+  label: string;
+  value: string;
+  highlight?: boolean;
+  last?: boolean;
+}) {
+  return (
+    <div
+      className={`flex items-center justify-between gap-4 py-3 text-[14.5px] ${
+        last ? "" : "border-b border-dashed border-white/10"
+      }`}
+    >
+      <span className="text-white/60">{label}</span>
+      <span className={`font-heading font-bold ${highlight ? "text-[17px] text-[#efa4f2]" : "text-white"}`}>
+        {value}
+      </span>
+    </div>
+  );
+}
+
 export default function RoiCalculator() {
-  const [missedCalls, setMissedCalls] = useState(40);
-  const [closeRate, setCloseRate] = useState(30);
+  const [calls, setCalls] = useState(40);
   const [avgValue, setAvgValue] = useState(400);
-  const [monthlyCost, setMonthlyCost] = useState(297);
+  const [closeRatePct, setCloseRatePct] = useState(30);
+  const [cost, setCost] = useState(297);
 
-  const lost = missedCalls * (closeRate / 100) * avgValue;
-  const recovered = lost * 0.6;
-  const net = recovered - monthlyCost;
-  const roi = monthlyCost > 0 ? (net / monthlyCost) * 100 : 0;
-
-  const field = "mt-2 w-full rounded-xl border border-white/15 bg-white/[0.04] px-4 py-3 text-[16px] text-white outline-none transition focus:border-[#8b5cf6]";
+  const closeRate = Math.max(0, Math.min(100, closeRatePct)) / 100;
+  const lostCustomers = calls * closeRate;
+  const lostRevenue = lostCustomers * avgValue;
+  const recovered = lostRevenue * RECOVERY;
+  const net = recovered - cost;
+  const roi = cost > 0 ? (net / cost) * 100 : 0;
 
   return (
-    <div className="card-strong grid gap-0 overflow-hidden lg:grid-cols-2">
+    <div className="grid gap-6 lg:grid-cols-2">
       {/* Inputs */}
-      <div className="p-7 sm:p-9">
-        <h2 className="font-heading text-2xl font-bold text-white">Your Numbers</h2>
-        <div className="mt-6 space-y-6">
-          <div>
-            <label htmlFor="roi-missed" className="text-[14.5px] font-medium text-white/80">
-              Missed calls per month
-            </label>
-            <input
-              id="roi-missed"
-              type="number"
-              min={0}
-              max={2000}
-              value={missedCalls}
-              onChange={(e) => setMissedCalls(Math.max(0, Number(e.target.value)))}
-              className={field}
-            />
-          </div>
-          <div>
-            <div className="flex items-center justify-between">
-              <label htmlFor="roi-close" className="text-[14.5px] font-medium text-white/80">
-                Close rate
-              </label>
-              <span className="text-[14.5px] font-semibold text-[#efa4f2]">{closeRate}%</span>
-            </div>
-            <input
-              id="roi-close"
-              type="range"
-              min={5}
-              max={80}
-              step={1}
-              value={closeRate}
-              onChange={(e) => setCloseRate(Number(e.target.value))}
-              className="mt-3 w-full accent-[#8b5cf6]"
-            />
-            <p className="mt-1.5 text-[12.5px] text-white/45">
-              Most service businesses land between 20% and 40%.
-            </p>
-          </div>
-          <div>
-            <label htmlFor="roi-value" className="text-[14.5px] font-medium text-white/80">
-              Average customer value ($)
-            </label>
+      <div className="card-strong rounded-[22px] p-7 sm:p-8">
+        <h2 className="flex items-center gap-2.5 font-heading text-[19px] font-bold text-white">
+          <span
+            aria-hidden
+            className="h-[9px] w-[9px] flex-none rounded-full bg-[#efa4f2] shadow-[0_0_12px_#efa4f2]"
+          />
+          Your Numbers
+        </h2>
+
+        <div className="mt-6">
+          <label htmlFor="roi-calls" className="block text-[14px] font-semibold text-white">
+            Missed calls per month{" "}
+            <span className="font-normal text-white/45">(calls that go unanswered)</span>
+          </label>
+          <input
+            id="roi-calls"
+            type="number"
+            min={0}
+            max={2000}
+            value={calls}
+            onChange={(e) => setCalls(Math.max(0, Number(e.target.value)))}
+            className={`mt-2 ${fieldClass}`}
+          />
+        </div>
+
+        <div className="mt-6">
+          <label htmlFor="roi-value" className="block text-[14px] font-semibold text-white">
+            Average job / customer value{" "}
+            <span className="font-normal text-white/45">(what one new customer is worth)</span>
+          </label>
+          <div className="relative mt-2">
+            <span
+              aria-hidden
+              className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 font-semibold text-[#efa4f2]"
+            >
+              $
+            </span>
             <input
               id="roi-value"
               type="number"
@@ -77,63 +99,97 @@ export default function RoiCalculator() {
               max={100000}
               value={avgValue}
               onChange={(e) => setAvgValue(Math.max(0, Number(e.target.value)))}
-              className={field}
+              className={`${fieldClass} pl-8`}
             />
           </div>
-          <div>
-            <label htmlFor="roi-cost" className="text-[14.5px] font-medium text-white/80">
-              Monthly cost to fix it ($)
+        </div>
+
+        <div className="mt-6">
+          <div className="flex items-baseline justify-between">
+            <label htmlFor="roi-close" className="text-[14px] font-semibold text-white">
+              Close rate
             </label>
+            <span className="font-heading text-[16px] font-bold text-[#efa4f2]">
+              {Math.round(closeRate * 100)}%
+            </span>
+          </div>
+          <input
+            id="roi-close"
+            type="range"
+            min={1}
+            max={100}
+            step={1}
+            value={closeRatePct}
+            onChange={(e) => setCloseRatePct(Number(e.target.value))}
+            className="mt-3 w-full accent-[#8b5cf6]"
+          />
+          <p className="mt-1.5 text-[12.5px] text-white/45">The % of leads you typically win</p>
+        </div>
+
+        <div className="mt-6">
+          <label htmlFor="roi-cost" className="block text-[14px] font-semibold text-white">
+            Monthly cost of the solution{" "}
+            <span className="font-normal text-white/45">(what you&apos;d pay to catch these calls)</span>
+          </label>
+          <div className="relative mt-2">
+            <span
+              aria-hidden
+              className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 font-semibold text-[#efa4f2]"
+            >
+              $
+            </span>
             <input
               id="roi-cost"
               type="number"
-              min={1}
+              min={0}
               max={10000}
-              value={monthlyCost}
-              onChange={(e) => setMonthlyCost(Math.max(1, Number(e.target.value)))}
-              className={field}
+              value={cost}
+              onChange={(e) => setCost(Math.max(0, Number(e.target.value)))}
+              className={`${fieldClass} pl-8`}
             />
-            <p className="mt-1.5 text-[12.5px] text-white/45">Viking plans start at $297/month.</p>
           </div>
+          <p className="mt-1.5 text-[12.5px] text-white/45">Viking plans start at $297/month.</p>
         </div>
       </div>
 
       {/* Results */}
-      <div className="border-t border-white/10 bg-gradient-to-b from-[#8547f6]/15 to-transparent p-7 sm:p-9 lg:border-l lg:border-t-0">
-        <h3 className="font-heading text-2xl font-bold text-white">Your Result</h3>
-        <dl className="mt-6 space-y-5" aria-live="polite">
-          <div className="flex items-end justify-between gap-4 border-b border-white/10 pb-5">
-            <dt className="text-[14.5px] text-white/70">Lost revenue per month</dt>
-            <dd className="font-heading text-3xl font-bold text-[#f87171]">{fmt(lost)}</dd>
-          </div>
-          <div className="flex items-end justify-between gap-4 border-b border-white/10 pb-5">
-            <dt className="text-[14.5px] text-white/70">
-              Realistically recoverable
-              <span className="block text-[12px] text-white/45">at a conservative 60% recovery rate</span>
-            </dt>
-            <dd className="font-heading text-3xl font-bold text-white">{fmt(recovered)}</dd>
-          </div>
-          <div className="flex items-end justify-between gap-4 border-b border-white/10 pb-5">
-            <dt className="text-[14.5px] text-white/70">Net monthly gain</dt>
-            <dd className="font-heading text-3xl font-bold text-[#37ca37]">{fmt(net)}</dd>
-          </div>
-          <div className="flex items-end justify-between gap-4">
-            <dt className="text-[14.5px] text-white/70">Return on investment</dt>
-            <dd className="grad-text font-heading text-4xl font-bold">
-              {roi >= 0 ? "" : "−"}
-              {Math.floor(Math.abs(roi)).toLocaleString()}%
-            </dd>
-          </div>
+      <div className="card-strong overflow-hidden rounded-[22px]">
+        <div className="border-b border-white/10 px-6 py-7 text-center" aria-live="polite">
+          <p className="text-[13px] font-semibold uppercase tracking-[1.5px] text-white/50">
+            Lost revenue per month
+          </p>
+          <p
+            className="mt-2 bg-clip-text font-heading text-[clamp(36px,7vw,54px)] font-extrabold leading-[1.05] text-transparent"
+            style={{ backgroundImage: "linear-gradient(100deg, #fff, #efa4f2)" }}
+          >
+            {money(lostRevenue)}
+          </p>
+          <p className="text-[13.5px] text-white/50">about {money(lostRevenue * 12)} per year</p>
+        </div>
+
+        <dl className="px-6 py-2 sm:px-7">
+          <ResultRow label="Potential customers missed / mo" value={Math.round(lostCustomers).toLocaleString("en-US")} />
+          <ResultRow label="Revenue you could recover / mo" value={money(recovered)} highlight />
+          <ResultRow label="Solution cost / mo" value={money(cost)} />
+          <ResultRow label="Net gain / mo" value={money(net)} last />
         </dl>
-        <Link
-          href="/missed-call-text-back"
-          className="mt-8 inline-flex items-center gap-2 text-[15px] font-medium text-[#efa4f2] hover:text-white"
-        >
-          Recover these calls
-          <svg width="14" height="10" viewBox="0 0 14 10" fill="none" aria-hidden>
-            <path d="M1 5h12m0 0L9 1m4 4L9 9" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-          </svg>
-        </Link>
+
+        <div className="mx-6 rounded-2xl border border-[#c17ded]/25 bg-gradient-to-br from-[#5c1de8]/35 to-[#370ac5]/25 p-4 text-center sm:mx-7">
+          <p className="text-[12.5px] font-semibold uppercase tracking-[1.5px] text-white/50">Estimated ROI</p>
+          <p className="mt-0.5 font-heading text-[30px] font-extrabold text-white">
+            {cost > 0 ? `${Math.round(roi).toLocaleString("en-US")}%` : "—"}
+          </p>
+        </div>
+
+        <div className="px-6 pb-7 pt-6 sm:px-7">
+          <Link
+            href="/missed-call-text-back"
+            className="block rounded-xl py-4 text-center font-heading text-[16px] font-bold text-white shadow-[0_10px_30px_rgba(92,29,232,0.45)] transition hover:-translate-y-0.5"
+            style={{ backgroundImage: "var(--grad-cta)" }}
+          >
+            Recover these calls →
+          </Link>
+        </div>
       </div>
     </div>
   );
