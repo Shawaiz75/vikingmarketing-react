@@ -54,7 +54,12 @@ export default function Footer() {
           </a>
         </div>
 
-        <nav aria-label="Footer" className="mt-14 grid grid-cols-2 gap-x-6 gap-y-12 sm:grid-cols-3 lg:grid-cols-5">
+        {/* Single column until md, then straight to all 5 - skipping the
+            2- and 3-column middle tiers on purpose: 5 columns doesn't
+            divide evenly by 2 or 3, so either would leave a ragged last
+            row (one or two columns orphaned with empty space beside them).
+            Only 1 or 5 columns keep every row evenly filled. */}
+        <nav aria-label="Footer" className="mt-14 grid grid-cols-1 gap-y-10 md:grid-cols-5 md:gap-x-6 md:gap-y-12">
           {FOOTER_COLUMNS.map((col) => (
             <div key={col.title}>
               <h3 className="font-heading text-[22px] font-bold text-white">{col.title}</h3>
