@@ -58,10 +58,19 @@ export default function Footer() {
             2- and 3-column middle tiers on purpose: 5 columns doesn't
             divide evenly by 2 or 3, so either would leave a ragged last
             row (one or two columns orphaned with empty space beside them).
-            Only 1 or 5 columns keep every row evenly filled. */}
-        <nav aria-label="Footer" className="mt-14 grid grid-cols-1 gap-y-10 md:grid-cols-5 md:gap-x-6 md:gap-y-12">
+            Only 1 or 5 columns keep every row evenly filled.
+
+            Columns hold different numbers of links (7-10), so even with
+            equal widths the link lists themselves end at very different
+            heights - a vertical rule between columns (spanning the grid's
+            full stretched row height) frames each as an equal panel, so
+            the row still reads as balanced regardless of link count. */}
+        <nav
+          aria-label="Footer"
+          className="mt-14 grid grid-cols-1 gap-y-10 md:grid-cols-5 md:gap-x-0 md:gap-y-12 md:divide-x md:divide-white/10"
+        >
           {FOOTER_COLUMNS.map((col) => (
-            <div key={col.title}>
+            <div key={col.title} className="md:px-6 md:first:pl-0 md:last:pr-0">
               <h3 className="font-heading text-[22px] font-bold text-white">{col.title}</h3>
               <ul className="mt-5 space-y-3">
                 {col.links.map((l, i) => (
