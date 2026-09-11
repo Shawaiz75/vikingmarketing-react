@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Image from "next/image";
+import Script from "next/script";
 import {
   pageMetadata,
   jsonLdGraph,
@@ -107,12 +108,21 @@ export default function BookACallPage() {
 
           <div id="booking" className="mx-auto mt-12 max-w-3xl">
             {BOOKING_WIDGET_URL ? (
-              <iframe
-                src={BOOKING_WIDGET_URL}
-                title="Book your free 15-minute strategy call"
-                className="min-h-[720px] w-full rounded-2xl border border-white/10 bg-white"
-                loading="lazy"
-              />
+              <>
+                <iframe
+                  id="v0P2h41GrhFypUZbJ8BT_1789149583132"
+                  src={BOOKING_WIDGET_URL}
+                  title="Book your free 15-minute strategy call"
+                  allow="payment"
+                  scrolling="no"
+                  className="min-h-[720px] w-full overflow-hidden rounded-2xl border-none bg-white"
+                />
+                {/* GoHighLevel's own script: listens for the widget's
+                    postMessage calls and resizes the iframe to fit its
+                    content, since the calendar's height changes as the
+                    visitor steps through booking. */}
+                <Script src="https://link.vikingmarketing.ai/js/form_embed.js" strategy="afterInteractive" />
+              </>
             ) : (
               <div className="card-strong px-8 py-14">
                 <p className="font-heading text-xl font-bold text-white">Pick a time with our team</p>
