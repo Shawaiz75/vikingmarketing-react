@@ -54,28 +54,26 @@ export default function Footer() {
           </a>
         </div>
 
-        {/* Single column until md, then straight to all 5 - skipping the
-            2- and 3-column middle tiers on purpose: 5 columns doesn't
-            divide evenly by 2 or 3, so either would leave a ragged last
-            row (one or two columns orphaned with empty space beside them).
-            Only 1 or 5 columns keep every row evenly filled.
-
-            Columns hold different numbers of links (7-10), so even with
-            equal widths the link lists themselves end at very different
-            heights - a vertical rule between columns (spanning the grid's
-            full stretched row height) frames each as an equal panel, so
-            the row still reads as balanced regardless of link count. */}
+        {/* Columns hold widely different link counts and label lengths
+            (e.g. "Lead & Customer Tracking" vs "Blog"), so forcing 5 equal
+            grid tracks either wrapped the longer labels onto two lines or
+            needed dividers to look intentional. Flex + justify-between
+            instead sizes each column to its own content (never wraps a
+            label) and spreads the leftover row width evenly as gaps - so
+            spacing balances itself regardless of column width. Single
+            column below lg, where 5 natural-width columns wouldn't fit
+            on one line without wrapping the row itself. */}
         <nav
           aria-label="Footer"
-          className="mt-14 grid grid-cols-1 gap-y-10 md:grid-cols-5 md:gap-x-0 md:gap-y-12 md:divide-x md:divide-white/10"
+          className="mt-14 flex flex-col gap-y-10 lg:flex-row lg:flex-wrap lg:justify-between lg:gap-x-8 lg:gap-y-12"
         >
           {FOOTER_COLUMNS.map((col) => (
-            <div key={col.title} className="md:px-6 md:first:pl-0 md:last:pr-0">
-              <h3 className="font-heading text-[22px] font-bold text-white">{col.title}</h3>
+            <div key={col.title}>
+              <h3 className="whitespace-nowrap font-heading text-[22px] font-bold text-white">{col.title}</h3>
               <ul className="mt-5 space-y-3">
                 {col.links.map((l, i) => (
                   <li key={`${l.label}-${i}`}>
-                    <Link href={l.href} className="text-[16px] text-white/85 transition hover:text-white">
+                    <Link href={l.href} className="whitespace-nowrap text-[16px] text-white/85 transition hover:text-white">
                       {l.label}
                     </Link>
                   </li>
