@@ -3,6 +3,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { pageMetadata, jsonLdGraph, webPageLd, breadcrumbLd } from "@/lib/seo";
 import { JsonLd } from "@/components/ui";
+import HeroGlow from "@/components/HeroGlow";
 import BlogGrid from "@/components/BlogGrid";
 import { getPostsIndex, CATEGORIES, CATEGORY_DESCRIPTIONS } from "@/lib/blog";
 
@@ -48,9 +49,7 @@ export default async function CategoryPage({ params }: { params: Promise<Params>
     <>
       <JsonLd json={ld} />
       <section className="relative overflow-hidden pt-36 pb-10 md:pt-44">
-        <div className="grid-backdrop" aria-hidden>
-          <div className="grid-glow top-0" />
-        </div>
+        <HeroGlow />
         <div className="wrap relative text-center">
           <p className="eyebrow">Category</p>
           <h1 className="mt-3 font-heading text-[clamp(32px,4.6vw,54px)] font-bold text-white">{name}</h1>

@@ -15,6 +15,7 @@ import {
 } from "@/lib/seo";
 import { CtaButton, SectionHeading, JsonLd } from "@/components/ui";
 import Reveal from "@/components/Reveal";
+import HeroGlow from "@/components/HeroGlow";
 import HoverLift from "@/components/HoverLift";
 import StatPop from "@/components/StatPop";
 import FaqSection from "@/components/FaqSection";
@@ -404,15 +405,7 @@ export default function TemplatePage({ data }: { data: TemplatePageData }) {
           live site - stacked (copy, then art) below that, where there's no
           room for two columns. */}
       <section className="relative overflow-hidden pt-32 pb-14 md:pt-40">
-        <Image
-          src="/images/inner-hero-glow.webp"
-          alt=""
-          width={1200}
-          height={552}
-          priority
-          aria-hidden
-          className="pointer-events-none absolute inset-x-0 top-0 -z-10 h-auto w-full select-none"
-        />
+        <HeroGlow />
         <div className="wrap relative grid items-center gap-10 lg:grid-cols-2 lg:gap-16">
           <div className="text-center lg:text-left">
             {data.hero.badge ? <p className="text-[15px] text-white/80">{data.hero.badge}</p> : null}

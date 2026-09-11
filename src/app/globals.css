@@ -174,39 +174,6 @@ h1, h2, h3, .font-heading {
   background: linear-gradient(90deg, rgba(133, 71, 246, 0.1) 0%, rgba(183, 121, 245, 0.2) 96%);
 }
 
-/* Purple perspective grid backdrop (hero / final CTA) */
-.grid-backdrop {
-  position: absolute;
-  inset: 0;
-  overflow: hidden;
-  pointer-events: none;
-}
-.grid-backdrop::before {
-  content: "";
-  position: absolute;
-  inset: -10% -30%;
-  background-image:
-    linear-gradient(rgba(139, 92, 246, 0.14) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(139, 92, 246, 0.14) 1px, transparent 1px);
-  background-size: 72px 72px;
-  transform: perspective(620px) rotateX(58deg) translateY(-8%);
-  transform-origin: center top;
-  mask-image: radial-gradient(ellipse 75% 65% at 50% 20%, #000 35%, transparent 78%);
-}
-.grid-backdrop.grid-bottom::before {
-  transform: perspective(620px) rotateX(-58deg) translateY(8%);
-  transform-origin: center bottom;
-  mask-image: radial-gradient(ellipse 75% 65% at 50% 85%, #000 35%, transparent 78%);
-}
-.grid-backdrop .grid-glow {
-  position: absolute;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 90%;
-  height: 60%;
-  background: radial-gradient(ellipse at center, rgba(139, 92, 246, 0.28) 0%, transparent 65%);
-}
-
 /* Scroll-reveal animation — a slight scale is mixed into the usual
    fade+slide for more depth; eased with a expo-out curve (fast start,
    long soft settle) rather than plain "ease", closer to how premium

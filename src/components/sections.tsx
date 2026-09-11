@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { CtaButton, SectionHeading } from "./ui";
 import Reveal from "./Reveal";
+import CtaGlow from "./CtaGlow";
 import ReviewsCarousel from "./ReviewsCarousel";
 import { Star, GoogleG } from "./review-icons";
 import { CITY_LIST } from "@/lib/nav";
@@ -216,18 +217,7 @@ export function FinalCta({
 }) {
   return (
     <section className="section overflow-hidden">
-      {/* sm+ (where wrapped copy stays short) keeps the exact width-locked
-          aspect ratio this always used. Below that, mobile's much longer
-          line-wrap makes the section far taller than this image is wide,
-          so a width-locked image shrinks to a barely-there sliver behind
-          the CTA - a fixed min band + object-cover keeps a real glow
-          behind the button/phone line without stretching the image. */}
-      <div
-        className="pointer-events-none absolute inset-x-0 bottom-0 h-[260px] w-full select-none sm:aspect-[1200/427] sm:h-auto"
-        aria-hidden
-      >
-        <Image src="/images/final-cta-glow.webp" alt="" fill sizes="100vw" className="object-cover object-bottom" />
-      </div>
+      <CtaGlow />
       <div className="wrap relative text-center">
         <Reveal>
           <h2 className="mx-auto max-w-[1120px] font-heading text-[clamp(30px,3.9vw,52px)] font-bold leading-[1.5] text-white">

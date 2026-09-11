@@ -8,6 +8,7 @@ import {
 } from "@/lib/seo";
 import { CtaButton, SectionHeading, JsonLd } from "@/components/ui";
 import Reveal from "@/components/Reveal";
+import HeroGlow from "@/components/HeroGlow";
 import VideoModal from "@/components/VideoModal";
 import { ReviewsSection, FinalCta, CallNote, CityChips } from "@/components/sections";
 import { SITE_URL, PHONE_DISPLAY, PHONE_TEL, EMAIL, ADDRESS } from "@/lib/site";
@@ -61,9 +62,7 @@ export default function AboutPage() {
 
       {/* Hero */}
       <section className="relative overflow-hidden pt-36 pb-16 md:pt-44">
-        <div className="grid-backdrop" aria-hidden>
-          <div className="grid-glow top-0" />
-        </div>
+        <HeroGlow />
         <div className="wrap relative text-center">
           <h1 className="mx-auto max-w-4xl font-heading text-[clamp(32px,4.6vw,54px)] font-bold leading-[1.16] text-white">
             Too Many Good Businesses Lose Leads They Should Have Won. We Built Viking to Fix That.

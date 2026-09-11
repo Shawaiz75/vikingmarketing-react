@@ -10,6 +10,7 @@ import {
 } from "@/lib/seo";
 import { CtaButton, SectionHeading, JsonLd } from "@/components/ui";
 import Reveal from "@/components/Reveal";
+import HeroGlow from "@/components/HeroGlow";
 import FaqSection, { type Faq } from "@/components/FaqSection";
 import { ReviewsSection, FinalCta, CallNote } from "@/components/sections";
 
@@ -189,9 +190,7 @@ export default function PricingPage() {
 
       {/* Hero */}
       <section className="relative overflow-hidden pt-36 pb-14 md:pt-44">
-        <div className="grid-backdrop" aria-hidden>
-          <div className="grid-glow top-0" />
-        </div>
+        <HeroGlow />
         <div className="wrap relative text-center">
           <h1 className="mx-auto max-w-4xl font-heading text-[clamp(32px,4.6vw,54px)] font-bold leading-[1.16] text-white">
             One Flat Price. Every Tool Your Service Business Needs to Stop Losing Leads.

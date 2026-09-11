@@ -9,6 +9,8 @@ import {
 } from "@/lib/seo";
 import { SectionHeading, JsonLd, CtaButton } from "@/components/ui";
 import Reveal from "@/components/Reveal";
+import HeroGlow from "@/components/HeroGlow";
+import CtaGlow from "@/components/CtaGlow";
 import FaqSection, { type Faq } from "@/components/FaqSection";
 import { ReviewsSection } from "@/components/sections";
 import { BOOKING_WIDGET_URL, EMAIL, PHONE_DISPLAY, PHONE_TEL } from "@/lib/site";
@@ -90,9 +92,7 @@ export default function BookACallPage() {
 
       {/* Hero + booking widget */}
       <section className="relative overflow-hidden pt-36 pb-14 md:pt-44">
-        <div className="grid-backdrop" aria-hidden>
-          <div className="grid-glow top-0" />
-        </div>
+        <HeroGlow />
         <div className="wrap relative text-center">
           <h1 className="mx-auto max-w-3xl font-heading text-[clamp(32px,4.6vw,54px)] font-bold leading-[1.16] text-white">
             Book Your Free 15-Minute Strategy Call
@@ -183,9 +183,7 @@ export default function BookACallPage() {
 
       {/* Final CTA */}
       <section className="section overflow-hidden">
-        <div className="grid-backdrop grid-bottom" aria-hidden>
-          <div className="grid-glow bottom-0" />
-        </div>
+        <CtaGlow />
         <div className="wrap relative text-center">
           <h2 className="mx-auto max-w-3xl font-heading text-[clamp(30px,4.6vw,46px)] font-bold leading-[1.12] text-white">
             Stop Missing Leads. Book Your Free Strategy Call Now.

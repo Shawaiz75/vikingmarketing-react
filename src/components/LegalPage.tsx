@@ -1,4 +1,5 @@
 import type { ReactNode } from "react";
+import HeroGlow from "@/components/HeroGlow";
 
 /** Simple prose layout for Privacy Policy / Terms pages. */
 export default function LegalPage({
@@ -12,9 +13,7 @@ export default function LegalPage({
 }) {
   return (
     <section className="relative overflow-hidden pt-36 pb-20 md:pt-44">
-      <div className="grid-backdrop" aria-hidden>
-        <div className="grid-glow top-0" />
-      </div>
+      <HeroGlow />
       <div className="wrap relative max-w-3xl">
         <h1 className="font-heading text-[clamp(32px,4.6vw,50px)] font-bold leading-[1.15] text-white">
           {title}

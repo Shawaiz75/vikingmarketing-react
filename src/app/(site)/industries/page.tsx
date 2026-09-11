@@ -3,6 +3,7 @@ import Link from "next/link";
 import { pageMetadata, jsonLdGraph, webPageLd } from "@/lib/seo";
 import { SectionHeading, JsonLd } from "@/components/ui";
 import Reveal from "@/components/Reveal";
+import HeroGlow from "@/components/HeroGlow";
 import { FinalCta, CallNote } from "@/components/sections";
 import { INDUSTRY_LINKS } from "@/lib/nav";
 
@@ -30,9 +31,7 @@ export default function IndustriesPage() {
       <JsonLd json={ld} />
 
       <section className="relative overflow-hidden pt-36 pb-10 md:pt-44">
-        <div className="grid-backdrop" aria-hidden>
-          <div className="grid-glow top-0" />
-        </div>
+        <HeroGlow />
         <div className="wrap relative text-center">
           <h1 className="mx-auto max-w-3xl font-heading text-[clamp(32px,4.6vw,54px)] font-bold leading-[1.16] text-white">
             Find Viking for Your Industry

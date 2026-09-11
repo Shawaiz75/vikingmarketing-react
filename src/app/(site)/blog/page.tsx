@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { pageMetadata, jsonLdGraph, webPageLd, breadcrumbLd } from "@/lib/seo";
 import { JsonLd } from "@/components/ui";
+import HeroGlow from "@/components/HeroGlow";
 import BlogGrid from "@/components/BlogGrid";
 import { getPostsIndex } from "@/lib/blog";
 import { CATEGORIES } from "@/lib/blog-constants";
@@ -32,9 +33,7 @@ export default function BlogIndexPage() {
     <>
       <JsonLd json={ld} />
       <section className="relative overflow-hidden pt-36 pb-10 md:pt-44">
-        <div className="grid-backdrop" aria-hidden>
-          <div className="grid-glow top-0" />
-        </div>
+        <HeroGlow />
         <div className="wrap relative text-center">
           <h1 className="font-heading text-[clamp(32px,4.6vw,54px)] font-bold text-white">
             The Viking Marketing Blog
