@@ -94,30 +94,6 @@ export default function Footer() {
           </p>
         </div>
       </div>
-
-      {/* Floating chat/help bubble (mirrors the live site's chat widget button).
-          When a real chat widget is wired up via GTM it replaces this launcher.
-          Sits above the sticky CTA bar's ~70px height (bottom-24 = 96px)
-          rather than its old bottom-5, so the two never overlap. */}
-      <Link
-        href="/book-a-call"
-        aria-label="Chat with the Viking Marketing team"
-        className="fixed bottom-24 right-5 z-50 inline-flex h-14 w-14 items-center justify-center rounded-full bg-[#8b5cf6] shadow-[0_10px_40px_rgba(139,92,246,0.5)] transition hover:scale-105"
-      >
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden>
-          <path
-            d="M4 6a3 3 0 0 1 3-3h10a3 3 0 0 1 3 3v7a3 3 0 0 1-3 3H9l-4.2 3.36A.5.5 0 0 1 4 18.97V6Z"
-            fill="#fff"
-          />
-          <circle cx="9" cy="9.5" r="1.1" fill="#8b5cf6" />
-          <circle cx="12.5" cy="9.5" r="1.1" fill="#8b5cf6" />
-          <circle cx="16" cy="9.5" r="1.1" fill="#8b5cf6" />
-        </svg>
-        <span
-          className="absolute bottom-1 right-1 h-3 w-3 rounded-full border-2 border-[#020114] bg-[#22c55e]"
-          aria-hidden
-        />
-      </Link>
     </footer>
   );
 }

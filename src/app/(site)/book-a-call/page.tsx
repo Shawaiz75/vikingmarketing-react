@@ -106,7 +106,7 @@ export default function BookACallPage() {
             Rated 5.0 from 21 Google reviews · Built in Chandler, Arizona
           </p>
 
-          <div id="booking" className="mx-auto mt-12 max-w-3xl">
+          <div id="booking" className="mx-auto mt-12 max-w-5xl">
             {BOOKING_WIDGET_URL ? (
               <>
                 <iframe
