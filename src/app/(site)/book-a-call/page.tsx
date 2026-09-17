@@ -115,7 +115,7 @@ export default function BookACallPage() {
                   title="Book your free 15-minute strategy call"
                   allow="payment"
                   scrolling="no"
-                  className="min-h-[720px] w-full overflow-hidden rounded-2xl border-none bg-white"
+                  className="w-full overflow-hidden rounded-2xl border-none bg-white"
                 />
                 {/* GoHighLevel's own script: listens for the widget's
                     postMessage calls and resizes the iframe to fit its
