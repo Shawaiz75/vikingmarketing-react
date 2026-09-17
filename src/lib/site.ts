@@ -28,6 +28,10 @@ export const GOOGLE_MAPS_URL =
 
 // Integrations — set these in .env.local (see .env.example). Never hardcode IDs.
 export const GTM_ID = process.env.NEXT_PUBLIC_GTM_ID || "";
+export const GA_ID = process.env.NEXT_PUBLIC_GA_ID || "";
+export const CLARITY_ID = process.env.NEXT_PUBLIC_CLARITY_ID || "";
+export const CLOSEBOT_SOURCE = process.env.NEXT_PUBLIC_CLOSEBOT_SOURCE || "";
+export const SEARCHATLAS_UUID = process.env.NEXT_PUBLIC_SEARCHATLAS_UUID || "";
 export const BOOKING_WIDGET_URL = process.env.NEXT_PUBLIC_BOOKING_WIDGET_URL || "";
 
 export const ORG_LOGO = "/images/logo.svg";
