@@ -4,7 +4,7 @@ const data: TemplatePageData = {
   slug: "crm-with-invoicing",
   breadcrumbName: "CRM With Invoicing",
   seo: {
-    title: "CRM With Invoicing: Get Paid Faster | Free Demo | Viking",
+    title: "CRM With Invoicing: Get Paid Faster | Free Demo | Viking Marketing",
     description:
       "Get paid faster with a CRM with invoicing that sends estimates and invoices by text or email, automates reminders, and tracks every payment in one place.",
     ogImage: "/images/6a29e2e11388fabc64b3-31ed93ae85e0.webp",

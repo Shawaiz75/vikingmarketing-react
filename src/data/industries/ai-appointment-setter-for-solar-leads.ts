@@ -16,7 +16,7 @@ const data: TemplatePageData = {
     ],
   },
   schema: {
-    kinds: ["localBusiness", "person", "service", "webPage", "howTo", "faq"],
+    kinds: ["organization", "person", "service", "webPage", "howTo", "faq"],
     serviceName: "AI Appointment Setter for Solar Leads",
     serviceDescription:
       "Viking's AI Appointment Setter for Solar Leads answers every lead in seconds, qualifies homeownership & utility spend, and books the consultation.",

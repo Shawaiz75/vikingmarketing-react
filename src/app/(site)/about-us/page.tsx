@@ -11,7 +11,7 @@ import Reveal from "@/components/Reveal";
 import HeroGlow from "@/components/HeroGlow";
 import VideoModal from "@/components/VideoModal";
 import { ReviewsSection, FinalCta, CallNote, CityChips } from "@/components/sections";
-import { SITE_URL, PHONE_DISPLAY, PHONE_TEL, EMAIL, ADDRESS } from "@/lib/site";
+import { SITE_URL, PHONE_DISPLAY, PHONE_TEL, EMAIL, ADDRESS, RATING } from "@/lib/site";
 
 export const metadata: Metadata = pageMetadata({
   title: "About Viking Marketing | AI CRM for Local Service Businesses",
@@ -78,7 +78,7 @@ export default function AboutPage() {
             <CtaButton href="/book-a-call">Book a Free Demo</CtaButton>
           </div>
           <p className="mt-6 text-[14.5px] text-white/70">
-            Built in Chandler, Arizona. Rated 5.0 from 21 Google reviews.
+            Built in Chandler, Arizona. Rated {RATING.value} from {RATING.count} Google reviews.
           </p>
         </div>
       </section>

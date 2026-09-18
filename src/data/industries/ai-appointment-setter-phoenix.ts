@@ -1,4 +1,22 @@
 import type { TemplatePageData } from "@/lib/templates";
+import { RATING } from "@/lib/site";
+
+// The one page where LocalBusiness is genuinely defensible: a real,
+// geographically bounded service area, not the "US" nationwide claim the
+// national vertical pages used to carry. Keep this city list in sync with
+// CITY_LIST in lib/nav.ts.
+const PHOENIX_METRO_CITIES = [
+  "Phoenix",
+  "Scottsdale",
+  "Tempe",
+  "Mesa",
+  "Chandler",
+  "Gilbert",
+  "Glendale",
+  "Peoria",
+  "Surprise",
+  "Goodyear",
+];
 
 const data: TemplatePageData = {
   slug: "ai-appointment-setter-phoenix",
@@ -15,6 +33,7 @@ const data: TemplatePageData = {
     serviceName: "AI Appointment Setter in Phoenix",
     serviceDescription:
       "Viking's AI appointment setter answers every lead that reaches a Phoenix business in seconds, qualifies them, and books the appointment, day or night.",
+    areaServed: PHOENIX_METRO_CITIES,
     howTo: {
       name: "How the AI Appointment Setter Works",
       description:
@@ -28,7 +47,7 @@ const data: TemplatePageData = {
     ctaLabel: "Book a Free Demo",
     image: "/images/6a399b0b7b00529580aa-eb15b1f47524.webp",
     imageAlt: "AI Appointment Setter in Phoenix",
-    checkLines: ["✓ Built and run from Chandler, Arizona ✓ 5.0 from 21 Google reviews ✓ Live in 48 hours"],
+    checkLines: [`✓ Built and run from Chandler, Arizona ✓ 5.0 from ${RATING.count} Google reviews ✓ Live in 48 hours`],
   },
   sections: [
     {

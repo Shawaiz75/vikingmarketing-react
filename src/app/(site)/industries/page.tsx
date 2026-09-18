@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { pageMetadata, jsonLdGraph, webPageLd } from "@/lib/seo";
+import { pageMetadata, jsonLdGraph, webPageLd, itemListLd } from "@/lib/seo";
 import { SectionHeading, JsonLd } from "@/components/ui";
 import Reveal from "@/components/Reveal";
 import HeroGlow from "@/components/HeroGlow";
@@ -23,6 +23,10 @@ export default function IndustriesPage() {
       name: "Industries | Viking Marketing",
       description:
         "Viking serves dental practices, med spas, gyms, home services, real estate, and salons. Find your industry and see how it works.",
+    }),
+    itemListLd({
+      name: "Industries Viking Marketing Serves",
+      items: INDUSTRY_LINKS.map((l) => ({ name: l.label, path: l.href })),
     }),
   ]);
 

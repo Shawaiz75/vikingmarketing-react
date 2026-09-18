@@ -248,33 +248,25 @@ export function CallNote({ text = "Speak to a real human in Chandler, AZ" }: { t
   );
 }
 
-/** Arizona city chip grid (Chandler section / locations). Only Phoenix has a page today. */
-export function CityChips({ linkPhoenix = true }: { linkPhoenix?: boolean }) {
+/** Arizona city chip grid (Chandler section / locations). Every city now has
+ *  its own real page — see CITY_LIST in lib/nav.ts. */
+export function CityChips() {
   return (
     <div className="card-strong px-6 py-6">
       <ul className="grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-5">
-        {CITY_LIST.map((city) => {
-          const isPhoenix = city === "Phoenix" && linkPhoenix;
-          const inner = (
-            <span className="font-heading flex w-full items-center justify-between gap-2 rounded-xl border border-white/10 bg-[#0b0920]/90 px-4 py-3.5 text-[17px] font-medium text-white transition hover:border-white/25">
-              {city}
+        {CITY_LIST.map((city) => (
+          <li key={city.href}>
+            <Link
+              href={city.href}
+              className="font-heading flex w-full items-center justify-between gap-2 rounded-xl border border-white/10 bg-[#0b0920]/90 px-4 py-3.5 text-[17px] font-medium text-white transition hover:border-white/25"
+            >
+              {city.name}
               <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden>
                 <path d="M2 10 10 2M4 2h6v6" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
               </svg>
-            </span>
-          );
-          return (
-            <li key={city}>
-              {isPhoenix ? (
-                <Link href="/ai-appointment-setter-phoenix">{inner}</Link>
-              ) : (
-                <button type="button" className="w-full cursor-default text-left" aria-label={`${city}, Arizona service area`}>
-                  {inner}
-                </button>
-              )}
-            </li>
-          );
-        })}
+            </Link>
+          </li>
+        ))}
       </ul>
     </div>
   );

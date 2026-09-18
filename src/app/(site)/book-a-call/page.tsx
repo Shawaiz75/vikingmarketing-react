@@ -4,7 +4,7 @@ import Script from "next/script";
 import {
   pageMetadata,
   jsonLdGraph,
-  localBusinessLd,
+  organizationLd,
   breadcrumbLd,
   faqLd,
 } from "@/lib/seo";
@@ -14,7 +14,7 @@ import HeroGlow from "@/components/HeroGlow";
 import CtaGlow from "@/components/CtaGlow";
 import FaqSection, { type Faq } from "@/components/FaqSection";
 import { ReviewsSection } from "@/components/sections";
-import { BOOKING_WIDGET_URL, EMAIL, PHONE_DISPLAY, PHONE_TEL } from "@/lib/site";
+import { BOOKING_WIDGET_URL, EMAIL, PHONE_DISPLAY, PHONE_TEL, RATING } from "@/lib/site";
 
 export const metadata: Metadata = pageMetadata({
   title: "Book a Free Strategy Call | Viking Marketing",
@@ -79,7 +79,7 @@ const FAQS: Faq[] = [
 
 export default function BookACallPage() {
   const ld = jsonLdGraph([
-    localBusinessLd(),
+    organizationLd(),
     breadcrumbLd([
       { name: "Home", path: "/" },
       { name: "Book a Call", path: "/book-a-call" },
@@ -103,7 +103,7 @@ export default function BookACallPage() {
             clear, honest look at what the platform does and whether it is the right fit.
           </p>
           <p className="mt-5 text-[14.5px] text-white/70">
-            Rated 5.0 from 21 Google reviews · Built in Chandler, Arizona
+            Rated {RATING.value} from {RATING.count} Google reviews · Built in Chandler, Arizona
           </p>
 
           <div id="booking" className="mx-auto mt-12 max-w-5xl">

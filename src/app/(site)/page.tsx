@@ -5,7 +5,6 @@ import {
   pageMetadata,
   jsonLdGraph,
   organizationLd,
-  localBusinessLd,
   webPageLd,
   howToLd,
   faqLd,
@@ -27,8 +26,13 @@ import {
   StepsSection,
 } from "@/components/sections";
 
+// Raw <picture> below (not next/image) needs this prefix itself under a
+// basePath build (GitHub Pages) — see image-loader.ts for why. Local dev,
+// Vercel, and the live Hostinger domain all leave it unset.
+const BASE_PATH = process.env.NEXT_PUBLIC_BASE_PATH || "";
+
 export const metadata: Metadata = pageMetadata({
-  title: "AI Appointment Setter & CRM for Local Service Businesses | Viking",
+  title: "AI Appointment Setter & CRM for Local Service Businesses | Viking Marketing",
   description:
     "Viking's AI appointment setter answers every lead, qualifies them, & books the job straight to your calendar. One platform for local service businesses.",
   path: "/",
@@ -265,7 +269,6 @@ const FAQS: Faq[] = [
 export default function HomePage() {
   const ld = jsonLdGraph([
     organizationLd(),
-    localBusinessLd(),
     webPageLd({
       path: "/",
       name: "AI Appointment Setter & CRM for Local Service Businesses | Viking Marketing",
@@ -287,7 +290,7 @@ export default function HomePage() {
       <JsonLd json={ld} />
 
       {/* ------------------------------ HERO ------------------------------ */}
-      <section className="relative overflow-hidden pt-36 pb-16 md:pt-44">
+      <section className="relative overflow-hidden pt-28 pb-16 md:pt-44">
         <div className="relative mx-auto w-full max-w-[1328px] px-6 text-center">
           <p className="text-[16px] text-white/80">
             ⚡ Built in Chandler · Serving local businesses across the U.S.
@@ -326,7 +329,7 @@ export default function HomePage() {
               secondary content, so a light cascading entrance here adds
               polish without touching LCP timing. */}
           <Reveal>
-            <p className="mx-auto mt-6 max-w-[1280px] text-[16px] leading-[2.1] text-white/80">
+            <p className="mx-auto mt-4 max-w-[1280px] text-[16px] leading-[1.85] text-white/80 md:mt-6 md:leading-[2.1]">
               Viking&apos;s AI never sleeps, never gets tired, and never lets a lead go cold. It
               replies, qualifies, and books the job, replacing 12 disconnected tools with one
               AI-powered platform. Built for dentists, gyms, med spas, home services, and local
@@ -335,7 +338,7 @@ export default function HomePage() {
           </Reveal>
 
           <Reveal delay={100}>
-            <div className="mt-9 flex flex-wrap items-center justify-center gap-6">
+            <div className="mt-6 flex flex-wrap items-center justify-center gap-6 md:mt-9">
               <CtaButton href="/book-a-call">Book Your Free Demo</CtaButton>
               <VideoModal
                 videoId="ktpSvngBNiA"
@@ -386,28 +389,42 @@ export default function HomePage() {
               className="pointer-events-none absolute inset-x-0 top-0 -z-10 flex justify-center"
               aria-hidden
             >
-              <Image
-                src="/images/hero-grid-bg.webp"
-                alt=""
-                width={2000}
-                height={1413}
-                priority
-                sizes="100vw"
-                className="w-[100vw] max-w-none shrink-0 -translate-y-[68%] sm:min-w-[620px] md:min-w-[1200px]"
-              />
+              {/* Real art-directed <picture> instead of next/image: the
+                  static-export custom loader can't generate resized
+                  variants, so without this every viewport downloaded the
+                  same 2000px master. A dedicated <=900px mobile export
+                  cuts that to ~5KB on phones instead of ~38KB. */}
+              <picture>
+                <source media="(max-width: 767px)" srcSet={`${BASE_PATH}/images/hero-grid-bg-mobile.webp`} />
+                <img
+                  src={`${BASE_PATH}/images/hero-grid-bg-desktop.webp`}
+                  alt=""
+                  width={2000}
+                  height={1413}
+                  className="w-[100vw] max-w-none shrink-0 -translate-y-[68%] sm:min-w-[620px] md:min-w-[1200px]"
+                />
+              </picture>
             </span>
-            {/* Supplied Background2.png, used unmodified at its original
-                4032x1530 - no crop, no resize. Ships with its own device
-                bezel and transparent surround, so no card border/radius. */}
-            <Image
-              src="/images/hero-image.webp"
-              alt="Viking Marketing CRM dashboard showing opportunity status, opportunity value, and conversion rate for a local business"
-              width={4032}
-              height={1530}
-              priority
-              sizes="100vw"
-              className="mx-auto w-full max-w-none"
-            />
+            {/* Supplied Background2.png, unmodified crop/composition at its
+                original 4032x1530 on desktop - ships with its own device
+                bezel and transparent surround, so no card border/radius.
+                Mobile gets a dedicated <=900px export of the same image
+                (same crop, just downsized + recompressed) since this file
+                was the site's Core Web Vitals LCP bottleneck: the full
+                4032px master was downloading on every viewport, phones
+                included. See findings/performance.md from the 2026-09-18
+                audit. */}
+            <picture>
+              <source media="(max-width: 767px)" srcSet={`${BASE_PATH}/images/hero-image-mobile.webp`} />
+              <img
+                src={`${BASE_PATH}/images/hero-image-desktop.webp`}
+                alt="Viking Marketing CRM dashboard showing opportunity status, opportunity value, and conversion rate for a local business"
+                width={4032}
+                height={1530}
+                fetchPriority="high"
+                className="mx-auto w-full max-w-none"
+              />
+            </picture>
           </Reveal>
         </div>
       </section>

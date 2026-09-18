@@ -26,7 +26,7 @@ const BASE_PATH = process.env.NEXT_PUBLIC_BASE_PATH || "";
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
-  title: `AI Appointment Setter & CRM for Local Service Businesses | Viking`,
+  title: `AI Appointment Setter & CRM for Local Service Businesses | Viking Marketing`,
   description:
     "Viking's AI appointment setter answers every lead, qualifies them, & books the job straight to your calendar. One platform for local service businesses.",
   applicationName: SITE_NAME,
@@ -38,18 +38,10 @@ export default function RootLayout({
 }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="en" className={`${poppins.variable} ${playfair.variable}`}>
-      <head>
-        {/* Satoshi (headings) via Fontshare's official free delivery */}
-        <link rel="preconnect" href="https://api.fontshare.com" />
-        <link
-          href="https://api.fontshare.com/v2/css?f[]=satoshi@400,500,700,900&display=swap"
-          rel="stylesheet"
-        />
-      </head>
       <body className="antialiased">
         {GTM_ID ? (
           <>
-            <Script id="gtm" strategy="afterInteractive">
+            <Script id="gtm" strategy="lazyOnload">
               {`(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','${GTM_ID}');`}
             </Script>
             <noscript>
@@ -64,8 +56,8 @@ export default function RootLayout({
         ) : null}
         {GA_ID ? (
           <>
-            <Script src={`https://www.googletagmanager.com/gtag/js?id=${GA_ID}`} strategy="afterInteractive" />
-            <Script id="ga4" strategy="afterInteractive">
+            <Script src={`https://www.googletagmanager.com/gtag/js?id=${GA_ID}`} strategy="lazyOnload" />
+            <Script id="ga4" strategy="lazyOnload">
               {`window.dataLayer = window.dataLayer || [];
                 function gtag(){dataLayer.push(arguments);}
                 gtag('js', new Date());
@@ -74,7 +66,7 @@ export default function RootLayout({
           </>
         ) : null}
         {CLARITY_ID ? (
-          <Script id="clarity" strategy="afterInteractive">
+          <Script id="clarity" strategy="lazyOnload">
             {`(function(c,l,a,r,i,t,y){
                 c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
                 t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
@@ -83,10 +75,10 @@ export default function RootLayout({
           </Script>
         ) : null}
         {CLOSEBOT_SOURCE ? (
-          <Script src={`https://api.closebot.com/scripts/cb.js?source=${CLOSEBOT_SOURCE}`} strategy="afterInteractive" />
+          <Script src={`https://api.closebot.com/scripts/cb.js?source=${CLOSEBOT_SOURCE}`} strategy="lazyOnload" />
         ) : null}
         {SEARCHATLAS_UUID ? (
-          <Script id="sa-dynamic-optimization" strategy="afterInteractive">
+          <Script id="sa-dynamic-optimization" strategy="lazyOnload">
             {`var script = document.createElement("script");
               script.src = "https://dashboard.searchatlas.com/scripts/dynamic_optimization.js";
               script.dataset.uuid = "${SEARCHATLAS_UUID}";

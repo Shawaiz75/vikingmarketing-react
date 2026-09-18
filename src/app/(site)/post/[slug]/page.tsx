@@ -198,7 +198,7 @@ export default async function PostPage({ params }: { params: Promise<Params> }) 
                   </div>
                 </div>
                 <div className="mt-4">
-                  <AuthorBio text={`Author description: ${post.authorBio}`} />
+                  <AuthorBio text={post.authorBio} />
                 </div>
               </aside>
 

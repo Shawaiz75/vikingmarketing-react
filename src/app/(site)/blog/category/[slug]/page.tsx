@@ -18,9 +18,8 @@ export const dynamicParams = false;
 export async function generateMetadata({ params }: { params: Promise<Params> }): Promise<Metadata> {
   const { slug } = await params;
   const name = CATEGORIES[slug];
-  // Titles match the source site exactly (bare category name, no suffix).
   return pageMetadata({
-    title: name,
+    title: `${name} | Viking Marketing`,
     description: CATEGORY_DESCRIPTIONS[slug],
     path: `/blog/category/${slug}`,
   });

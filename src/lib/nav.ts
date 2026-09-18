@@ -29,10 +29,9 @@ export const FOOTER_COLUMNS: { title: string; links: NavLink[] }[] = [
     links: [
       { label: "Home", href: "/" },
       { label: "About Viking", href: "/about-us" },
-      { label: "Our Team", href: "/about-us" },
+      { label: "Meet the Team", href: "/about-us" },
       { label: "Contact Us", href: "/book-a-call" },
       { label: "Pricing", href: "/pricing" },
-      { label: "Careers", href: "/about-us" },
       { label: "Privacy Policy", href: "/privacy-policy" },
       { label: "Terms", href: "/terms-and-conditions" },
     ],
@@ -70,14 +69,12 @@ export const FOOTER_COLUMNS: { title: string; links: NavLink[] }[] = [
     title: "Locations",
     links: [
       { label: "Phoenix", href: "/ai-appointment-setter-phoenix" },
-      // The live site lists these cities without destination pages yet.
-      { label: "Tempe", href: "/locations" },
-      { label: "Scottsdale", href: "/locations" },
-      { label: "Mesa", href: "/locations" },
-      { label: "Chandler", href: "/locations" },
-      { label: "Gilbert", href: "/locations" },
-      { label: "Glendale", href: "/locations" },
-      { label: "All Arizona Cities", href: "/locations" },
+      { label: "Tempe", href: "/ai-appointment-setter-tempe" },
+      { label: "Scottsdale", href: "/ai-appointment-setter-scottsdale" },
+      { label: "Mesa", href: "/ai-appointment-setter-mesa" },
+      { label: "Chandler", href: "/ai-appointment-setter-chandler" },
+      { label: "Gilbert", href: "/ai-appointment-setter-gilbert" },
+      { label: "Glendale", href: "/ai-appointment-setter-glendale" },
       { label: "See All Locations", href: "/locations" },
     ],
   },
@@ -85,28 +82,24 @@ export const FOOTER_COLUMNS: { title: string; links: NavLink[] }[] = [
     title: "Resources",
     links: [
       { label: "Blog", href: "/blog" },
-      // Placeholder links on the live site (no destinations yet):
-      { label: "Case Studies", href: "/blog" },
       { label: "Missed Call ROI Calculator", href: "/missed-call-roi-calculator" },
-      { label: "Comparisons", href: "/blog" },
-      { label: "Help Center", href: "/book-a-call" },
-      { label: "Integrations", href: "/book-a-call" },
-      { label: "API Docs", href: "/book-a-call" },
+      { label: "Comparisons", href: "/compare" },
+      { label: "Talk to Our Team", href: "/book-a-call" },
     ],
   },
 ];
 
-export const CITY_LIST = [
-  "Phoenix",
-  "Scottsdale",
-  "Tempe",
-  "Mesa",
-  "Chandler",
-  "Gilbert",
-  "Glendale",
-  "Peoria",
-  "Surprise",
-  "Goodyear",
+export const CITY_LIST: { name: string; href: string }[] = [
+  { name: "Phoenix", href: "/ai-appointment-setter-phoenix" },
+  { name: "Scottsdale", href: "/ai-appointment-setter-scottsdale" },
+  { name: "Tempe", href: "/ai-appointment-setter-tempe" },
+  { name: "Mesa", href: "/ai-appointment-setter-mesa" },
+  { name: "Chandler", href: "/ai-appointment-setter-chandler" },
+  { name: "Gilbert", href: "/ai-appointment-setter-gilbert" },
+  { name: "Glendale", href: "/ai-appointment-setter-glendale" },
+  { name: "Peoria", href: "/ai-appointment-setter-peoria" },
+  { name: "Surprise", href: "/ai-appointment-setter-surprise" },
+  { name: "Goodyear", href: "/ai-appointment-setter-goodyear" },
 ];
 
 export const INDUSTRY_LINKS: NavLink[] = [
@@ -119,4 +112,9 @@ export const INDUSTRY_LINKS: NavLink[] = [
   { label: "Marketing Agencies", href: "/ai-appointment-setter-for-agencies" },
   { label: "B2B Sales", href: "/ai-appointment-setter-for-b2b-sales" },
   { label: "Mortgage", href: "/ai-appointment-setter-for-mortgage" },
+  { label: "HVAC Contractors", href: "/hvac-crm-software" },
+  { label: "Gyms & Fitness Studios", href: "/gym-crm-software" },
+  { label: "Chiropractors", href: "/chiropractic-scheduling-software" },
+  { label: "Electricians", href: "/electrician-scheduling-software" },
+  { label: "Roofing Contractors", href: "/roofing-crm-software" },
 ];

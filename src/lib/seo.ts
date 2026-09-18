@@ -54,6 +54,11 @@ export function pageMetadata(seo: PageSeo): Metadata {
 
 /* ------------------------- JSON-LD builders ------------------------- */
 
+// Organization carries the real, disclosed rating (see ReviewsSection) so
+// pages that are correctly typed as Organization instead of LocalBusiness
+// (i.e. every page that isn't a genuine physical-service-area page) don't
+// lose the rating from their graph. See localBusinessLd below for why
+// LocalBusiness itself is now reserved for genuine local/service-area pages.
 export const organizationLd = () => ({
   "@type": "Organization",
   "@id": `${SITE_URL}/#organization`,
@@ -65,9 +70,19 @@ export const organizationLd = () => ({
   email: EMAIL,
   address: { "@type": "PostalAddress", ...ADDRESS },
   sameAs: [SOCIAL.facebook, SOCIAL.instagram, SOCIAL.linkedin, SOCIAL.youtube],
+  aggregateRating: {
+    "@type": "AggregateRating",
+    ratingValue: RATING.value,
+    reviewCount: RATING.count,
+  },
 });
 
-export const localBusinessLd = () => ({
+// Reserved for pages that make a genuine, geographically bounded
+// local-service claim (Phoenix-metro city pages). Google scopes
+// LocalBusiness to businesses with a physical service area customers are
+// actually in — a nationwide SaaS page should use organizationLd instead.
+// Pass the specific cities/areas the page actually serves.
+export const localBusinessLd = (opts?: { areaServed?: string[] }) => ({
   "@type": "LocalBusiness",
   "@id": `${SITE_URL}/#localbusiness`,
   name: SITE_NAME,
@@ -76,6 +91,9 @@ export const localBusinessLd = () => ({
   telephone: PHONE_SCHEMA,
   priceRange: PRICE_RANGE,
   address: { "@type": "PostalAddress", ...ADDRESS },
+  ...(opts?.areaServed?.length
+    ? { areaServed: opts.areaServed.map((name) => ({ "@type": "City", name })) }
+    : {}),
   aggregateRating: {
     "@type": "AggregateRating",
     ratingValue: RATING.value,
@@ -137,13 +155,34 @@ export const howToLd = (opts: {
   })),
 });
 
-export const serviceLd = (opts: { name: string; description: string; path: string }) => ({
+export const serviceLd = (opts: {
+  name: string;
+  description: string;
+  path: string;
+  areaServed?: string[];
+}) => ({
   "@type": "Service",
   name: opts.name,
   description: opts.description,
   url: `${SITE_URL}${opts.path}`,
   provider: { "@id": `${SITE_URL}/#organization` },
-  areaServed: "US",
+  areaServed: opts.areaServed?.length
+    ? opts.areaServed.map((name) => ({ "@type": "City", name }))
+    : { "@type": "Country", name: "United States" },
+});
+
+/** ItemList linking a hub page (e.g. /industries, /locations) to each of its
+ *  child Service/WebPage entries, so the hub-to-spoke relationship is
+ *  machine-readable rather than only a set of on-page <a> links. */
+export const itemListLd = (opts: { name: string; items: { name: string; path: string }[] }) => ({
+  "@type": "ItemList",
+  name: opts.name,
+  itemListElement: opts.items.map((it, i) => ({
+    "@type": "ListItem",
+    position: i + 1,
+    url: `${SITE_URL}${it.path}`,
+    name: it.name,
+  })),
 });
 
 export const softwareApplicationLd = (opts: {

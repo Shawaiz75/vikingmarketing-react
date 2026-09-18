@@ -4,7 +4,7 @@ const data: TemplatePageData = {
   slug: "review-generation-software",
   breadcrumbName: "Review Generation Software",
   seo: {
-    title: "Review Generation Software: More 5-Star Reviews | Viking",
+    title: "Review Generation Software: More 5-Star Reviews | Viking Marketing",
     description:
       "Get more 5-star reviews with review generation software that automates text and email requests, Google links, follow-ups, and AI replies in Viking’s CRM.",
     ogImage: "/images/6a289ffdbb09e3b139a7-c2e1ffb51004.webp",

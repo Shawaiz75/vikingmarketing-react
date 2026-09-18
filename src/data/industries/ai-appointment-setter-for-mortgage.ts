@@ -16,7 +16,7 @@ const data: TemplatePageData = {
     ],
   },
   schema: {
-    kinds: ["localBusiness", "person", "service", "webPage", "howTo", "faq"],
+    kinds: ["organization", "person", "service", "webPage", "howTo", "faq"],
     serviceName: "AI Appointment Setter for Mortgage",
     serviceDescription:
       "Viking's AI appointment setter for mortgage answers every lead in seconds, confirms the basics, and books the loan officer's call.",

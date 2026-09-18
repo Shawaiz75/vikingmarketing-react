@@ -4,7 +4,7 @@ const data: TemplatePageData = {
   slug: "ai-appointment-setter",
   breadcrumbName: "AI Appointment Setter",
   seo: {
-    title: "AI Appointment Setter for Local Service Businesses | Viking",
+    title: "AI Appointment Setter for Local Service Businesses | Viking Marketing",
     description:
       "Viking's AI appointment setter texts leads back in seconds, qualifies them, and books appointments 24/7. From $297/mo. Book a free demo.",
     ogImage: "/images/6a3495eb162c3e3e341b-f1427f26f926.webp",

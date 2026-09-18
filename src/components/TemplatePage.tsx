@@ -346,7 +346,7 @@ export default function TemplatePage({ data }: { data: TemplatePageData }) {
   const nodes: object[] = [];
   const k = data.schema.kinds;
   if (k.includes("organization")) nodes.push(organizationLd());
-  if (k.includes("localBusiness")) nodes.push(localBusinessLd());
+  if (k.includes("localBusiness")) nodes.push(localBusinessLd({ areaServed: data.schema.areaServed }));
   if (k.includes("person")) nodes.push(personLd());
   if (k.includes("service"))
     nodes.push(
@@ -354,6 +354,7 @@ export default function TemplatePage({ data }: { data: TemplatePageData }) {
         name: data.schema.serviceName ?? data.breadcrumbName,
         description: data.schema.serviceDescription ?? data.seo.description,
         path,
+        areaServed: data.schema.areaServed,
       })
     );
   if (k.includes("softwareApplication"))

@@ -4,7 +4,7 @@ const data: TemplatePageData = {
   slug: "database-reactivation",
   breadcrumbName: "Database Reactivation",
   seo: {
-    title: "Database Reactivation: Turn Old Leads Into Jobs | Viking",
+    title: "Database Reactivation: Turn Old Leads Into Jobs | Viking Marketing",
     description:
       "Turn old contacts you already paid for into booked jobs. Viking’s database reactivation uses AI, text, email, and voicemail to follow up and book for you.",
     ogImage: "/images/6a2b35e2ea26507ded20-6e76723c934c.webp",

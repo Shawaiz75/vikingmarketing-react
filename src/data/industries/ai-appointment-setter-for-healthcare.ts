@@ -11,7 +11,7 @@ const data: TemplatePageData = {
     keywords: ["AI appointment setter for healthcare", "AI appointment setter for medical practices"],
   },
   schema: {
-    kinds: ["localBusiness", "person", "service", "webPage", "howTo", "faq"],
+    kinds: ["organization", "person", "service", "webPage", "howTo", "faq"],
     serviceName: "AI Appointment Setter for Healthcare",
     serviceDescription:
       "An AI appointment setter for healthcare is software that replies to a new patient inquiry, by text, web chat, or social message, within seconds, confirms the basics your front desk needs, new or returning patient, reason for the visit, and preferred timing, and books the appointment directly to your schedule.",

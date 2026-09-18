@@ -11,7 +11,7 @@ const data: TemplatePageData = {
     keywords: ["AI appointment setter for agencies", "AI appointment setter for marketing agencies"],
   },
   schema: {
-    kinds: ["localBusiness", "person", "service", "webPage", "howTo", "faq"],
+    kinds: ["organization", "person", "service", "webPage", "howTo", "faq"],
     serviceName: "AI Appointment Setter for Agencies",
     serviceDescription:
       "An AI appointment setter for agencies is software that replies to an inbound inquiry, a contact form, a DM, or a pricing-page chat, within seconds, confirms the basics your team needs, budget range, project type, and timeline, and books the call directly to your sales calendar.",

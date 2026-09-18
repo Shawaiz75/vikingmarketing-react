@@ -85,6 +85,12 @@ export type TemplatePageData = {
     serviceName?: string;
     serviceDescription?: string;
     howTo?: { name: string; description: string };
+    /** Cities this page's Service/LocalBusiness genuinely serves. Only set
+     *  this on real local/service-area pages (e.g. a city page) — leave it
+     *  unset on national pages so Service.areaServed defaults to "United
+     *  States" and localBusiness (if included at all) doesn't imply a
+     *  narrower area than the page actually claims. */
+    areaServed?: string[];
   };
   hero: {
     badge?: string;

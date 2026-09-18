@@ -1,9 +1,10 @@
 import type { Metadata } from "next";
-import { pageMetadata, jsonLdGraph, webPageLd } from "@/lib/seo";
+import { pageMetadata, jsonLdGraph, webPageLd, itemListLd } from "@/lib/seo";
 import { JsonLd } from "@/components/ui";
 import Reveal from "@/components/Reveal";
 import HeroGlow from "@/components/HeroGlow";
 import { FinalCta, CallNote, CityChips } from "@/components/sections";
+import { CITY_LIST } from "@/lib/nav";
 
 export const metadata: Metadata = pageMetadata({
   title: "Locations | Viking Marketing",
@@ -21,6 +22,10 @@ export default function LocationsPage() {
       name: "Locations | Viking Marketing",
       description:
         "Viking serves local service businesses across Phoenix, Scottsdale, Tempe, Mesa, Chandler, and beyond. Find your city and see how it works.",
+    }),
+    itemListLd({
+      name: "Phoenix Metro Locations Viking Marketing Serves",
+      items: CITY_LIST.map((c) => ({ name: c.name, path: c.href })),
     }),
   ]);
 

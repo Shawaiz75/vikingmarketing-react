@@ -11,7 +11,7 @@ const data: TemplatePageData = {
     keywords: ["AI appointment setter for b2b sales", "AI appointment setter for sales teams"],
   },
   schema: {
-    kinds: ["localBusiness", "person", "service", "webPage", "howTo", "faq"],
+    kinds: ["organization", "person", "service", "webPage", "howTo", "faq"],
     serviceName: "AI Appointment Setter for B2B Sales",
     serviceDescription:
       "An AI appointment setter for B2B sales is software that replies to an inbound lead, a demo request, a contact form, or a pricing-page message, within seconds, qualifies them against real criteria like budget, authority, need, and timeline, and books the call directly to a rep's calendar.",

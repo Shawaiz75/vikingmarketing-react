@@ -1,5 +1,39 @@
 @import "tailwindcss";
 
+/* Satoshi, self-hosted (downloaded from Fontshare's own CDN) instead of a
+   render-blocking <link> to api.fontshare.com at request time — that round
+   trip cost ~750ms of render-blocking delay before first paint. woff2 only
+   (no woff/ttf fallback) since these are the only weights/styles used and
+   woff2 has near-universal support. */
+@font-face {
+  font-family: "Satoshi";
+  src: url("/fonts/satoshi-400.woff2") format("woff2");
+  font-weight: 400;
+  font-display: swap;
+  font-style: normal;
+}
+@font-face {
+  font-family: "Satoshi";
+  src: url("/fonts/satoshi-500.woff2") format("woff2");
+  font-weight: 500;
+  font-display: swap;
+  font-style: normal;
+}
+@font-face {
+  font-family: "Satoshi";
+  src: url("/fonts/satoshi-700.woff2") format("woff2");
+  font-weight: 700;
+  font-display: swap;
+  font-style: normal;
+}
+@font-face {
+  font-family: "Satoshi";
+  src: url("/fonts/satoshi-900.woff2") format("woff2");
+  font-weight: 900;
+  font-display: swap;
+  font-style: normal;
+}
+
 /* ---------------------------------------------------------------------------
    Viking Marketing design tokens (measured from the live site)
 --------------------------------------------------------------------------- */

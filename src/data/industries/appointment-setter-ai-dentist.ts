@@ -11,7 +11,7 @@ const data: TemplatePageData = {
     keywords: ["appointment setter ai dentist", "AI appointment setter for dentists"],
   },
   schema: {
-    kinds: ["localBusiness", "person", "service", "webPage", "howTo", "faq"],
+    kinds: ["organization", "person", "service", "webPage", "howTo", "faq"],
     serviceName: "AI Appointment Setter for Dentists",
     serviceDescription:
       "An AI appointment setter for dental practices that replies to patient inquiries in seconds, books the right visit type directly to your schedule, and brings back patients who are overdue.",

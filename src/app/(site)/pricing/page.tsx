@@ -7,12 +7,14 @@ import {
   organizationLd,
   breadcrumbLd,
   faqLd,
+  softwareApplicationLd,
 } from "@/lib/seo";
 import { CtaButton, SectionHeading, JsonLd } from "@/components/ui";
 import Reveal from "@/components/Reveal";
 import HeroGlow from "@/components/HeroGlow";
 import FaqSection, { type Faq } from "@/components/FaqSection";
 import { ReviewsSection, FinalCta, CallNote } from "@/components/sections";
+import { RATING } from "@/lib/site";
 
 export const metadata: Metadata = pageMetadata({
   title: "Viking Marketing Pricing | AI CRM Plans from $297/month",
@@ -177,6 +179,12 @@ const FAQS: Faq[] = [
 export default function PricingPage() {
   const ld = jsonLdGraph([
     organizationLd(),
+    softwareApplicationLd({
+      name: "Viking Marketing",
+      description:
+        "Viking Marketing plans start at $297/month flat. No contracts, no setup fees, live in 48 hours. AI receptionist, CRM, reviews, invoicing, and more.",
+      path: "/pricing",
+    }),
     breadcrumbLd([
       { name: "Home", path: "/" },
       { name: "Pricing", path: "/pricing" },
@@ -204,7 +212,7 @@ export default function PricingPage() {
             <CtaButton href="/book-a-call">Book a Free Demo</CtaButton>
           </div>
           <p className="mt-6 text-[14.5px] text-white/70">
-            Rated 5.0 from 21 Google reviews · 48-hour setup · Cancel anytime
+            Rated {RATING.value} from {RATING.count} Google reviews · 48-hour setup · Cancel anytime
           </p>
         </div>
       </section>
